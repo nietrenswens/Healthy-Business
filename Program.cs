@@ -1,2 +1,2 @@
-﻿using var game = new TheBradgeCompany.TheBradgeCompany();
+﻿using var game = new TheBradgeCompany.HealthyBusiness();
 game.Run();
