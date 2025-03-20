@@ -33,5 +33,28 @@ namespace HealthyBusiness.Engine
                 component.Load(content);
             }
         }
+
+        public GameObject GetGameObject<T>() where T : GameObject
+        {
+            foreach (var component in Components)
+            {
+                if (component is T)
+                {
+                    return component as T;
+                }
+            }
+            return null;
+        }
+
+        public IEnumerable<GameObject> GetGameObjects<T>() where T : GameObject
+        {
+            foreach (var component in Components)
+            {
+                if (component is T)
+                {
+                    yield return component;
+                }
+            }
+        }
     }
 }
