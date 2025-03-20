@@ -56,8 +56,6 @@ namespace HealthyBusiness.Engine
             Components = new List<GameObject>();
         }
 
-        public GameObject
-
         public virtual void Update(GameTime gameTime)
         {
             foreach (var component in Components)
