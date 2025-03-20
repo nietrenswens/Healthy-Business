@@ -27,6 +27,6 @@ jobs:
     - name: .NET Lint
       uses: zyactions/dotnet-lint@v1
       with:
-        workspace: test
+        workspace: TheBradgeCompany.csproj
         implicit-restore: true
       
