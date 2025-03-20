@@ -8,12 +8,12 @@ namespace HealthyBusiness.Engine
     public abstract class GameObject
     {
         public GameObject Parent { get; set; }
-        public List<GameObject> Components { get; set; }
+        public IReadOnlyCollection<GameObject> Components { get; private set; }
 
 
-        public Vector2 LocalPosition { get; set; }
-        public float LocalRotation { get; set; }
-        public float LocalScale { get; set; }
+        public Vector2 LocalPosition;
+        public float LocalRotation;
+        public float LocalScale;
 
         public Vector2 WorldPosition
         {
@@ -100,6 +100,12 @@ namespace HealthyBusiness.Engine
             Vector2 position = worldSpace - Parent.WorldPosition;
             position.Rotate(-Parent.WorldRotation);
             return position / Parent.WorldScale;
+        }
+
+        public void Add(GameObject component)
+        {
+            component.Parent = this;
+            (Components as List<GameObject>).Add(component);
         }
 
         public GameObject GetGameObject<T>() where T : GameObject
