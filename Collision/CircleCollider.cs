@@ -88,10 +88,12 @@ namespace HealthyBusiness.Collision
             if (absCompensatedCircleCenter.X < compensatedBottomRight.X)
             {
                 return absCompensatedCircleCenter.Y - compensatedBottomRight.Y < Radius;
-            } else if (absCompensatedCircleCenter.Y < compensatedBottomRight.Y)
+            }
+            else if (absCompensatedCircleCenter.Y < compensatedBottomRight.Y)
             {
                 return absCompensatedCircleCenter.X - compensatedBottomRight.X < Radius;
-            } else
+            }
+            else
             {
                 return (compensatedBottomRight - compensatedCircleCenter).Length() < Radius;
             }
