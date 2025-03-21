@@ -105,6 +105,7 @@ namespace HealthyBusiness.Engine
         public void Add(GameObject component)
         {
             component.Parent = this;
+            component.Load(GameManager.GetGameManager().ContentManager);
             (Components as List<GameObject>).Add(component);
         }
 
