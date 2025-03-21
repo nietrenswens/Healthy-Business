@@ -21,12 +21,12 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore HealthyBusiness.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build HealthyBusiness.csproj --no-restore
     - name: .NET Lint
       uses: zyactions/dotnet-lint@v1
       with:
-        workspace: TheBradgeCompany.csproj
+        workspace: HealthyBusiness.csproj
         implicit-restore: true
       
