@@ -41,10 +41,11 @@ namespace HealthyBusiness.Engine.Managers
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
             var player = new Player(new Vector2(2, 2));
-            CurrentCamera = new GameObjectCenteredCamera(player, 1f);
+            CurrentCamera = new GameObjectCenteredCamera(player, 4f);
 
-            AddGameObject(player);
             AddGameObject(new Wall(new Point(200, 200)));
+            AddGameObject(new Floor(new Point(216, 200)));
+            AddGameObject(player);
         }
 
         public void Load(ContentManager content)
@@ -80,7 +81,7 @@ namespace HealthyBusiness.Engine.Managers
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(transformMatrix: CurrentCamera.GetWorldTransformationMatrix());
+            spriteBatch.Begin(transformMatrix: CurrentCamera.GetWorldTransformationMatrix(), samplerState: SamplerState.PointClamp);
             // Draw game objects here
             foreach (var gameObject in _gameObjects)
             {

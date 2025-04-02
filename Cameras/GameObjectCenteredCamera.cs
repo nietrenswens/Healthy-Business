@@ -19,8 +19,8 @@ namespace HealthyBusiness.Cameras
             var screenWidth = Globals.SCREENWIDTH;
             var screenHeight = Globals.SCREENHEIGHT;
 
-            var x = Target.WorldPosition.X;
-            var y = Target.WorldPosition.Y;
+            var x = Target.WorldPosition.X + (Target.Width / 2);
+            var y = Target.WorldPosition.Y + (Target.Height / 2);
 
             return Matrix.CreateTranslation(-x, -y, 0) * Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(screenWidth / 2, screenHeight / 2, 0);
         }

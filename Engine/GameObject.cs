@@ -14,6 +14,9 @@ namespace HealthyBusiness.Engine
         public CollisionGroup CollisionGroup { get; private set; }
         public Collider Collider { get; private set; }
 
+        public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
+        public virtual float Height => Collider?.GetBoundingBox().Height ?? 0;
+
         public Vector2 LocalPosition;
         public float LocalRotation;
         public float LocalScale;
