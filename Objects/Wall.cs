@@ -19,7 +19,7 @@ namespace HealthyBusiness.Objects
         {
             base.Load(content);
             _texture = content.Load<Texture2D>("objects\\wall");
-            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(_texture.Width, _texture.Height))), CollisionGroup.Wall);
+            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(_texture.Width, _texture.Height))), CollisionGroup.Solid);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

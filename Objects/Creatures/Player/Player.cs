@@ -56,7 +56,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
                 bool collided = false;
                 var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
 
-                foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(CollisionGroup.Wall))
+                foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(CollisionGroup.Solid))
                 {
                     if (tempCollider.CheckIntersection(gameObject.Collider))
                     {
@@ -72,7 +72,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
 
         public override void OnCollision(GameObject other)
         {
-            if (other.CollisionGroup == CollisionGroup.Wall)
+            if (other.CollisionGroup == CollisionGroup.Solid)
             {
                 if (Collider is RectangleCollider playerRect && other.Collider is RectangleCollider wallRect)
                 {
