@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine.Managers;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,8 @@ namespace HealthyBusiness.Engine
     {
         public GameObject Parent { get; set; }
         public IReadOnlyCollection<GameObject> Components { get; private set; }
-
+        public CollisionGroup CollisionGroup { get; private set; }
+        public Collider Collider { get; private set; }
 
         public Vector2 LocalPosition;
         public float LocalRotation;
@@ -81,6 +83,14 @@ namespace HealthyBusiness.Engine
             }
         }
 
+        public virtual void OnCollision(GameObject other)
+        {
+            foreach (var component in Components)
+            {
+                component.OnCollision(other);
+            }
+        }
+
         public Vector2 ToWorldSpace(Vector2 localSpace)
         {
             if (Parent == null)
@@ -131,6 +141,12 @@ namespace HealthyBusiness.Engine
                     yield return component;
                 }
             }
+        }
+
+        protected void SetCollider(Collider collider, CollisionGroup group = CollisionGroup.None)
+        {
+            this.Collider = collider;
+            this.CollisionGroup = group;
         }
     }
 }

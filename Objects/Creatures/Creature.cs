@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
 using Microsoft.Xna.Framework;
 
 namespace HealthyBusiness.Objects.Creatures
