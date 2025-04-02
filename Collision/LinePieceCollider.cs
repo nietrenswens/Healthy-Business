@@ -14,48 +14,24 @@ namespace HealthyBusiness.Collision
         /// </summary>
         public float Length
         {
-            get
-            {
-                return (End - Start).Length();
-            }
-            set
-            {
-                End = Start + GetDirection() * value;
-            }
+            get => (End - Start).Length();
+            set => End = Start + GetDirection() * value;
         }
 
         /// <summary>
         /// The A component from the standard line formula Ax + By + C = 0
         /// </summary>
-        public float StandardA
-        {
-            get
-            {
-                return Start.Y - End.Y;
-            }
-        }
+        public float StandardA => Start.Y - End.Y;
 
         /// <summary>
         /// The B component from the standard line formula Ax + By + C = 0
         /// </summary>
-        public float StandardB
-        {
-            get
-            {
-                return End.X - Start.X;
-            }
-        }
+        public float StandardB => End.X - Start.X;
 
         /// <summary>
         /// The C component from the standard line formula Ax + By + C = 0
         /// </summary>
-        public float StandardC
-        {
-            get
-            {
-                return Start.X * End.Y - End.X * Start.Y;
-            }
-        }
+        public float StandardC => Start.X * End.Y - End.X * Start.Y;
 
         public LinePieceCollider(Vector2 start, Vector2 end)
         {
@@ -117,7 +93,6 @@ namespace HealthyBusiness.Collision
         /// <returns>true there is any overlap between the two Circles.</returns>
         public override bool Intersects(CircleCollider other)
         {
-            // TODO Implement hint, you can use the NearestPointOnLine function defined below.
             var near = NearestPointOnLine(other.Center);
             return (near - other.Center).Length() < other.Radius;
         }
@@ -129,7 +104,7 @@ namespace HealthyBusiness.Collision
         /// <returns>true there is any overlap between the Circle and the Rectangle.</returns>
         public override bool Intersects(RectangleCollider other)
         {
-            var rectangle = other.shape;
+            var rectangle = other.Shape;
             var topLeft = rectangle.Location.ToVector2();
             var topRight = new Vector2(rectangle.Right, rectangle.Top);
             var bottomLeft = new Vector2(rectangle.Left, rectangle.Bottom);
@@ -144,7 +119,7 @@ namespace HealthyBusiness.Collision
         /// <summary>
         /// Calculates the intersection point between 2 lines.
         /// </summary>
-        /// <param name="Other">The line to intersect with</param>
+        /// <param name="other">The line to intersect with</param>
         /// <returns>A Vector2 with the point of intersection.</returns>
         public Vector2 GetIntersection(LinePieceCollider other)
         {
@@ -223,7 +198,6 @@ namespace HealthyBusiness.Collision
         /// <summary>
         /// Should return the angle between a given direction and the up vector.
         /// </summary>
-        /// <param name="direction">The Vector2 pointing out from (0,0) to calculate the angle to.</param>
         /// <returns> The angle in radians between the the up vector and the direction to the cursor.</returns>
         public float GetAngle()
         {

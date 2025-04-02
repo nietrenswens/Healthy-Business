@@ -21,17 +21,17 @@ namespace HealthyBusiness.Collision
         {
             switch (other)
             {
-                case RectangleCollider:
+                case RectangleCollider collider:
                     {
-                        return Intersects((RectangleCollider)other);
+                        return Intersects(collider);
                     }
-                case CircleCollider:
+                case CircleCollider collider:
                     {
-                        return Intersects((CircleCollider)other);
+                        return Intersects(collider);
                     }
-                case LinePieceCollider:
+                case LinePieceCollider collider:
                     {
-                        return Intersects((LinePieceCollider)other);
+                        return Intersects(collider);
                     }
                 case null:
                     {
@@ -66,7 +66,7 @@ namespace HealthyBusiness.Collision
         /// <summary>
         /// Gets whether or not the provided coordinates lie within the bounds of this shape.
         /// </summary>
-        /// <param name="coordinates">The coordinates to check.</param>
+        /// <param name="loc">The coordinates to check.</param>
         /// <returns>true if the coordinates are within the circle.</returns>
         public abstract bool Contains(Vector2 loc);
     }
