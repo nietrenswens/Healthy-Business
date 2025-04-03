@@ -36,7 +36,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Collider is RectangleCollider rectangleCollider && Collider != null)
+            if (Collider is RectangleCollider rectangleCollider)
             {
                 rectangleCollider.Shape.Location = WorldPosition.ToPoint();
             }
