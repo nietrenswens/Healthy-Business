@@ -123,7 +123,7 @@ namespace HealthyBusiness.Engine
             (Components as List<GameObject>).Add(component);
         }
 
-        public GameObject GetGameObject<T>() where T : GameObject
+        public T GetGameObject<T>() where T : GameObject
         {
             foreach (var component in Components)
             {
@@ -135,13 +135,13 @@ namespace HealthyBusiness.Engine
             return null;
         }
 
-        public IEnumerable<GameObject> GetGameObjects<T>() where T : GameObject
+        public IEnumerable<T> GetGameObjects<T>() where T : GameObject
         {
             foreach (var component in Components)
             {
-                if (component is T)
+                if (component is T typedComponent)
                 {
-                    yield return component;
+                    yield return typedComponent;
                 }
             }
         }

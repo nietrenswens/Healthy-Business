@@ -51,7 +51,7 @@ namespace HealthyBusiness.Controllers
             Player p = (Player)Parent;
             if (direction != Vector2.Zero)
             {
-                p.Move(direction, gameTime);
+                p.GetGameObject<CollidableMovementController>().Move(direction, gameTime);
             }
         }
     }
