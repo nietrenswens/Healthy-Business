@@ -1,8 +1,13 @@
-﻿using HealthyBusiness.Objects.Creatures.Player;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Cameras;
+using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthyBusiness.Engine.Managers
 {
@@ -13,9 +18,9 @@ namespace HealthyBusiness.Engine.Managers
         private List<GameObject> _gameObjects = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeAdded = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeRemoved = new List<GameObject>();
-
         public ContentManager ContentManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
+        public Camera CurrentCamera { get; private set; }
 
         public static GameManager GetGameManager()
         {
@@ -36,8 +41,11 @@ namespace HealthyBusiness.Engine.Managers
             // Initialize game objects here
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
+            var player = new Player(new TileLocation(4, 4));
+            CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
-            AddGameObject(new Player(new Vector2(100, 100)));
+            AddGameObjects(LevelBuilder.CreateRectangularLevel(40, 40));
+            AddGameObject(player);
         }
 
         public void Load(ContentManager content)
@@ -52,6 +60,7 @@ namespace HealthyBusiness.Engine.Managers
         public void Update(GameTime gameTime)
         {
             InputManager.GetInputManager().Update();
+            CheckCollision();
             foreach (var gameObject in _gameObjectsToBeAdded)
             {
                 _gameObjects.Add(gameObject);
@@ -72,7 +81,7 @@ namespace HealthyBusiness.Engine.Managers
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: CurrentCamera.GetWorldTransformationMatrix(), samplerState: SamplerState.PointClamp);
             // Draw game objects here
             foreach (var gameObject in _gameObjects)
             {
@@ -85,6 +94,38 @@ namespace HealthyBusiness.Engine.Managers
         {
             gameObject.Load(ContentManager);
             _gameObjectsToBeAdded.Add(gameObject);
+        }
+
+        public void AddGameObjects(IEnumerable<GameObject> gameObjects)
+        {
+            foreach (var gameObject in gameObjects)
+            {
+                AddGameObject(gameObject);
+            }
+        }
+
+        public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroups)
+        {
+            var objects = _gameObjects.Where(_object => _object.CollisionGroup == collisionGroups);
+            return objects;
+        }
+
+        private void CheckCollision()
+        {
+            foreach (var gameObject in _gameObjects)
+            {
+                foreach (var other in _gameObjects)
+                {
+                    if (gameObject != other && gameObject.Collider != null && other.Collider != null)
+                    {
+                        if (gameObject.Collider.CheckIntersection(other.Collider))
+                        {
+                            gameObject.OnCollision(other);
+                            other.OnCollision(gameObject);
+                        }
+                    }
+                }
+            }
         }
     }
 }

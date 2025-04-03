@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine.Managers;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,11 @@ namespace HealthyBusiness.Engine
     {
         public GameObject Parent { get; set; }
         public IReadOnlyCollection<GameObject> Components { get; private set; }
+        public CollisionGroup CollisionGroup { get; private set; }
+        public Collider Collider { get; private set; }
 
+        public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
+        public virtual float Height => Collider?.GetBoundingBox().Height ?? 0;
 
         public Vector2 LocalPosition;
         public float LocalRotation;
@@ -81,6 +86,14 @@ namespace HealthyBusiness.Engine
             }
         }
 
+        public virtual void OnCollision(GameObject other)
+        {
+            foreach (var component in Components)
+            {
+                component.OnCollision(other);
+            }
+        }
+
         public Vector2 ToWorldSpace(Vector2 localSpace)
         {
             if (Parent == null)
@@ -110,7 +123,7 @@ namespace HealthyBusiness.Engine
             (Components as List<GameObject>).Add(component);
         }
 
-        public GameObject GetGameObject<T>() where T : GameObject
+        public T GetGameObject<T>() where T : GameObject
         {
             foreach (var component in Components)
             {
@@ -122,15 +135,21 @@ namespace HealthyBusiness.Engine
             return null;
         }
 
-        public IEnumerable<GameObject> GetGameObjects<T>() where T : GameObject
+        public IEnumerable<T> GetGameObjects<T>() where T : GameObject
         {
             foreach (var component in Components)
             {
-                if (component is T)
+                if (component is T typedComponent)
                 {
-                    yield return component;
+                    yield return typedComponent;
                 }
             }
+        }
+
+        protected void SetCollider(Collider collider, CollisionGroup group = CollisionGroup.None)
+        {
+            this.Collider = collider;
+            this.CollisionGroup = group;
         }
     }
 }

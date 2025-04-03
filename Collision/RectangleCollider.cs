@@ -5,26 +5,26 @@ namespace HealthyBusiness.Collision;
 
 public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 {
-    public Rectangle shape;
+    public Rectangle Shape;
 
     public RectangleCollider(Rectangle shape)
     {
-        this.shape = shape;
+        this.Shape = shape;
     }
 
     public override bool Contains(Vector2 loc)
     {
-        return shape.Contains(loc);
+        return Shape.Contains(loc);
     }
 
     public bool Equals(RectangleCollider other)
     {
-        return shape == other.shape;
+        return Shape == other.Shape;
     }
 
     public override Rectangle GetBoundingBox()
     {
-        return shape;
+        return Shape;
     }
 
     public override bool Intersects(CircleCollider other)
@@ -34,7 +34,7 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 
     public override bool Intersects(RectangleCollider other)
     {
-        return shape.Intersects(other.shape);
+        return Shape.Intersects(other.Shape);
     }
 
     public override bool Intersects(LinePieceCollider other)

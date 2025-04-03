@@ -75,10 +75,10 @@ namespace HealthyBusiness.Collision
         /// <returns>true there is any overlap between the Circle and the Rectangle.</returns>
         public override bool Intersects(RectangleCollider other)
         {
-            var rectCenterCompensation = other.shape.Center.ToVector2();
+            var rectCenterCompensation = other.Shape.Center.ToVector2();
 
             // Calculate how much we should move to get the rectangle center to (0,0)
-            var compensatedBottomRight = new Vector2(other.shape.Right, other.shape.Bottom) - rectCenterCompensation;
+            var compensatedBottomRight = new Vector2(other.Shape.Right, other.Shape.Bottom) - rectCenterCompensation;
             // Calculate how much we should move to get the circle center to its correct position when the rectangle center is at (0,0)
             var compensatedCircleCenter = Center - rectCenterCompensation;
 
