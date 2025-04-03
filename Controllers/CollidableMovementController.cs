@@ -8,6 +8,13 @@ namespace HealthyBusiness.Controllers
     public class CollidableMovementController : GameObject
     {
         private float _speed = 0.4f; // Adjusted speed for smoother movement
+        private CollisionGroup _cantGoThrough;
+
+        public CollidableMovementController(CollisionGroup cantGoThrough)
+        {
+            _cantGoThrough = cantGoThrough;
+        }
+
         public void Move(Vector2 direction, GameTime gameTime)
         {
             var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -17,7 +24,7 @@ namespace HealthyBusiness.Controllers
             bool collided = false;
             var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
 
-            foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(CollisionGroup.Solid))
+            foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(_cantGoThrough))
             {
                 if (tempCollider.CheckIntersection(gameObject.Collider))
                 {

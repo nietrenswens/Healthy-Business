@@ -17,7 +17,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             Health = 100;
             MaxHealth = 100;
             LocalScale = 4;
-            Add(new CollidableMovementController());
+            Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
         }
 
