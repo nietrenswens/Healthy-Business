@@ -17,6 +17,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             Health = 100;
             MaxHealth = 100;
             LocalScale = 4;
+            CollisionGroup = CollisionGroup.Player;
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
         }
@@ -30,7 +31,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             _texture = content.Load<Texture2D>("entities\\player");
             var width = (int)(_texture.Width * LocalScale);
             var height = (int)(_texture.Height * LocalScale);
-            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height))), CollisionGroup.Player);
+            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height))));
         }
 
         public override void Update(GameTime gameTime)

@@ -13,13 +13,14 @@ namespace HealthyBusiness.Objects
 
         public Wall(TileLocation tileLocation) : base(tileLocation)
         {
+            CollisionGroup = CollisionGroup.Solid;
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
             _texture = content.Load<Texture2D>("objects\\wall");
-            SetCollider(new RectangleCollider(new Rectangle(LocalPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE))), CollisionGroup.Solid);
+            SetCollider(new RectangleCollider(new Rectangle(LocalPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE))));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

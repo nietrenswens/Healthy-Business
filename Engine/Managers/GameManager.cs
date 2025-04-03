@@ -16,8 +16,11 @@ namespace HealthyBusiness.Engine.Managers
         private static GameManager _gameManager;
 
         private List<GameObject> _gameObjects = new List<GameObject>();
+        private List<GameObject> _collidableGameObjects = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeAdded = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeRemoved = new List<GameObject>();
+
+
         public ContentManager ContentManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
         public Camera CurrentCamera { get; private set; }
@@ -75,6 +78,10 @@ namespace HealthyBusiness.Engine.Managers
             foreach (var gameObject in _gameObjectsToBeRemoved)
             {
                 _gameObjects.Remove(gameObject);
+                if (_collidableGameObjects.Contains(gameObject))
+                {
+                    _collidableGameObjects.Remove(gameObject);
+                }
             }
             _gameObjectsToBeRemoved.Clear();
         }
@@ -101,6 +108,10 @@ namespace HealthyBusiness.Engine.Managers
             foreach (var gameObject in gameObjects)
             {
                 AddGameObject(gameObject);
+                if (gameObject.CollisionGroup != CollisionGroup.None)
+                {
+                    _collidableGameObjects.Add(gameObject);
+                }
             }
         }
 
@@ -112,9 +123,9 @@ namespace HealthyBusiness.Engine.Managers
 
         private void CheckCollision()
         {
-            foreach (var gameObject in _gameObjects)
+            foreach (var gameObject in _collidableGameObjects)
             {
-                foreach (var other in _gameObjects)
+                foreach (var other in _collidableGameObjects)
                 {
                     if (gameObject != other && gameObject.Collider != null && other.Collider != null)
                     {

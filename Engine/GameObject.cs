@@ -11,7 +11,7 @@ namespace HealthyBusiness.Engine
     {
         public GameObject Parent { get; set; }
         public IReadOnlyCollection<GameObject> Components { get; private set; }
-        public CollisionGroup CollisionGroup { get; private set; }
+        public CollisionGroup CollisionGroup { get; protected set; }
         public Collider Collider { get; private set; }
 
         public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
@@ -146,10 +146,9 @@ namespace HealthyBusiness.Engine
             }
         }
 
-        protected void SetCollider(Collider collider, CollisionGroup group = CollisionGroup.None)
+        protected void SetCollider(Collider collider)
         {
             this.Collider = collider;
-            this.CollisionGroup = group;
         }
     }
 }
