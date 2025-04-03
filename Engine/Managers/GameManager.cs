@@ -1,7 +1,7 @@
-﻿using HealthyBusiness.Cameras;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -41,14 +41,11 @@ namespace HealthyBusiness.Engine.Managers
             // Initialize game objects here
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
-            var player = new Player(new Vector2(2, 2));
+            var player = new Player(new TileLocation(4, 4));
             CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
-            AddGameObject(new Wall(new TileLocation(0, 5)));
-            AddGameObject(new Wall(new TileLocation(1, 5)));
-            AddGameObject(new Wall(new TileLocation(2, 5)));
-            AddGameObject(new Floor(new TileLocation(2, 4)));
-            AddGameObject(new Floor(new TileLocation(1, 4)));
+
+            AddGameObjects(LevelBuilder.CreateRectangularLevel(40, 40));
             AddGameObject(player);
         }
 
@@ -98,6 +95,14 @@ namespace HealthyBusiness.Engine.Managers
         {
             gameObject.Load(ContentManager);
             _gameObjectsToBeAdded.Add(gameObject);
+        }
+
+        public void AddGameObjects(IEnumerable<GameObject> gameObjects)
+        {
+            foreach (var gameObject in gameObjects)
+            {
+                AddGameObject(gameObject);
+            }
         }
 
         public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroups)

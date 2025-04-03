@@ -2,6 +2,7 @@
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,9 @@ namespace HealthyBusiness.Objects.Creatures.Player
             LocalScale = 4;
             Add(new PlayerInputController());
         }
+
+        public Player(TileLocation tileLocation) : this(tileLocation.ToVector2())
+        { }
 
         public override void Load(ContentManager content)
         {
