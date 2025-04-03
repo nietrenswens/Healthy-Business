@@ -1,5 +1,4 @@
-﻿
-using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
@@ -12,12 +11,13 @@ namespace HealthyBusiness.Objects.Creatures.Player
     public class Player : Creature
     {
         private Texture2D _texture;
-        private float speed = 0.1f;
+        private float speed = 0.4f; // Adjusted speed for smoother movement
+
         public Player(Vector2 spawnPosition) : base(spawnPosition)
         {
             Health = 100;
             MaxHealth = 100;
-            LocalScale = 1;
+            LocalScale = 4;
             Add(new PlayerInputController());
         }
 
@@ -48,37 +48,29 @@ namespace HealthyBusiness.Objects.Creatures.Player
 
         public void Move(Vector2 direction, GameTime gameTime)
         {
-            var velocity = direction * speed * gameTime.ElapsedGameTime.Milliseconds;
+            var velocity = direction * speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             var rectCollider = (RectangleCollider)Collider;
 
-            var steps = 10;
-            var steppedVelocity = velocity / steps;
+            var destination = WorldPosition + velocity;
+            bool collided = false;
+            var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
 
-            for (int i = 0; i < steps; i++)
+            foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(CollisionGroup.Solid))
             {
-                var destination = WorldPosition + steppedVelocity;
-                bool collided = false;
-                var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
-
-                foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(CollisionGroup.Solid))
+                if (tempCollider.CheckIntersection(gameObject.Collider))
                 {
-                    if (tempCollider.CheckIntersection(gameObject.Collider))
-                    {
-                        collided = true;
-                        break;
-                    }
+                    collided = true;
+                    break;
                 }
-
-                if (!collided)
-                    WorldPosition += steppedVelocity;
             }
+
+            if (!collided)
+                WorldPosition += velocity;
         }
 
         public override void OnCollision(GameObject other)
         {
             base.OnCollision(other);
         }
-
-
     }
 }

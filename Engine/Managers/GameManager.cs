@@ -1,5 +1,6 @@
 ﻿using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
@@ -41,10 +42,13 @@ namespace HealthyBusiness.Engine.Managers
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
             var player = new Player(new Vector2(2, 2));
-            CurrentCamera = new GameObjectCenteredCamera(player, 4f);
+            CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
-            AddGameObject(new Wall(new Point(200, 200)));
-            AddGameObject(new Floor(new Point(216, 200)));
+            AddGameObject(new Wall(new TileLocation(0, 5)));
+            AddGameObject(new Wall(new TileLocation(1, 5)));
+            AddGameObject(new Wall(new TileLocation(2, 5)));
+            AddGameObject(new Floor(new TileLocation(2, 4)));
+            AddGameObject(new Floor(new TileLocation(1, 4)));
             AddGameObject(player);
         }
 
