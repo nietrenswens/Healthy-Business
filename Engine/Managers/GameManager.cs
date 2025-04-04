@@ -48,6 +48,7 @@ namespace HealthyBusiness.Engine.Managers
             CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
             AddGameObjects(LevelBuilder.CreateRectangularLevel(40, 40));
+            AddGameObject(ItemBuilder.CreateColonelFries(new TileLocation(3, 3)));
             AddGameObject(player);
         }
 

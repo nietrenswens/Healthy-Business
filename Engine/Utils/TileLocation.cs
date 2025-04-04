@@ -25,9 +25,22 @@ namespace HealthyBusiness.Engine.Utils
             Y = (int)(realposition.Y / Globals.TILESIZE);
         }
 
+        /// <summary>
+        /// Converts the TileLocation to a Vector2 in real coordinates.
+        /// </summary>
+        /// <returns></returns>
         public Vector2 ToVector2()
         {
             return new Vector2(X * Globals.TILESIZE, Y * Globals.TILESIZE);
+        }
+
+        /// <summary>
+        /// Converts the TileLocation to a Point in real coordinates.
+        /// </summary>
+        /// <returns></returns>
+        public Point ToPoint()
+        {
+            return new Point(X * Globals.TILESIZE, Y * Globals.TILESIZE);
         }
 
         public override string ToString()
