@@ -6,12 +6,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HealthyBusiness.Objects
 {
-    public class Floor : TiledGameObject
+    public class Floor : GameObject
     {
         private Texture2D _texture;
 
-        public Floor(TileLocation tileLocation) : base(tileLocation)
+        public Floor(TileLocation tileLocation)
         {
+            Add(tileLocation);
         }
 
         public override void Load(ContentManager content)
@@ -23,7 +24,7 @@ namespace HealthyBusiness.Objects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(_texture, new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
+            spriteBatch.Draw(_texture, new Rectangle(GetGameObject<TileLocation>().ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
         }
     }
 }

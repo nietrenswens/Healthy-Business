@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace HealthyBusiness.Engine.Utils
 {
-    public class TileLocation
+    public class TileLocation : GameObject
     {
-        public int X { get; }
-        public int Y { get; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         public TileLocation(int x, int y)
         {
@@ -13,16 +14,31 @@ namespace HealthyBusiness.Engine.Utils
             Y = y;
         }
 
-        public TileLocation(Vector2 realposition)
+        public TileLocation(Vector2 realposition) : this((int)realposition.X, (int)realposition.Y)
         {
-            X = (int)(realposition.X / Globals.TILESIZE);
-            Y = (int)(realposition.Y / Globals.TILESIZE);
         }
 
-        public TileLocation(Point realposition)
+        public TileLocation(Point realposition) : this(realposition.ToVector2())
         {
-            X = (int)(realposition.X / Globals.TILESIZE);
-            Y = (int)(realposition.Y / Globals.TILESIZE);
+        }
+
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+            if (Parent != null)
+                Parent.WorldPosition = new Vector2(X * Globals.TILESIZE, Y * Globals.TILESIZE);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (Parent != null)
+            {
+                // Update the TileLocation based on the parent's position
+                var parentPosition = Parent.WorldPosition;
+                X = (int)(parentPosition.X / Globals.TILESIZE);
+                Y = (int)(parentPosition.Y / Globals.TILESIZE);
+            }
         }
 
         /// <summary>
