@@ -26,16 +26,8 @@ namespace HealthyBusiness.Engine
         {
             get
             {
-                var tileLocation = GetGameObject<TileLocation>();
-                if (tileLocation != null)
-                {
-                    return tileLocation;
-                }
-                else
-                {
-                    return new TileLocation(WorldPosition.ToPoint());
-                }
-            };
+                return new TileLocation(WorldPosition.ToPoint());
+            }
         }
 
         public Vector2 WorldPosition

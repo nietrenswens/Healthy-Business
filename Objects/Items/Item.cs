@@ -11,11 +11,10 @@ namespace HealthyBusiness.Objects.Items
         private string _textureName;
         private Texture2D _texture;
 
-        private TileLocation _tileLocation => GetGameObject<TileLocation>();
         public Item(TileLocation tileLocation, string textureName)
         {
             _textureName = textureName;
-            Add(tileLocation);
+            WorldPosition = tileLocation.ToVector2();
         }
 
         public override void Load(ContentManager content)
@@ -27,7 +26,7 @@ namespace HealthyBusiness.Objects.Items
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(_texture, new Rectangle(_tileLocation.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
+            spriteBatch.Draw(_texture, new Rectangle(TileLocation.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
         }
     }
 }

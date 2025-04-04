@@ -14,7 +14,7 @@ namespace HealthyBusiness.Objects
         public Wall(TileLocation tileLocation)
         {
             CollisionGroup = CollisionGroup.Solid;
-            Add(tileLocation);
+            WorldPosition = tileLocation.ToVector2();
         }
 
         public override void Load(ContentManager content)

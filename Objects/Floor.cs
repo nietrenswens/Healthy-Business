@@ -12,7 +12,7 @@ namespace HealthyBusiness.Objects
 
         public Floor(TileLocation tileLocation)
         {
-            Add(tileLocation);
+            WorldPosition = tileLocation.ToVector2();
         }
 
         public override void Load(ContentManager content)
