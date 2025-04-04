@@ -1,5 +1,6 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,22 @@ namespace HealthyBusiness.Engine
         public Vector2 LocalPosition;
         public float LocalRotation;
         public float LocalScale;
+
+        public TileLocation TileLocation
+        {
+            get
+            {
+                var tileLocation = GetGameObject<TileLocation>();
+                if (tileLocation != null)
+                {
+                    return tileLocation;
+                }
+                else
+                {
+                    return new TileLocation(WorldPosition.ToPoint());
+                }
+            };
+        }
 
         public Vector2 WorldPosition
         {

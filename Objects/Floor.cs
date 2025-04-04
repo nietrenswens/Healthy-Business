@@ -24,7 +24,7 @@ namespace HealthyBusiness.Objects
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(_texture, new Rectangle(GetGameObject<TileLocation>().ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
+            spriteBatch.Draw(_texture, new Rectangle(TileLocation.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), Color.White);
         }
     }
 }
