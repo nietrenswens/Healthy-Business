@@ -1,5 +1,8 @@
-﻿using HealthyBusiness.Engine.Utils;
+﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Items;
+using System;
 
 namespace HealthyBusiness.Builders
 {
@@ -13,6 +16,18 @@ namespace HealthyBusiness.Builders
         public static Item CreateColonelFries(TileLocation location)
         {
             return new Item(location, "items\\colonel_fries");
+        }
+
+        public static GameObject CreateRandomItem(TileLocation randomTileLocation)
+        {
+            Func<Item>[] itemCreationMethods = new[]
+            {
+                () => CreateFries(randomTileLocation),
+                () => CreateColonelFries(randomTileLocation)
+            };
+
+            int index = GameManager.GetGameManager().RNG.Next(itemCreationMethods.Length);
+            return itemCreationMethods[index]();
         }
     }
 }

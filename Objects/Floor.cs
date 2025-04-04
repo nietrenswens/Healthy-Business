@@ -13,6 +13,7 @@ namespace HealthyBusiness.Objects
         public Floor(TileLocation tileLocation)
         {
             WorldPosition = tileLocation.ToVector2();
+            CollisionGroup = Collision.CollisionGroup.None | Collision.CollisionGroup.Floor;
         }
 
         public override void Load(ContentManager content)

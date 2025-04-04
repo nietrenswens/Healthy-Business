@@ -6,6 +6,7 @@ namespace HealthyBusiness.Collision;
 public enum CollisionGroup
 {
     None = 0,
-    Player = 1,
-    Solid = 2,
+    Floor = 1,
+    Player = 2,
+    Solid = 4,
 }
