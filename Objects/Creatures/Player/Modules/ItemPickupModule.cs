@@ -44,7 +44,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
 
             var closestItem = items
                 .Where(item => item.Collider!.Intersects((CircleCollider)Collider!))
-                .Select(item => new { Item = item, Distance = (_center - item.WorldPosition).Length() })
+                .Select(item => new { Item = item, Distance = (_center - item.Center).Length() })
                 .OrderBy(x => x.Distance)
                 .FirstOrDefault();
 
