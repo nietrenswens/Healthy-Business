@@ -43,7 +43,7 @@ public class HealthyBusiness : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
         GameManager.GetGameManager().Draw(_spriteBatch);
 
