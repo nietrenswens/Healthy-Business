@@ -9,4 +9,6 @@ public enum CollisionGroup
     Floor = 1,
     Player = 2,
     Solid = 4,
+    Item = 8,
+    PlayerReach = 16,
 }

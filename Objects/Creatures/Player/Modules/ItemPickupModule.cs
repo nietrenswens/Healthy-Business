@@ -1,0 +1,82 @@
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Objects.Items;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
+using System.Linq;
+
+namespace HealthyBusiness.Objects.Creatures.Player.Modules
+{
+    public class ItemPickupModule : GameObject
+    {
+        public Item? SelectedItem { get; private set; }
+
+        private Vector2 _center => ((CircleCollider)Collider!).Center;
+
+        public ItemPickupModule()
+        {
+            CollisionGroup = CollisionGroup.PlayerReach;
+        }
+
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+            if (Parent is not Player)
+                throw new Exception("ItemPickupModule can only be added to a Player.");
+            SetCollider(new CircleCollider(WorldPosition + (new Vector2(Parent.Width, Parent.Height) / 2), Globals.ITEMPICKUPRANGE));
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            ((CircleCollider)Collider!).Center = WorldPosition + (new Vector2(Parent!.Width, Parent.Height) / 2);
+            CheckCollision();
+        }
+
+        private void CheckCollision()
+        {
+            var items = GameManager.GetGameManager()
+                .GetGameObjects(CollisionGroup.Item)
+                .OfType<Item>();
+
+            var closestItem = items
+                .Where(item => item.Collider!.Intersects((CircleCollider)Collider!))
+                .Select(item => new { Item = item, Distance = (_center - item.WorldPosition).Length() })
+                .OrderBy(x => x.Distance)
+                .FirstOrDefault();
+
+            if (closestItem?.Item != SelectedItem)
+            {
+                SelectedItem = closestItem?.Item ?? null;
+                SelectedItemChangedEvent?.Invoke(this, new ItemSelectedEventArgs(SelectedItem));
+                ChangeGUI();
+            }
+        }
+
+        private void ChangeGUI()
+        {
+            if (SelectedItem == null)
+            {
+                Parent!.Remove(Parent.GetGameObject<SelectedItemText>()!);
+            }
+            else
+            {
+                var selectedItemText = new SelectedItemText();
+                Parent!.Add(selectedItemText);
+            }
+        }
+
+        public event EventHandler<ItemSelectedEventArgs>? SelectedItemChangedEvent;
+    }
+
+    public class ItemSelectedEventArgs : EventArgs
+    {
+        public Item? Item { get; }
+        public ItemSelectedEventArgs(Item? item)
+        {
+            Item = item;
+        }
+    }
+}

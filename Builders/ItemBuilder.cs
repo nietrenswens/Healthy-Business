@@ -10,12 +10,12 @@ namespace HealthyBusiness.Builders
     {
         public static Item CreateFries(TileLocation location)
         {
-            return new Item(location, "items\\fries");
+            return new Item(location, "items\\fries", "Fries");
         }
 
         public static Item CreateColonelFries(TileLocation location)
         {
-            return new Item(location, "items\\colonel_fries");
+            return new Item(location, "items\\colonel_fries", "Colonel fries");
         }
 
         public static GameObject CreateRandomItem(TileLocation randomTileLocation)

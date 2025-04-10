@@ -7,8 +7,8 @@ namespace HealthyBusiness;
 
 public class HealthyBusiness : Game
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    private GraphicsDeviceManager _graphics = null!;
+    private SpriteBatch _spriteBatch = null!;
 
     public HealthyBusiness()
     {

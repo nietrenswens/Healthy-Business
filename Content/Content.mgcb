@@ -25,6 +25,20 @@
 /processorParam:TextureFormat=Color
 /build:entities/player.png
 
+#begin fonts/pixelated_elegance/med.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/pixelated_elegance/med.spritefont;fonts/pixelated_elegance/medium.spritefont
+
+#begin fonts/pixelated_elegance/small.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/pixelated_elegance/small.spritefont
+
 #begin items/colonel_fries.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -14,17 +14,20 @@ namespace HealthyBusiness.Engine.Managers
 {
     public class GameManager
     {
-        private static GameManager _gameManager;
+        private static GameManager _gameManager = null!;
 
         private List<GameObject> _gameObjects = new List<GameObject>();
         private List<GameObject> _collidableGameObjects = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeAdded = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeRemoved = new List<GameObject>();
 
+        public List<GUIObject> _guiObjects = new();
+        public List<GUIObject> _guiObjectsToBeAdded = new();
+        public List<GUIObject> _guiObjectsToBeRemoved = new();
 
-        public ContentManager ContentManager { get; private set; }
-        public GraphicsDevice GraphicsDevice { get; private set; }
-        public Camera CurrentCamera { get; private set; }
+        public ContentManager ContentManager { get; private set; } = null!;
+        public GraphicsDevice GraphicsDevice { get; private set; } = null!;
+        public Camera CurrentCamera { get; private set; } = null!;
         public Random RNG { get; private set; }
 
         public static GameManager GetGameManager()
@@ -88,6 +91,24 @@ namespace HealthyBusiness.Engine.Managers
                 }
             }
             _gameObjectsToBeRemoved.Clear();
+
+            // GUI Objects
+            foreach (var guiObject in _guiObjectsToBeAdded)
+            {
+                _guiObjects.Add(guiObject);
+            }
+            _guiObjectsToBeAdded.Clear();
+
+            foreach (var guiObject in _guiObjects)
+            {
+                guiObject.Update(gameTime);
+            }
+
+            foreach (var guiObject in _guiObjectsToBeRemoved)
+            {
+                _guiObjects.Remove(guiObject);
+            }
+            _guiObjectsToBeRemoved.Clear();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -97,6 +118,14 @@ namespace HealthyBusiness.Engine.Managers
             foreach (var gameObject in _gameObjects)
             {
                 gameObject.Draw(spriteBatch);
+            }
+            spriteBatch.End();
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            // Draw GUI objects here
+            foreach (var guiObject in _guiObjects)
+            {
+                guiObject.Draw(spriteBatch);
             }
             spriteBatch.End();
         }
@@ -117,6 +146,25 @@ namespace HealthyBusiness.Engine.Managers
                     _collidableGameObjects.Add(gameObject);
                 }
             }
+        }
+
+        public void AddGUIObject(GUIObject guiObject)
+        {
+            guiObject.Load(ContentManager);
+            _guiObjectsToBeAdded.Add(guiObject);
+        }
+
+        public void AddGUIObjects(IEnumerable<GUIObject> guiObjects)
+        {
+            foreach (var guiObject in guiObjects)
+            {
+                AddGUIObject(guiObject);
+            }
+        }
+
+        public void RemoveGameObject(GameObject gameObject)
+        {
+            _gameObjectsToBeRemoved.Add(gameObject);
         }
 
         public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroups)
