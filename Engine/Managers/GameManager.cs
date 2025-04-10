@@ -54,7 +54,7 @@ namespace HealthyBusiness.Engine.Managers
             CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
             AddGameObjects(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
-            SpawnRandomItems(20);
+            SpawnRandomItems(3);
             AddGameObject(player);
         }
 

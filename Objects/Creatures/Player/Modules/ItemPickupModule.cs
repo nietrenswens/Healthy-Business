@@ -33,6 +33,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
         {
             ((CircleCollider)Collider!).Center = WorldPosition + (new Vector2(Parent!.Width, Parent.Height) / 2);
             CheckCollision();
+            CheckInput();
         }
 
         private void CheckCollision()
@@ -50,8 +51,16 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (closestItem?.Item != SelectedItem)
             {
                 SelectedItem = closestItem?.Item ?? null;
-                SelectedItemChangedEvent?.Invoke(this, new ItemSelectedEventArgs(SelectedItem));
                 ChangeGUI();
+            }
+        }
+
+        private void CheckInput()
+        {
+            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
+            {
+                GameManager.GetGameManager().RemoveGameObject(SelectedItem);
+                SelectedItem = null;
             }
         }
 
@@ -66,17 +75,6 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
                 var selectedItemText = new SelectedItemText();
                 Parent!.Add(selectedItemText);
             }
-        }
-
-        public event EventHandler<ItemSelectedEventArgs>? SelectedItemChangedEvent;
-    }
-
-    public class ItemSelectedEventArgs : EventArgs
-    {
-        public Item? Item { get; }
-        public ItemSelectedEventArgs(Item? item)
-        {
-            Item = item;
         }
     }
 }
