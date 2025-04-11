@@ -9,7 +9,7 @@ namespace HealthyBusiness.Objects
 {
     public class Wall : GameObject
     {
-        private Texture2D _texture;
+        private Texture2D _texture = null!;
 
         public Wall(TileLocation tileLocation)
         {

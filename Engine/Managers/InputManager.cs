@@ -5,7 +5,7 @@ namespace HealthyBusiness.Engine.Managers
 {
     public class InputManager
     {
-        private static InputManager _inputManager;
+        private static InputManager _inputManager = null!;
 
         public KeyboardState LastKeyboardState { get; private set; }
         public KeyboardState CurrentKeyboardState { get; private set; }

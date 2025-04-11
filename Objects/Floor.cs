@@ -8,7 +8,7 @@ namespace HealthyBusiness.Objects
 {
     public class Floor : GameObject
     {
-        private Texture2D _texture;
+        private Texture2D _texture = null!;
 
         public Floor(TileLocation tileLocation)
         {

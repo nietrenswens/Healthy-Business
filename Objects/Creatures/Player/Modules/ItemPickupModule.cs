@@ -16,11 +16,6 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
 
         private Vector2 _center => ((CircleCollider)Collider!).Center;
 
-        public ItemPickupModule()
-        {
-            CollisionGroup = CollisionGroup.PlayerReach;
-        }
-
         public override void Load(ContentManager content)
         {
             base.Load(content);
