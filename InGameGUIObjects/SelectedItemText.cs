@@ -25,7 +25,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var selectedItem = ((Player)Parent!).GetGameObject<ItemPickupModule>()!.SelectedItem;
             if (selectedItem == null)
                 return;
-            WorldPosition = selectedItem.Center + new Vector2(0, 20);
+            WorldPosition = selectedItem.Center;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
