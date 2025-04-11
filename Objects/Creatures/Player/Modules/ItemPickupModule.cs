@@ -21,7 +21,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             base.Load(content);
             if (Parent is not Player)
                 throw new Exception("ItemPickupModule can only be added to a Player.");
-            SetCollider(new CircleCollider(WorldPosition + (new Vector2(Parent.Width, Parent.Height) / 2), Globals.ITEMPICKUPRANGE));
+            SetCollider(new CircleCollider(Parent.Center, Globals.ITEMPICKUPRANGE));
         }
 
         public override void Update(GameTime gameTime)

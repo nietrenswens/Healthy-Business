@@ -21,13 +21,13 @@ namespace HealthyBusiness.Objects
         {
             base.Load(content);
             _texture = content.Load<Texture2D>("objects\\wall");
-            SetCollider(new RectangleCollider(new Rectangle(TileLocation.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE))));
+            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE))));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(_texture, new Rectangle(TileLocation.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), new Rectangle(0, 0, _texture.Width, _texture.Height), Color.White);
+            spriteBatch.Draw(_texture, new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)), new Rectangle(0, 0, _texture.Width, _texture.Height), Color.White);
         }
     }
 }
