@@ -17,6 +17,17 @@ namespace HealthyBusiness.Engine
 
         public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
         public virtual float Height => Collider?.GetBoundingBox().Height ?? 0;
+        public Vector2 Center
+        {
+            get
+            {
+                if (Width == 0 || Height == 0)
+                {
+                    return Vector2.Zero;
+                }
+                return new Vector2(WorldPosition.X + Width / 2, WorldPosition.Y + Height / 2);
+            }
+        }
 
         public Vector2 LocalPosition;
         public float LocalRotation;

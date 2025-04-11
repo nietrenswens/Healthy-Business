@@ -11,8 +11,6 @@ namespace HealthyBusiness.Objects.Items
     {
         public string Name { get; private set; }
 
-        public Vector2 Center => WorldPosition + new Vector2(Width, Height) / 2;
-
         private string _textureName;
         private Texture2D? _texture;
 

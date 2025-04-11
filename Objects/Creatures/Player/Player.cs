@@ -13,8 +13,6 @@ namespace HealthyBusiness.Objects.Creatures.Player
     {
         private Texture2D _texture = null!;
 
-        private Vector2 Center => WorldPosition + new Vector2(Width, Height) / 2;
-
         public Player(Vector2 spawnPosition) : base(spawnPosition)
         {
             Health = 100;

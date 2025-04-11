@@ -22,9 +22,7 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public override void Update(GameTime gameTime)
         {
-            if (Parent is not Player player)
-                throw new Exception("SelectedItemText can only be added to a Player.");
-            var selectedItem = player.GetGameObject<ItemPickupModule>()!.SelectedItem;
+            var selectedItem = ((Player)Parent!).GetGameObject<ItemPickupModule>()!.SelectedItem;
             if (selectedItem == null)
                 return;
             WorldPosition = selectedItem.Center + new Vector2(0, 20);
@@ -32,9 +30,7 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (Parent is not Player player)
-                throw new Exception("SelectedItemText can only be added to a Player.");
-            var selectedItem = player.GetGameObject<ItemPickupModule>()!.SelectedItem;
+            var selectedItem = ((Player)Parent!).GetGameObject<ItemPickupModule>()!.SelectedItem;
             if (selectedItem == null)
                 return;
 

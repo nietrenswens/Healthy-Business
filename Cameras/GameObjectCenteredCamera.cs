@@ -22,11 +22,10 @@ namespace HealthyBusiness.Cameras
             var screenWidth = Globals.SCREENWIDTH;
             var screenHeight = Globals.SCREENHEIGHT;
 
-            var targetX = Target.WorldPosition.X + (Target.Width / 2);
-            var targetY = Target.WorldPosition.Y + (Target.Height / 2);
+            var target = Target.Center;
 
             // Interpolate the camera position
-            _position = Vector2.Lerp(_position, new Vector2(targetX, targetY), _interpolationSpeed);
+            _position = Vector2.Lerp(_position, target, _interpolationSpeed);
 
             return Matrix.CreateTranslation(-_position.X, -_position.Y, 0) * Matrix.CreateScale(Zoom) * Matrix.CreateTranslation(screenWidth / 2, screenHeight / 2, 0);
         }
