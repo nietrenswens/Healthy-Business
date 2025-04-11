@@ -24,7 +24,8 @@ namespace HealthyBusiness.Engine.Managers
         public ContentManager ContentManager { get; private set; } = null!;
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Camera CurrentCamera { get; private set; } = null!;
-        public Random RNG { get; private set; }
+        public Random RNG { get; private set; } = null!;
+        public Level CurrentLevel { get; private set; } = null!;
 
         public static GameManager GetGameManager()
         {
