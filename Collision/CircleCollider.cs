@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace HealthyBusiness.Collision
 {
@@ -120,7 +119,7 @@ namespace HealthyBusiness.Collision
             return new Rectangle((int)(X - Radius), (int)(Y - Radius), (int)(2 * Radius), (int)(2 * Radius));
         }
 
-        public bool Equals([AllowNull] CircleCollider other)
+        public bool Equals(CircleCollider? other)
         {
             return other != null && other.X == X && other.Y == Y && other.Radius == Radius;
         }

@@ -170,9 +170,9 @@ namespace HealthyBusiness.Collision
             return StandardA * coordinates.X + StandardB * coordinates.Y + StandardC == 0;
         }
 
-        public bool Equals(LinePieceCollider other)
+        public bool Equals(LinePieceCollider? other)
         {
-            return other.Start == this.Start && other.End == this.End;
+            return other != null && other.Start == this.Start && other.End == this.End;
         }
 
         /// <summary>

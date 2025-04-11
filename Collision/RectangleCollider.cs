@@ -17,9 +17,9 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
         return Shape.Contains(loc);
     }
 
-    public bool Equals(RectangleCollider other)
+    public bool Equals(RectangleCollider? other)
     {
-        return Shape == other.Shape;
+        return other != null && Shape == other.Shape;
     }
 
     public override Rectangle GetBoundingBox()
