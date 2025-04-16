@@ -29,7 +29,7 @@ namespace HealthyBusiness.Controllers
             bool collided = false;
             var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
 
-            foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(_cantGoThrough))
+            foreach (var gameObject in GameManager.GetGameManager().CurrentLevel.GetGameObjects(_cantGoThrough))
             {
                 if (gameObject.Collider == null)
                     continue;

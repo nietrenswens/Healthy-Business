@@ -8,33 +8,36 @@ namespace HealthyBusiness.Engine.Managers
 {
     public class AttributeManager<T> where T : IGameAttribute
     {
-        public List<T> Attributes { get; private set; } = new List<T>();
-
+        private List<T> _attributes = new List<T>();
         private List<T> _attributesToBeAdded = new List<T>();
         private List<T> _attributesToBeRemoved = new List<T>();
+
+        public IReadOnlyList<T> Attributes => _attributes.AsReadOnly();
+        public IReadOnlyList<T> AttributesToBeAdded => _attributesToBeAdded.AsReadOnly();
+        public IReadOnlyList<T> AttributesToBeRemoved => _attributesToBeRemoved.AsReadOnly();
 
         public void Update(GameTime gameTime)
         {
             foreach (var attribute in _attributesToBeAdded)
             {
                 attribute.Load(GameManager.GetGameManager().ContentManager);
-                Attributes.Add(attribute);
+                _attributes.Add(attribute);
             }
             _attributesToBeAdded.Clear();
-            foreach (var attribute in Attributes)
+            foreach (var attribute in _attributes)
             {
                 attribute.Update(gameTime);
             }
             foreach (var attribute in _attributesToBeRemoved)
             {
-                Attributes.Remove(attribute);
+                _attributes.Remove(attribute);
             }
             _attributesToBeRemoved.Clear();
         }
 
         public void Load(ContentManager content)
         {
-            foreach (var attribute in Attributes)
+            foreach (var attribute in _attributes)
             {
                 attribute.Load(content);
             }
@@ -42,16 +45,16 @@ namespace HealthyBusiness.Engine.Managers
 
         public void Unload()
         {
-            foreach (var attribute in Attributes)
+            foreach (var attribute in _attributes)
             {
                 attribute.Unload();
             }
-            Attributes.Clear();
+            _attributes.Clear();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var attribute in Attributes)
+            foreach (var attribute in _attributes)
             {
                 attribute.Draw(spriteBatch);
             }
@@ -66,6 +69,13 @@ namespace HealthyBusiness.Engine.Managers
         {
             _attributesToBeAdded.AddRange(attributes);
         }
+
+        public void Remove(T attribute)
+        {
+            _attributesToBeRemoved.Add(attribute);
+        }
+
+
 
     }
 }

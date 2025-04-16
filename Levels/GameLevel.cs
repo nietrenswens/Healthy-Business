@@ -1,8 +1,109 @@
-﻿using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Cameras;
+using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.Player;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthyBusiness.Levels
 {
     public class GameLevel : Level
     {
+        private List<GameObject> _collidableGameObjects { get; set; }
+
+        public GameLevel()
+        {
+            _collidableGameObjects = new List<GameObject>();
+        }
+
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+            var player = new Player(new TileLocation(4, 4));
+            SetCamera(new GameObjectCenteredCamera(player, 1f));
+            AddGameObject(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
+            AddGameObject(player);
+            SpawnRandomItems(5);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            CheckCollision();
+            base.Update(gameTime);
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
+
+        public override void AddGameObject(GameObject gameObject)
+        {
+            base.AddGameObject(gameObject);
+            if (!gameObject.CollisionGroup.HasFlag(CollisionGroup.None))
+            {
+                _collidableGameObjects.Add(gameObject);
+            }
+        }
+
+        public override void AddGameObject(GameObject[] gameObjects)
+        {
+            foreach (var gameObject in gameObjects)
+            {
+                this.AddGameObject(gameObject);
+            }
+        }
+
+        public override void RemoveGameObject(GameObject gameObject)
+        {
+            base.RemoveGameObject(gameObject);
+            if (_collidableGameObjects.Contains(gameObject))
+            {
+                _collidableGameObjects.Remove(gameObject);
+            }
+        }
+
+        private void CheckCollision()
+        {
+            foreach (var gameObject in _collidableGameObjects)
+            {
+                foreach (var other in _collidableGameObjects)
+                {
+                    if (gameObject != other && gameObject.Collider != null && other.Collider != null)
+                    {
+                        if (gameObject.Collider.CheckIntersection(other.Collider))
+                        {
+                            gameObject.OnCollision(other);
+                            other.OnCollision(gameObject);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SpawnRandomItems(int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                var currentAndPendingGameObjects = GameObjects.ToList().Concat(GameObjectsToBeAdded);
+                var floorTiles = currentAndPendingGameObjects.Where(go => go.CollisionGroup.HasFlag(CollisionGroup.Floor)).ToList();
+                if (floorTiles.Count == 0)
+                {
+                    break;
+                }
+                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                var item = ItemBuilder.CreateRandomItem(randomTileLocation);
+                AddGameObject(item);
+            }
+        }
     }
 }
