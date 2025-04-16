@@ -92,8 +92,8 @@ namespace HealthyBusiness.Levels
         {
             for (int i = 0; i < number; i++)
             {
-                var currentAndPendingGameObjects = GameObjects.ToList().Concat(GameObjectsToBeAdded);
-                var floorTiles = currentAndPendingGameObjects.Where(go => go.CollisionGroup.HasFlag(CollisionGroup.Floor)).ToList();
+                var floorTiles = GameObjects.ToList().Concat(GameObjectsToBeAdded)
+                    .Where(go => go.CollisionGroup.HasFlag(CollisionGroup.Floor)).ToList();
                 if (floorTiles.Count == 0)
                 {
                     break;

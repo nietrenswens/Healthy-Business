@@ -34,7 +34,7 @@ namespace HealthyBusiness.Engine.Managers
             // Initialize game objects here
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
-            CurrentLevel = new GameLevel();
+            CurrentLevel = new MainMenu();
         }
 
         public void Load(ContentManager content)
