@@ -4,8 +4,8 @@ namespace HealthyBusiness.Engine.Utils
 {
     public class TileLocation
     {
-        public int X { get; }
-        public int Y { get; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         public TileLocation(int x, int y)
         {
@@ -13,21 +13,30 @@ namespace HealthyBusiness.Engine.Utils
             Y = y;
         }
 
-        public TileLocation(Vector2 realposition)
+        public TileLocation(Vector2 realposition) : this((int)realposition.X / Globals.TILESIZE, (int)realposition.Y / Globals.TILESIZE)
         {
-            X = (int)(realposition.X / Globals.TILESIZE);
-            Y = (int)(realposition.Y / Globals.TILESIZE);
         }
 
-        public TileLocation(Point realposition)
+        public TileLocation(Point realposition) : this(realposition.ToVector2())
         {
-            X = (int)(realposition.X / Globals.TILESIZE);
-            Y = (int)(realposition.Y / Globals.TILESIZE);
         }
 
+        /// <summary>
+        /// Converts the TileLocation to a Vector2 in real coordinates.
+        /// </summary>
+        /// <returns></returns>
         public Vector2 ToVector2()
         {
             return new Vector2(X * Globals.TILESIZE, Y * Globals.TILESIZE);
+        }
+
+        /// <summary>
+        /// Converts the TileLocation to a Point in real coordinates.
+        /// </summary>
+        /// <returns></returns>
+        public Point ToPoint()
+        {
+            return new Point(X * Globals.TILESIZE, Y * Globals.TILESIZE);
         }
 
         public override string ToString()

@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HealthyBusiness.Objects
 {
-    public class Floor : TiledGameObject
+    public class Floor : GameObject
     {
-        private Texture2D _texture;
+        private Texture2D _texture = null!;
 
-        public Floor(TileLocation tileLocation) : base(tileLocation)
+        public Floor(TileLocation tileLocation)
         {
+            WorldPosition = tileLocation.ToVector2();
+            CollisionGroup = Collision.CollisionGroup.None | Collision.CollisionGroup.Floor;
         }
 
         public override void Load(ContentManager content)

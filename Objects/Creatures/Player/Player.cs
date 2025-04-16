@@ -2,6 +2,7 @@
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
 {
     public class Player : Creature
     {
-        private Texture2D _texture;
+        private Texture2D _texture = null!;
 
         public Player(Vector2 spawnPosition) : base(spawnPosition)
         {
@@ -20,6 +21,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             CollisionGroup = CollisionGroup.Player;
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
+            Add(new ItemPickupModule());
         }
 
         public Player(TileLocation tileLocation) : this(tileLocation.ToVector2())
@@ -48,6 +50,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             var width = (int)(_texture.Width * LocalScale);
             var height = (int)(_texture.Height * LocalScale);
             spriteBatch.Draw(_texture, new Rectangle(WorldPosition.ToPoint(), new Point(width, height)), Color.White);
+            base.Draw(spriteBatch);
         }
 
         public override void OnCollision(GameObject other)

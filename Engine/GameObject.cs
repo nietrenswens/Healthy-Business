@@ -1,5 +1,6 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,17 +10,39 @@ namespace HealthyBusiness.Engine
 {
     public abstract class GameObject
     {
-        public GameObject Parent { get; set; }
-        public IReadOnlyCollection<GameObject> Components { get; private set; }
+        public GameObject? Parent { get; set; }
+        public Collider? Collider { get; private set; }
+        public List<GameObject> Components { get; private set; }
         public CollisionGroup CollisionGroup { get; protected set; }
-        public Collider Collider { get; private set; }
 
         public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
         public virtual float Height => Collider?.GetBoundingBox().Height ?? 0;
+        public Vector2 Center
+        {
+            get
+            {
+                if (Width == 0 || Height == 0)
+                {
+                    return Vector2.Zero;
+                }
+                return new Vector2(WorldPosition.X + Width / 2, WorldPosition.Y + Height / 2);
+            }
+        }
 
         public Vector2 LocalPosition;
         public float LocalRotation;
         public float LocalScale;
+
+        private List<GameObject> _componentsToBeAdded = new List<GameObject>();
+        private List<GameObject> _componentsToBeRemoved = new List<GameObject>();
+
+        public TileLocation TileLocation
+        {
+            get
+            {
+                return new TileLocation(WorldPosition.ToPoint());
+            }
+        }
 
         public Vector2 WorldPosition
         {
@@ -64,10 +87,22 @@ namespace HealthyBusiness.Engine
 
         public virtual void Update(GameTime gameTime)
         {
+            foreach (var component in _componentsToBeAdded)
+            {
+                Components.Add(component);
+            }
+            _componentsToBeAdded.Clear();
+
             foreach (var component in Components)
             {
                 component.Update(gameTime);
             }
+
+            foreach (var component in _componentsToBeRemoved)
+            {
+                Components.Remove(component);
+            }
+            _componentsToBeRemoved.Clear();
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
@@ -88,10 +123,8 @@ namespace HealthyBusiness.Engine
 
         public virtual void OnCollision(GameObject other)
         {
-            foreach (var component in Components)
-            {
-                component.OnCollision(other);
-            }
+            // I do not think that we should pass collision events to children.
+            // Children might have own collision
         }
 
         public Vector2 ToWorldSpace(Vector2 localSpace)
@@ -120,10 +153,15 @@ namespace HealthyBusiness.Engine
         {
             component.Parent = this;
             component.Load(GameManager.GetGameManager().ContentManager);
-            (Components as List<GameObject>).Add(component);
+            _componentsToBeAdded.Add(component);
         }
 
-        public T GetGameObject<T>() where T : GameObject
+        public void Remove(GameObject component)
+        {
+            _componentsToBeRemoved.Add(component);
+        }
+
+        public T? GetGameObject<T>() where T : GameObject
         {
             foreach (var component in Components)
             {

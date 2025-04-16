@@ -5,7 +5,7 @@ namespace HealthyBusiness.Engine.Managers
 {
     public class InputManager
     {
-        private static InputManager _inputManager;
+        private static InputManager _inputManager = null!;
 
         public KeyboardState LastKeyboardState { get; private set; }
         public KeyboardState CurrentKeyboardState { get; private set; }
@@ -40,6 +40,11 @@ namespace HealthyBusiness.Engine.Managers
         public bool IsKeyDown(Keys key)
         {
             return CurrentKeyboardState.IsKeyDown(key);
+        }
+
+        public bool IsKeyPressed(Keys key)
+        {
+            return CurrentKeyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyUp(key);
         }
 
         public bool IsKeyUp(Keys key)

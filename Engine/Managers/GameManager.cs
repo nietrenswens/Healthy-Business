@@ -6,6 +6,7 @@ using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,17 +14,17 @@ namespace HealthyBusiness.Engine.Managers
 {
     public class GameManager
     {
-        private static GameManager _gameManager;
+        private static GameManager _gameManager = null!;
 
         private List<GameObject> _gameObjects = new List<GameObject>();
         private List<GameObject> _collidableGameObjects = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeAdded = new List<GameObject>();
         private List<GameObject> _gameObjectsToBeRemoved = new List<GameObject>();
 
-
-        public ContentManager ContentManager { get; private set; }
-        public GraphicsDevice GraphicsDevice { get; private set; }
-        public Camera CurrentCamera { get; private set; }
+        public ContentManager ContentManager { get; private set; } = null!;
+        public GraphicsDevice GraphicsDevice { get; private set; } = null!;
+        public Camera CurrentCamera { get; private set; } = null!;
+        public Random RNG { get; private set; }
 
         public static GameManager GetGameManager()
         {
@@ -37,6 +38,7 @@ namespace HealthyBusiness.Engine.Managers
         private GameManager()
         {
             _gameObjects = new();
+            RNG = new();
         }
 
         public void Initialize(ContentManager contentManager, GraphicsDevice graphicsDevice)
@@ -47,7 +49,8 @@ namespace HealthyBusiness.Engine.Managers
             var player = new Player(new TileLocation(4, 4));
             CurrentCamera = new GameObjectCenteredCamera(player, 1f);
 
-            AddGameObjects(LevelBuilder.CreateRectangularLevel(40, 40));
+            AddGameObjects(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
+            SpawnRandomItems(3);
             AddGameObject(player);
         }
 
@@ -108,17 +111,40 @@ namespace HealthyBusiness.Engine.Managers
             foreach (var gameObject in gameObjects)
             {
                 AddGameObject(gameObject);
-                if (gameObject.CollisionGroup != CollisionGroup.None)
+                if (!gameObject.CollisionGroup.HasFlag(CollisionGroup.None))
                 {
                     _collidableGameObjects.Add(gameObject);
                 }
             }
         }
 
+        public void RemoveGameObject(GameObject gameObject)
+        {
+            _gameObjectsToBeRemoved.Add(gameObject);
+        }
+
         public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroups)
         {
             var objects = _gameObjects.Where(_object => _object.CollisionGroup == collisionGroups);
             return objects;
+        }
+
+        private void SpawnRandomItems(int number)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                var currentAndPendingGameObjects = _gameObjects.Concat(_gameObjectsToBeAdded).ToList();
+                var floorTiles = currentAndPendingGameObjects.Where(go => go.CollisionGroup.HasFlag(CollisionGroup.Floor)).ToList();
+                if (floorTiles.Count == 0)
+                {
+                    break;
+                }
+                var randomTileIndex = RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                var item = ItemBuilder.CreateRandomItem(randomTileLocation);
+                AddGameObject(item);
+            }
         }
 
         private void CheckCollision()

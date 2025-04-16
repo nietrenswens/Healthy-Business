@@ -17,6 +17,11 @@ namespace HealthyBusiness.Controllers
 
         public void Move(Vector2 direction, GameTime gameTime)
         {
+            if (Parent == null || Parent.Collider == null)
+                return;
+
+
+
             var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             var rectCollider = (RectangleCollider)Parent.Collider;
 
@@ -26,6 +31,9 @@ namespace HealthyBusiness.Controllers
 
             foreach (var gameObject in GameManager.GetGameManager().GetGameObjects(_cantGoThrough))
             {
+                if (gameObject.Collider == null)
+                    continue;
+
                 if (tempCollider.CheckIntersection(gameObject.Collider))
                 {
                     collided = true;

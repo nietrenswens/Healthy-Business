@@ -7,8 +7,8 @@ namespace HealthyBusiness;
 
 public class HealthyBusiness : Game
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    private GraphicsDeviceManager _graphics = null!;
+    private SpriteBatch _spriteBatch = null!;
 
     public HealthyBusiness()
     {
@@ -43,7 +43,7 @@ public class HealthyBusiness : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
         GameManager.GetGameManager().Draw(_spriteBatch);
 

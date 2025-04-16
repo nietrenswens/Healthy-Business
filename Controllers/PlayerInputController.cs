@@ -24,7 +24,7 @@ namespace HealthyBusiness.Controllers
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Player player = (Player)Parent;
+            Player player = GetPlayer();
             var direction = Vector2.Zero;
 
             if (_inputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
@@ -48,11 +48,18 @@ namespace HealthyBusiness.Controllers
             {
                 direction.Normalize();
             }
-            Player p = (Player)Parent;
+            ;
             if (direction != Vector2.Zero)
             {
-                p.GetGameObject<CollidableMovementController>().Move(direction, gameTime);
+                player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
             }
+        }
+
+        private Player GetPlayer()
+        {
+            if (Parent == null && Parent is not Player)
+                throw new Exception("Parent of PlayerInputController must be Player");
+            return (Player)Parent;
         }
     }
 }

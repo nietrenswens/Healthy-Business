@@ -6,9 +6,9 @@ namespace HealthyBusiness.Builders
 {
     public static class LevelBuilder
     {
-        public static TiledGameObject[] CreateRectangularLevel(int width, int height, int offsetX = 0, int offsetY = 0)
+        public static GameObject[] CreateRectangularLevel(int width, int height, int offsetX = 0, int offsetY = 0)
         {
-            var level = new TiledGameObject[width * height];
+            var level = new GameObject[width * height];
             var offset = new TileLocation(offsetX, offsetY);
             for (int x = 0; x < width; x++)
             {
