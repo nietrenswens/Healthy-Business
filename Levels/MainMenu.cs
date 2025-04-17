@@ -15,6 +15,8 @@ namespace HealthyBusiness.Levels
             base.Load(content);
             SetCamera(new DefaultCamera());
             AddGameObject(new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
+            AddGameObject(new TextedButton("Klik op mij", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center)));
+            AddGameObject(new TextedButton("Klik niet op mij", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center)));
         }
     }
 }
