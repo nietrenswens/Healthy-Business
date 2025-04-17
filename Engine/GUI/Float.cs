@@ -1,13 +1,13 @@
 ﻿namespace HealthyBusiness.Engine.GUI
 {
-    public enum HorizontalFloat
+    public enum HorizontalAlign
     {
         Left,
         Center,
         Right
     }
 
-    public enum VerticalFloat
+    public enum VerticalAlign
     {
         Top,
         Center,
