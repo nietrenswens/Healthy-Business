@@ -16,6 +16,7 @@ namespace HealthyBusiness.Levels
         {
             base.Load(content);
             SetCamera(new DefaultCamera());
+            AddGameObject(new ColoredBackground(Color.LightCoral));
             AddGameObject(new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
 
             var playButton = new TextedButton("Play", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
