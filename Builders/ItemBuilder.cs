@@ -18,12 +18,30 @@ namespace HealthyBusiness.Builders
             return new Item(location, "items\\colonel_fries", "Colonel fries");
         }
 
+        public static Item CreateBurger(TileLocation location)
+        {
+            return new Item(location, "items\\burger", "Burger");
+        }
+
+        public static Item CreateDinoNugget1(TileLocation location)
+        {
+            return new Item(location, "items\\dino1", "Dino nugget");
+        }
+
+        public static Item CreateDinoNugget2(TileLocation location)
+        {
+            return new Item(location, "items\\dino2", "Dino nugget");
+        }
+
         public static GameObject CreateRandomItem(TileLocation randomTileLocation)
         {
             Func<Item>[] itemCreationMethods = new[]
             {
                 () => CreateFries(randomTileLocation),
-                () => CreateColonelFries(randomTileLocation)
+                () => CreateColonelFries(randomTileLocation),
+                () => CreateBurger(randomTileLocation),
+                () => CreateDinoNugget1(randomTileLocation),
+                () => CreateDinoNugget2(randomTileLocation)
             };
 
             int index = GameManager.GetGameManager().RNG.Next(itemCreationMethods.Length);
