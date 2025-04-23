@@ -10,15 +10,17 @@ namespace HealthyBusiness.Engine
 {
     public abstract class Level
     {
+        private AttributeManager<GameObject> _gameObjectsManager;
+
         public Camera CurrentCamera { get; private set; } = null!;
         public IReadOnlyList<GameObject> GameObjects => _gameObjectsManager.Attributes;
         public IReadOnlyList<GameObject> GameObjectsToBeAdded => _gameObjectsManager.AttributesToBeAdded;
-        private AttributeManager<GameObject> _gameObjectsManager { get; set; }
 
         public Level()
         {
             _gameObjectsManager = new AttributeManager<GameObject>();
         }
+
         /// <summary>
         /// Used for updating the level.
         /// </summary>
@@ -60,31 +62,52 @@ namespace HealthyBusiness.Engine
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// Adds a game object to the level.
+        /// </summary>
+        /// <param name="gameObject"></param>
         public virtual void AddGameObject(GameObject gameObject)
         {
             _gameObjectsManager.Add(gameObject);
         }
 
+        /// <summary>
+        /// Adds gameobjects to the level.
+        /// </summary>
+        /// <param name="gameObjects"></param>
         public virtual void AddGameObject(GameObject[] gameObjects)
         {
             _gameObjectsManager.Add(gameObjects);
         }
 
+        /// <summary>
+        /// Removes a game object from the level.
+        /// </summary>
+        /// <param name="gameObject"></param>
         public virtual void RemoveGameObject(GameObject gameObject)
         {
             _gameObjectsManager.Remove(gameObject);
         }
 
+        /// <summary>
+        /// Sets the camera for the level.
+        /// </summary>
+        /// <param name="camera"></param>
         public void SetCamera(Camera camera)
         {
             CurrentCamera = camera;
         }
 
-        public IEnumerable<GameObject> GetGameObjects(CollisionGroup cg)
+        /// <summary>
+        /// Returns all game objects in the level that are in the specified collision group.
+        /// </summary>
+        /// <param name="collisionGroup"></param>
+        /// <returns></returns>
+        public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroup)
         {
             foreach (var gameObject in GameObjects)
             {
-                if (gameObject.CollisionGroup.HasFlag(cg))
+                if (gameObject.CollisionGroup.HasFlag(collisionGroup))
                 {
                     yield return gameObject;
                 }

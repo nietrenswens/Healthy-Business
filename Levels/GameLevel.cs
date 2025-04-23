@@ -28,8 +28,8 @@ namespace HealthyBusiness.Levels
             var player = new Player(new TileLocation(4, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
-            AddGameObject(player);
             SpawnRandomItems(5);
+            AddGameObject(player);
         }
 
         public override void Update(GameTime gameTime)
