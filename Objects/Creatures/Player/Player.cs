@@ -2,6 +2,7 @@
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,15 +14,19 @@ namespace HealthyBusiness.Objects.Creatures.Player
     {
         private Texture2D _texture = null!;
 
+        public Hotbar hotbar;
+
         public Player(Vector2 spawnPosition) : base(spawnPosition)
         {
             Health = 100;
             MaxHealth = 100;
             LocalScale = 4;
             CollisionGroup = CollisionGroup.Player;
+            hotbar = new Hotbar();
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
             Add(new ItemPickupModule());
+            Add(hotbar);
         }
 
         public Player(TileLocation tileLocation) : this(tileLocation.ToVector2())

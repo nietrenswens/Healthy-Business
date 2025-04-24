@@ -27,7 +27,6 @@ namespace HealthyBusiness.Levels
         {
             base.Load(content);
             var player = new Player(new TileLocation(4, 4));
-            var hotbar = new Hotbar();
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
             SpawnRandomItems(5);

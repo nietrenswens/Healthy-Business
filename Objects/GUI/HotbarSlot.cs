@@ -41,23 +41,27 @@ namespace HealthyBusiness.Objects.GUI
             base.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)
+        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot, Item? item)
         {
             base.Draw(spriteBatch);
 
             // TODO: kijken hoe we de X en Y dynamisch kunnen maken zodat het beneden komt te staan
+            // TODO: item texture moet gecentreerd gedrawd worden in de slot
+
+            // in order to make the spacing even, we need to calculate the position of the previous slot
+            int margin = 20;
+
             if (previousSlot != null)
             {
-                int margin = 20;
                 float x = previousSlot.LocalPosition.X + 100 + margin;
 
                 this.LocalPosition = new Vector2(x, this.LocalPosition.Y);
             } else
             {
-                this.LocalPosition = new Vector2(500, 0);
+                this.LocalPosition = new Vector2(Globals.MAPWIDTH, 0);
             }
 
-            spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, 100, 100), Color.Gray);
+            spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, 100, 100), Color.LightGray);
 
         }
     }
