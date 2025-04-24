@@ -21,7 +21,7 @@ public class HealthyBusiness : Game
 
     protected override void Initialize()
     {
-        GameManager.GetGameManager().Initialize(Content, GraphicsDevice);
+        GameManager.GetGameManager().Initialize(Content, GraphicsDevice, this);
         base.Initialize();
     }
 

@@ -1,4 +1,5 @@
 ﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 
 namespace HealthyBusiness.Engine
 {
-    public abstract class GameObject
+    public abstract class GameObject : IGameAttribute
     {
         public GameObject? Parent { get; set; }
         public Collider? Collider { get; private set; }
@@ -171,6 +172,10 @@ namespace HealthyBusiness.Engine
                 }
             }
             return null;
+        }
+
+        public virtual void Unload()
+        {
         }
 
         public IEnumerable<T> GetGameObjects<T>() where T : GameObject
