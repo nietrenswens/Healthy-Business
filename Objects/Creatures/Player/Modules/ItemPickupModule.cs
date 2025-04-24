@@ -1,4 +1,4 @@
-﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;

@@ -38,7 +38,7 @@ namespace HealthyBusiness.Objects.GUI
             
         }
 
-        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)
+        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot, Item? item)
         {
             base.Draw(spriteBatch);
 
