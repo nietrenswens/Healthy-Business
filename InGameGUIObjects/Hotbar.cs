@@ -54,6 +54,11 @@ namespace HealthyBusiness.InGameGUIObjects
                 int previousIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
                 HotbarSlots[previousIndex].isSelected = true;
             }
+
+            //System.Diagnostics.Debug.WriteLine(createdHotbarSlots.Count);
+
+            // draw the hotbar container // TODO: niet nodig waarschijnlijk
+            //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
         }
 
         public bool AddItem(Item item)
