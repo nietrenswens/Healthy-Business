@@ -2,8 +2,8 @@
 {
     public static class Globals
     {
-        public const int SCREENWIDTH = 1920;
-        public const int SCREENHEIGHT = 1080;
+        public const int SCREENWIDTH = 1280;
+        public const int SCREENHEIGHT = 720;
         public const int TILESIZE = 64;
 
         public const int MAPWIDTH = 20;
@@ -17,7 +17,8 @@
         #endregion
 
         #region Hotbar globals
-        public const int AMOUNT_OF_SLOTS = 4;
+        public const int HOTBAR_SLOTS = 5;
+        public const int HOTBAR_SLOT_SIZE = 100;
         #endregion
     }
 }
