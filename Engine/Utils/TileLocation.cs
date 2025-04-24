@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace HealthyBusiness.Engine.Utils
 {
-    public class TileLocation
+    public class TileLocation : IEquatable<TileLocation>
     {
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -44,6 +45,16 @@ namespace HealthyBusiness.Engine.Utils
             return $"TileLocation({X}, {Y})";
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
+        }
+
+        public bool Equals(TileLocation? other)
+        {
+            return other is not null && other.X == X && other.Y == Y;
+        }
+
         public static TileLocation operator +(TileLocation a, TileLocation b)
         {
             return new TileLocation(a.X + b.X, a.Y + b.Y);
@@ -62,6 +73,25 @@ namespace HealthyBusiness.Engine.Utils
         public static TileLocation operator /(TileLocation a, int b)
         {
             return new TileLocation(a.X / b, a.Y / b);
+        }
+
+        public static bool operator ==(TileLocation? a, TileLocation? b)
+        {
+            if (a is null && b is null)
+                return true;
+            if (a is null || b is null)
+                return false;
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(TileLocation? a, TileLocation? b)
+        {
+            if ((a is null && b is not null) || (a is not null && b is null))
+                return true;
+            if (a is null || b is null)
+                return false;
+
+            return !a.Equals(b);
         }
     }
 }
