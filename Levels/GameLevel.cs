@@ -28,7 +28,7 @@ namespace HealthyBusiness.Levels
             base.Load(content);
             var player = new Player(new TileLocation(4, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            AddGameObject(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
+            AddGameObject(LevelBuilder.CreateRectangularWithWallWithGapLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT, Globals.MAPWIDTH / 2));
             SpawnRandomItems(5);
             AddGameObject(player);
             AddGameObject(EnemyBuilder.CreateTomatoEnemy(new TileLocation(12, 8), player));

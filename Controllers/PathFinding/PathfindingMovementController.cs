@@ -10,6 +10,9 @@ namespace HealthyBusiness.Controllers.PathFinding
     {
         private TileLocation? _lastTargetTileLocation;
         private TileLocation? _currentStep;
+        private int _timeoutCounter = 0;
+
+        private const int TIMEOUT_IN_SECONDS = 3;
 
         public Stack<TileLocation> CurrentPath { get; private set; }
         public float Speed { get; private set; } = 1f;
@@ -58,10 +61,21 @@ namespace HealthyBusiness.Controllers.PathFinding
             if (Target == null)
                 return;
 
+            if (_timeoutCounter > 0)
+            {
+                _timeoutCounter--;
+                return;
+            }
+
             if (_lastTargetTileLocation != Target.TileLocation || CurrentPath.Count == 0)
             {
                 _lastTargetTileLocation = Target.TileLocation;
                 var path = Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).Skip(1).Take(3).ToList();
+                if (path.Count == 0)
+                {
+                    _timeoutCounter = TIMEOUT_IN_SECONDS;
+                    return;
+                }
                 path.Reverse();
                 CurrentPath = new Stack<TileLocation>(path);
             }

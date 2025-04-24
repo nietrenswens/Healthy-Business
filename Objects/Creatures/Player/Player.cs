@@ -28,7 +28,8 @@ namespace HealthyBusiness.Objects.Creatures.Player
             var width = (int)(Texture.Width * LocalScale);
             var height = (int)(Texture.Height * LocalScale);
 
-            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height)));
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height / 2)));
+            collider.LocalPosition = new Vector2(0, height / 2);
             collider.CollisionGroup = CollisionGroup.Player;
             Add(collider);
             base.Load(content);
@@ -37,11 +38,6 @@ namespace HealthyBusiness.Objects.Creatures.Player
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            var collider = GetGameObject<Collider>();
-            if (collider is RectangleCollider rectangleCollider)
-            {
-                rectangleCollider.Shape.Location = WorldPosition.ToPoint();
-            }
         }
 
         public override void OnCollision(GameObject other)

@@ -1,14 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.Creatures.Player;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace HealthyBusiness.Collision;
 
 public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 {
+    private Texture2D _pixel;
     public Rectangle Shape;
-
     public override float Width { get => Shape.Width; }
     public override float Height { get => Shape.Height; }
+
+    public RectangleCollider(Rectangle shape)
+    {
+        this.Shape = shape;
+
+        _pixel = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+        _pixel.SetData(new[] { Color.White });
+    }
 
     public override Vector2 Center
     {
@@ -25,13 +36,16 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
         base.Update(gameTime);
         if (Parent != null)
         {
-            Shape.Location = Parent.WorldPosition.ToPoint();
+            if (Parent is Player)
+                Console.WriteLine();
+            Shape.Location = WorldPosition.ToPoint();
         }
     }
 
-    public RectangleCollider(Rectangle shape)
+    public override void Draw(SpriteBatch spriteBatch)
     {
-        this.Shape = shape;
+        base.Draw(spriteBatch);
+        spriteBatch.Draw(_pixel, GetBoundingBox(), Color.White);
     }
 
     public override bool Contains(Vector2 loc)

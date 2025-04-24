@@ -117,7 +117,7 @@ namespace HealthyBusiness.Engine
             {
                 return localSpace;
             }
-            Vector2 position = LocalPosition * Parent.WorldScale;
+            Vector2 position = LocalPosition;
             position.Rotate(Parent.WorldRotation);
             return position + Parent.WorldPosition;
         }

@@ -51,10 +51,7 @@ namespace HealthyBusiness.Collision
 
         public override void Update(GameTime gameTime)
         {
-            if (Parent != null)
-            {
-                WorldPosition = Parent.WorldPosition;
-            }
+
         }
 
         /// <summary>

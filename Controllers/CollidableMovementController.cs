@@ -26,7 +26,7 @@ namespace HealthyBusiness.Controllers
 
             var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            var destination = Parent.WorldPosition + velocity;
+            var destination = Parent.GetGameObject<Collider>()!.WorldPosition + velocity;
             bool collided = false;
             var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), parentCollider.GetBoundingBox().Size));
 
