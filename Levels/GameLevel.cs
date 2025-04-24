@@ -6,6 +6,7 @@ using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -28,6 +29,7 @@ namespace HealthyBusiness.Levels
         {
             base.Load(content);
             var player = new Player(new TileLocation(4, 4));
+            var hotbar = new Hotbar();
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(LevelBuilder.CreateRectangularWithWallWithGapLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT, Globals.MAPWIDTH / 2));
             SpawnRandomItems(5);

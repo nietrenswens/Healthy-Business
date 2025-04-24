@@ -35,7 +35,9 @@ namespace HealthyBusiness.Engine.Managers
         {
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
-            CurrentLevel = new MainMenu();
+            //CurrentLevel = new MainMenu();
+
+            CurrentLevel = new GameLevel();
             _game = game;
         }
 
