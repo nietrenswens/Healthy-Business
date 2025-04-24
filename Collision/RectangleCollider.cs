@@ -20,6 +20,15 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
         }
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        if (Parent != null)
+        {
+            Shape.Location = Parent.WorldPosition.ToPoint();
+        }
+    }
+
     public RectangleCollider(Rectangle shape)
     {
         this.Shape = shape;

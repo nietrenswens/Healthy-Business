@@ -33,6 +33,7 @@ namespace HealthyBusiness.Engine.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            WorldPosition = _guiStyling.GetPosition();
             var inputManager = InputManager.GetInputManager();
             if (inputManager.LeftMousePressed() && GetGameObject<Collider>()!.Contains(inputManager.GetMousePosition()))
             {
