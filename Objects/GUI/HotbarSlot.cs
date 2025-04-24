@@ -4,11 +4,6 @@ using HealthyBusiness.Objects.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthyBusiness.Objects.GUI
 {
@@ -17,7 +12,6 @@ namespace HealthyBusiness.Objects.GUI
     /// </summary>
     public class HotbarSlot : GameObject
     {
-        private int id;
         private Item? _item; // is nullable because not every slot has an item
         public Texture2D? rectangle;
 
@@ -25,8 +19,8 @@ namespace HealthyBusiness.Objects.GUI
 
         public HotbarSlot(Item? item)
         {
-            this.id = new Random().Next(1, 90); // TODO: change this to the right id
-            this._item = item;
+            _item = item;
+            LocalPosition = new Vector2(0, Globals.SCREENHEIGHT - Globals.HOTBAR_SLOT_SIZE);
         }
 
         public override void Load(ContentManager content)
@@ -41,7 +35,7 @@ namespace HealthyBusiness.Objects.GUI
             base.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot, Item? item)
+        public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)
         {
             base.Draw(spriteBatch);
 
@@ -53,15 +47,18 @@ namespace HealthyBusiness.Objects.GUI
 
             if (previousSlot != null)
             {
-                float x = previousSlot.LocalPosition.X + 100 + margin;
+                float x = previousSlot.LocalPosition.X + Globals.HOTBAR_SLOT_SIZE + margin;
 
-                this.LocalPosition = new Vector2(x, this.LocalPosition.Y);
-            } else
+                LocalPosition = new Vector2(x, this.LocalPosition.Y);
+            }
+            else
             {
-                this.LocalPosition = new Vector2(Globals.MAPWIDTH, 0);
+                var numberOfSlots = Globals.HOTBAR_SLOTS;
+                var x = Globals.SCREENWIDTH / 2 - (numberOfSlots * (Globals.HOTBAR_SLOT_SIZE + margin)) / 2;
+                LocalPosition = new Vector2(x, LocalPosition.Y);
             }
 
-            spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, 100, 100), Color.LightGray);
+            spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, Globals.HOTBAR_SLOT_SIZE, Globals.HOTBAR_SLOT_SIZE), Color.LightGray);
 
         }
     }

@@ -19,10 +19,12 @@ namespace HealthyBusiness.Levels
     public class GameLevel : Level
     {
         private List<GameObject> _collidableGameObjects { get; set; }
+        public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
 
         public GameLevel()
         {
             _collidableGameObjects = new List<GameObject>();
+            GUIObjects = new();
         }
 
         public override void Load(ContentManager content)
@@ -35,18 +37,23 @@ namespace HealthyBusiness.Levels
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
             AddGameObject(new TomatoEnemy(new(16, 9)));
+            GUIObjects.Add(new Hotbar());
         }
 
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
             base.Update(gameTime);
+            GUIObjects.Update(gameTime);
 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            GUIObjects.Draw(spriteBatch);
+            spriteBatch.End();
         }
 
         public override void AddGameObject(GameObject gameObject)
