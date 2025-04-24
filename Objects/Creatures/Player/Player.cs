@@ -2,6 +2,7 @@
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -11,12 +12,16 @@ namespace HealthyBusiness.Objects.Creatures.Player
 {
     public class Player : Creature
     {
+        public Hotbar hotbar;
+
         public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
             LocalScale = 4;
+            hotbar = new Hotbar();
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
             Add(new ItemPickupModule());
+            Add(hotbar);
         }
 
         public Player(TileLocation tileLocation) : this(tileLocation.ToVector2())

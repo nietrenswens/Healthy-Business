@@ -20,11 +20,11 @@ namespace HealthyBusiness.InGameGUIObjects
 
         private List<HotbarSlot> createdHotbarSlots = new List<HotbarSlot>();
 
-        private Item[] _hotbarItems;
+        public Item[] hotbarItems;
 
         public Hotbar()
         {
-            this._hotbarItems = new Item[AMOUNT_OF_SLOTS];
+            this.hotbarItems = new Item[AMOUNT_OF_SLOTS];
             InitializeHotbarSlots();
         }
 
@@ -32,7 +32,7 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
-                HotbarSlot hotbarSlot = new HotbarSlot(_hotbarItems[i] ?? null);
+                HotbarSlot hotbarSlot = new HotbarSlot(hotbarItems[i] ?? null);
                 hotbarSlot.Load(GameManager.GetGameManager().ContentManager);
                 createdHotbarSlots.Add(hotbarSlot);
             }
@@ -42,9 +42,9 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
-                if (_hotbarItems[i] == null)
+                if (hotbarItems[i] == null)
                 {
-                    _hotbarItems[i] = item;
+                    hotbarItems[i] = item;
                     return true;
                 }
             }
@@ -56,9 +56,9 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
-                if (_hotbarItems[i] == item)
+                if (hotbarItems[i] == item)
                 {
-                    _hotbarItems[i] = null;
+                    hotbarItems[i] = null;
                     return true;
                 }
             }
@@ -89,9 +89,10 @@ namespace HealthyBusiness.InGameGUIObjects
 
                 slot.Draw(
                     spriteBatch, 
-                    (i > 0)                         // check if te iteration is the first index
-                        ? createdHotbarSlots[i - 1] // if it is not the first iteration, pass the previous slot
-                        : null                      // if it is the first iteration, pass null to prevent a index out of range exception
+                    (i > 0)                             // check if te iteration is the first index
+                        ? createdHotbarSlots[i - 1]     // if it is not the first iteration, pass the previous slot
+                        : null                         // if it is the first iteration, pass null to prevent a index out of range exception
+                    //hotbarItems[i] // ready for when the player can add to the hotbar from the itempickup module       
                 );
             }
 
