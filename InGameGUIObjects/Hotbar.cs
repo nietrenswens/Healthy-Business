@@ -30,7 +30,7 @@ namespace HealthyBusiness.InGameGUIObjects
             }
         }
 
-        public bool Add(Item item)
+        public bool AddItem(Item item)
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
@@ -41,6 +41,8 @@ namespace HealthyBusiness.InGameGUIObjects
                     return true;
                 }
             }
+
+            
 
             return false; // no empty slot 
         }
