@@ -13,6 +13,7 @@ namespace HealthyBusiness.Controllers.PathFinding
         {
             PriorityQueue<Step, float> prioritizedSteps = new();
             HashSet<TileLocation> visitedLocations = new();
+            var gameObjects = GameManager.GetGameManager().CurrentLevel.GameObjects.Where(go => go is Floor).ToList();
 
             prioritizedSteps.Enqueue(new Step(0, originLocation), 0);
 
@@ -43,14 +44,13 @@ namespace HealthyBusiness.Controllers.PathFinding
                             nextLocation += new TileLocation(0, 1); ;
                             break; // down
                     }
-                    var gameObjects = GameManager.GetGameManager().CurrentLevel.GameObjects.Where(go => go is Floor).ToList();
                     var nextGameObject = gameObjects.FirstOrDefault(go => go.TileLocation == nextLocation);
                     if (nextGameObject == null)
                         continue;
 
                     if (nextGameObject.TileLocation == targetLocation)
                     {
-                        return GetPath(currentStep);
+                        return GetPath(currentStep, targetLocation);
                     }
 
                     if (visitedLocations.Contains(nextLocation))
@@ -66,9 +66,10 @@ namespace HealthyBusiness.Controllers.PathFinding
             return new();
         }
 
-        private static Stack<TileLocation> GetPath(Step step)
+        private static Stack<TileLocation> GetPath(Step step, TileLocation targetLocation)
         {
             Stack<TileLocation> path = new();
+            path.Push(targetLocation);
             var currentStep = step;
             while (currentStep != null)
             {

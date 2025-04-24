@@ -9,11 +9,10 @@ namespace HealthyBusiness.Objects.Creatures
     public class Creature : GameObject
     {
         private string? _textureName;
-        public Texture2D Texture = null!;
 
+        public Texture2D Texture = null!;
         public float Width => GetGameObject<Collider>()!.Width;
         public float Height => GetGameObject<Collider>()!.Height;
-
         public int Health { get; set; }
         public int MaxHealth { get; set; }
 
@@ -32,6 +31,11 @@ namespace HealthyBusiness.Objects.Creatures
             {
                 Texture = content.Load<Texture2D>(_textureName);
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

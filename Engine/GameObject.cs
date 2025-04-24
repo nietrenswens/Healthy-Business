@@ -10,15 +10,15 @@ namespace HealthyBusiness.Engine
 {
     public abstract class GameObject : IGameAttribute
     {
+        private List<GameObject> _componentsToBeAdded = new List<GameObject>();
+        private List<GameObject> _componentsToBeRemoved = new List<GameObject>();
+
         public GameObject? Parent { get; set; }
         public List<GameObject> Components { get; private set; }
-
         public Vector2 LocalPosition;
         public float LocalRotation = 0f;
         public float LocalScale = 1f;
 
-        private List<GameObject> _componentsToBeAdded = new List<GameObject>();
-        private List<GameObject> _componentsToBeRemoved = new List<GameObject>();
 
         public TileLocation TileLocation
         {

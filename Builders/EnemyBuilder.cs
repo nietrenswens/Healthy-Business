@@ -15,7 +15,7 @@ namespace HealthyBusiness.Builders
             var collider = new RectangleCollider(new(tileLocation.ToPoint(), new Point(64, 64)));
             collider.CollisionGroup = CollisionGroup.Solid;
             enemy.Add(collider);
-            var pathFinding = new PathfindingMovementController(1f);
+            var pathFinding = new PathfindingMovementController(2f);
             pathFinding.Target = player;
             enemy.Add(pathFinding);
             return enemy;

@@ -8,6 +8,7 @@ namespace HealthyBusiness.Controllers.PathFinding
 {
     public class PathfindingMovementController : GameObject
     {
+        private TileLocation? _lastTargetTileLocation;
         private TileLocation? _currentStep;
 
         public Stack<TileLocation> CurrentPath { get; private set; }
@@ -54,10 +55,15 @@ namespace HealthyBusiness.Controllers.PathFinding
 
         private void CalculatePath()
         {
-            if (CurrentPath.Count < 1 && Target != null)
+            if (Target == null)
+                return;
+
+            if (_lastTargetTileLocation != Target.TileLocation || CurrentPath.Count == 0)
             {
-                // Convert the IEnumerable<TileLocation> to Stack<TileLocation> explicitly
-                CurrentPath = new(Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).TakeLast(3));
+                _lastTargetTileLocation = Target.TileLocation;
+                var path = Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).Skip(1).Take(3).ToList();
+                path.Reverse();
+                CurrentPath = new Stack<TileLocation>(path);
             }
         }
 
