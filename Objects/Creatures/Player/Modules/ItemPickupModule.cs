@@ -59,6 +59,8 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
             {
                 GameManager.GetGameManager().CurrentLevel.RemoveGameObject(SelectedItem);
+                // TODO: add item to the hotbar of the player 
+                // the way to do it should be: gamemanager.player.hotbar.AddItem(SelectedItem); and the drawing of the hotbar does the rest
                 SelectedItem = null;
             }
         }
