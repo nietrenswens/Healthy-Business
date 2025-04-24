@@ -15,5 +15,9 @@
         /// </summary>
         public const int ITEMPICKUPRANGE = TILESIZE * 1;
         #endregion
+
+        #region Hotbar globals
+        public const int AMOUNT_OF_SLOTS = 4;
+        #endregion
     }
 }
