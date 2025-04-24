@@ -31,6 +31,7 @@ namespace HealthyBusiness.Levels
             AddGameObject(LevelBuilder.CreateRectangularLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT));
             SpawnRandomItems(5);
             AddGameObject(player);
+            AddGameObject(EnemyBuilder.CreateTomatoEnemy(new TileLocation(8, 8)));
         }
 
         public override void Update(GameTime gameTime)

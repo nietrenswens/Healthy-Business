@@ -9,7 +9,7 @@ namespace HealthyBusiness.Objects.Creatures
     public class Creature : GameObject
     {
         private string? _textureName;
-        protected Texture2D _texture = null!;
+        public Texture2D Texture = null!;
 
         public float Width => GetGameObject<Collider>()!.Width;
         public float Height => GetGameObject<Collider>()!.Height;
@@ -30,8 +30,16 @@ namespace HealthyBusiness.Objects.Creatures
             base.Load(content);
             if (_textureName != null)
             {
-                _texture = content.Load<Texture2D>(_textureName);
+                Texture = content.Load<Texture2D>(_textureName);
             }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            var width = (int)(Texture.Width * LocalScale);
+            var height = (int)(Texture.Height * LocalScale);
+            spriteBatch.Draw(Texture, new Rectangle(WorldPosition.ToPoint(), new Point(width, height)), Color.White);
+            base.Draw(spriteBatch);
         }
     }
 }

@@ -14,8 +14,8 @@ namespace HealthyBusiness.Engine
         public List<GameObject> Components { get; private set; }
 
         public Vector2 LocalPosition;
-        public float LocalRotation;
-        public float LocalScale;
+        public float LocalRotation = 0f;
+        public float LocalScale = 1f;
 
         private List<GameObject> _componentsToBeAdded = new List<GameObject>();
         private List<GameObject> _componentsToBeRemoved = new List<GameObject>();

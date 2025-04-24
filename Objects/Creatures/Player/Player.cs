@@ -24,9 +24,9 @@ namespace HealthyBusiness.Objects.Creatures.Player
 
         public override void Load(ContentManager content)
         {
-            _texture = content.Load<Texture2D>("entities\\player");
-            var width = (int)(_texture.Width * LocalScale);
-            var height = (int)(_texture.Height * LocalScale);
+            Texture = content.Load<Texture2D>("entities\\player");
+            var width = (int)(Texture.Width * LocalScale);
+            var height = (int)(Texture.Height * LocalScale);
 
             var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height)));
             collider.CollisionGroup = CollisionGroup.Player;
@@ -42,14 +42,6 @@ namespace HealthyBusiness.Objects.Creatures.Player
             {
                 rectangleCollider.Shape.Location = WorldPosition.ToPoint();
             }
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            var width = (int)(_texture.Width * LocalScale);
-            var height = (int)(_texture.Height * LocalScale);
-            spriteBatch.Draw(_texture, new Rectangle(WorldPosition.ToPoint(), new Point(width, height)), Color.White);
-            base.Draw(spriteBatch);
         }
 
         public override void OnCollision(GameObject other)
