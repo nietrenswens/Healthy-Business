@@ -16,6 +16,10 @@
         public const int ITEMPICKUPRANGE = TILESIZE * 1;
         #endregion
 
+        #region Hotbar globals
+        public const int AMOUNT_OF_SLOTS = 4;
+        #endregion
+
         #region
         public const int MAX_PATHFINDING_COST = 200;
         #endregion

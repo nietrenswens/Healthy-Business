@@ -1,29 +1,106 @@
-﻿using HealthyBusiness.Objects.Items;
+﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.Objects.Items;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
-    class Hotbar
+    public class Hotbar : GameObject
     {
-        List<Item> hotbarItems;
+        private const int AMOUNT_OF_SLOTS = Globals.AMOUNT_OF_SLOTS;
+
+        private List<HotbarSlot> createdHotbarSlots = new List<HotbarSlot>();
+
+        private Item[] _hotbarItems;
 
         public Hotbar()
         {
-            this.hotbarItems = new List<Item>();
+            this._hotbarItems = new Item[AMOUNT_OF_SLOTS];
+            InitializeHotbarSlots();
         }
 
-        public void Add(Item item) => hotbarItems.Add(item);
-
-        public void Remove(Item item)
+        public void InitializeHotbarSlots()
         {
-            if (hotbarItems.Contains(item))
+            for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
-                hotbarItems.Remove(item);
+                HotbarSlot hotbarSlot = new HotbarSlot(_hotbarItems[i] ?? null);
+                hotbarSlot.Load(GameManager.GetGameManager().ContentManager);
+                createdHotbarSlots.Add(hotbarSlot);
             }
         }
+
+        public bool Add(Item item)
+        {
+            for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
+            {
+                if (_hotbarItems[i] == null)
+                {
+                    _hotbarItems[i] = item;
+                    return true;
+                }
+            }
+
+            return false; // no empty slot 
+        }
+
+        public bool Remove(Item item)
+        {
+            for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
+            {
+                if (_hotbarItems[i] == item)
+                {
+                    _hotbarItems[i] = null;
+                    return true;
+                }
+            }
+            return false; // item not found
+        }
+
+        public void Clear()
+        {
+            //_hotbarItems.Clear();
+        }
+
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            // draw the hotbar slots
+            for (int i = 0; i < createdHotbarSlots.Count; i++)
+            {
+                HotbarSlot slot = createdHotbarSlots[i];
+
+                slot.Draw(
+                    spriteBatch, 
+                    (i > 0)                         // check if te iteration is the first index
+                        ? createdHotbarSlots[i - 1] // if it is not the first iteration, pass the previous slot
+                        : null                      // if it is the first iteration, pass null to prevent a index out of range exception
+                );
+            }
+
+            //System.Diagnostics.Debug.WriteLine(createdHotbarSlots.Count);
+
+            // draw the hotbar container // TODO: niet nodig waarschijnlijk
+            //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
+            base.Draw(spriteBatch);
+        }
+
     }
 }
