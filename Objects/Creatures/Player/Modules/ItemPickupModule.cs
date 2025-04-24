@@ -64,7 +64,8 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (SelectedItem == null)
             {
                 Parent!.Remove(Parent.GetGameObject<SelectedItemText>()!);
-            } else
+            }
+            else
             {
                 var selectedItemText = new SelectedItemText();
                 Parent!.Add(selectedItemText);
