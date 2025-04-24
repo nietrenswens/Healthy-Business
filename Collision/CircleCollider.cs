@@ -7,7 +7,11 @@ namespace HealthyBusiness.Collision
     {
         public float X;
         public float Y;
-        public Vector2 Center
+
+        public override float Width => GetBoundingBox().Width;
+        public override float Height => GetBoundingBox().Height;
+
+        public override Vector2 Center
         {
             get
             {

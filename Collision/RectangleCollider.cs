@@ -7,6 +7,19 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 {
     public Rectangle Shape;
 
+    public override float Width { get => Shape.Width; }
+    public override float Height { get => Shape.Height; }
+
+    public override Vector2 Center
+    {
+        get => new Vector2(Shape.X + Shape.Width / 2, Shape.Y + Shape.Height / 2);
+        set
+        {
+            Shape.X = (int)(value.X - Shape.Width / 2);
+            Shape.Y = (int)(value.Y - Shape.Height / 2);
+        }
+    }
+
     public RectangleCollider(Rectangle shape)
     {
         this.Shape = shape;

@@ -107,7 +107,7 @@ namespace HealthyBusiness.Engine
         {
             foreach (var gameObject in GameObjects)
             {
-                if (gameObject.CollisionGroup.HasFlag(collisionGroup))
+                if (gameObject.GetGameObject<Collider>()?.CollisionGroup.HasFlag(collisionGroup) ?? false)
                 {
                     yield return gameObject;
                 }

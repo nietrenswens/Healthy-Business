@@ -11,14 +11,9 @@ namespace HealthyBusiness.Objects.Creatures.Player
 {
     public class Player : Creature
     {
-        private Texture2D _texture = null!;
-
-        public Player(Vector2 spawnPosition) : base(spawnPosition)
+        public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
-            Health = 100;
-            MaxHealth = 100;
             LocalScale = 4;
-            CollisionGroup = CollisionGroup.Player;
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
             Add(new ItemPickupModule());
@@ -29,17 +24,21 @@ namespace HealthyBusiness.Objects.Creatures.Player
 
         public override void Load(ContentManager content)
         {
-            base.Load(content);
             _texture = content.Load<Texture2D>("entities\\player");
             var width = (int)(_texture.Width * LocalScale);
             var height = (int)(_texture.Height * LocalScale);
-            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height))));
+
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height)));
+            collider.CollisionGroup = CollisionGroup.Player;
+            Add(collider);
+            base.Load(content);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Collider is RectangleCollider rectangleCollider)
+            var collider = GetGameObject<Collider>();
+            if (collider is RectangleCollider rectangleCollider)
             {
                 rectangleCollider.Shape.Location = WorldPosition.ToPoint();
             }

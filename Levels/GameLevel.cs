@@ -4,6 +4,7 @@ using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -47,7 +48,7 @@ namespace HealthyBusiness.Levels
         public override void AddGameObject(GameObject gameObject)
         {
             base.AddGameObject(gameObject);
-            if (!gameObject.CollisionGroup.HasFlag(CollisionGroup.None))
+            if (!gameObject.GetGameObject<Collider>()?.CollisionGroup.HasFlag(CollisionGroup.None) ?? false)
             {
                 _collidableGameObjects.Add(gameObject);
             }
@@ -76,9 +77,9 @@ namespace HealthyBusiness.Levels
             {
                 foreach (var other in _collidableGameObjects)
                 {
-                    if (gameObject != other && gameObject.Collider != null && other.Collider != null)
+                    if (gameObject != other && gameObject.GetGameObject<Collider>() != null && other.GetGameObject<Collider>() != null)
                     {
-                        if (gameObject.Collider.CheckIntersection(other.Collider))
+                        if (gameObject.GetGameObject<Collider>()!.CheckIntersection(other.GetGameObject<Collider>()!))
                         {
                             gameObject.OnCollision(other);
                             other.OnCollision(gameObject);
@@ -93,7 +94,7 @@ namespace HealthyBusiness.Levels
             for (int i = 0; i < number; i++)
             {
                 var floorTiles = GameObjects.ToList().Concat(GameObjectsToBeAdded)
-                    .Where(go => go.CollisionGroup.HasFlag(CollisionGroup.Floor)).ToList();
+                    .Where(go => go is Floor).ToList();
                 if (floorTiles.Count == 0)
                 {
                     break;
