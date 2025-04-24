@@ -60,6 +60,13 @@ namespace HealthyBusiness.Objects.GUI
 
             if (Item != null)
             {
+                // draw the item texture in the center of the slot
+                var itemTexture = Item.Texture;
+                if (itemTexture != null)
+                {
+                    var itemPosition = new Vector2(LocalPosition.X + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Width / 2), LocalPosition.Y + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Height / 2));
+                    spriteBatch.Draw(itemTexture, new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height), Color.White);
+                }
             }
 
         }

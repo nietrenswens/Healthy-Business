@@ -2,6 +2,7 @@
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -58,9 +59,21 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
         {
             if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
             {
+                var gameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
+                
+                if(!gameLevel.GUIObjects.Attributes.OfType<Hotbar>()
+                    .First()
+                    .AddItem(SelectedItem))
+                {
+                    return; // no empty slot
+                }
+               
                 GameManager.GetGameManager().CurrentLevel.RemoveGameObject(SelectedItem);
                 // TODO: add item to the hotbar of the player 
-                // the way to do it should be: gamemanager.player.hotbar.AddItem(SelectedItem); and the drawing of the hotbar does the rest
+                // the way to do it should be: gamemanager.hotbar.AddItem(SelectedItem); and the drawing of the hotbar does the rest
+
+
+
                 SelectedItem = null;
             }
         }
