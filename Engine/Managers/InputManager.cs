@@ -44,7 +44,7 @@ namespace HealthyBusiness.Engine.Managers
 
         public bool IsKeyPressed(Keys key)
         {
-            return CurrentKeyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyUp(key);
+            return CurrentKeyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyUp(key);
         }
 
         public bool IsKeyUp(Keys key)
