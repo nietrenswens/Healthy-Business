@@ -19,6 +19,7 @@
         #region Hotbar globals
         public const int HOTBAR_SLOTS = 5;
         public const int HOTBAR_SLOT_SIZE = 100;
+        public const int HOTBAR_SLOT_MARGIN = 10;
         #endregion
     }
 }

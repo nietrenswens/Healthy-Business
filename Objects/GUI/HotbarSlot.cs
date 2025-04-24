@@ -12,15 +12,15 @@ namespace HealthyBusiness.Objects.GUI
     /// </summary>
     public class HotbarSlot : GameObject
     {
-        private Item? _item; // is nullable because not every slot has an item
+        public Item? Item; // is nullable because not every slot has an item
         public Texture2D? rectangle;
 
         public Vector2 position;
 
-        public HotbarSlot(Item? item)
+        public HotbarSlot(Item? item = null)
         {
-            _item = item;
-            LocalPosition = new Vector2(0, Globals.SCREENHEIGHT - Globals.HOTBAR_SLOT_SIZE);
+            Item = item;
+            LocalPosition = new Vector2(0, Globals.SCREENHEIGHT - Globals.HOTBAR_SLOT_SIZE - Globals.HOTBAR_SLOT_MARGIN);
         }
 
         public override void Load(ContentManager content)
@@ -43,22 +43,24 @@ namespace HealthyBusiness.Objects.GUI
             // TODO: item texture moet gecentreerd gedrawd worden in de slot
 
             // in order to make the spacing even, we need to calculate the position of the previous slot
-            int margin = 20;
-
             if (previousSlot != null)
             {
-                float x = previousSlot.LocalPosition.X + Globals.HOTBAR_SLOT_SIZE + margin;
+                float x = previousSlot.LocalPosition.X + Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN;
 
                 LocalPosition = new Vector2(x, this.LocalPosition.Y);
             }
             else
             {
                 var numberOfSlots = Globals.HOTBAR_SLOTS;
-                var x = Globals.SCREENWIDTH / 2 - (numberOfSlots * (Globals.HOTBAR_SLOT_SIZE + margin)) / 2;
+                var x = Globals.SCREENWIDTH / 2 - (numberOfSlots * (Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN)) / 2;
                 LocalPosition = new Vector2(x, LocalPosition.Y);
             }
 
             spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, Globals.HOTBAR_SLOT_SIZE, Globals.HOTBAR_SLOT_SIZE), Color.LightGray);
+
+            if (Item != null)
+            {
+            }
 
         }
     }
