@@ -7,7 +7,6 @@ using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
-using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
