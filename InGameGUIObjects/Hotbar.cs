@@ -5,18 +5,13 @@ using HealthyBusiness.Objects.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
     public class Hotbar : GameObject
     {
-        private const int AMOUNT_OF_SLOTS = Globals.AMOUNT_OF_SLOTS;
+        private const int AMOUNT_OF_SLOTS = Globals.HOTBAR_SLOTS;
 
         private List<HotbarSlot> createdHotbarSlots = new List<HotbarSlot>();
 
@@ -88,11 +83,11 @@ namespace HealthyBusiness.InGameGUIObjects
                 HotbarSlot slot = createdHotbarSlots[i];
 
                 slot.Draw(
-                    spriteBatch, 
+                    spriteBatch,
                     (i > 0)                             // check if te iteration is the first index
                         ? createdHotbarSlots[i - 1]     // if it is not the first iteration, pass the previous slot
                         : null                         // if it is the first iteration, pass null to prevent a index out of range exception
-                    //hotbarItems[i] // ready for when the player can add to the hotbar from the itempickup module       
+                                                       //hotbarItems[i] // ready for when the player can add to the hotbar from the itempickup module       
                 );
             }
 
