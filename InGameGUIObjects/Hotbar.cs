@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
@@ -27,6 +28,29 @@ namespace HealthyBusiness.InGameGUIObjects
                 HotbarSlot hotbarSlot = new HotbarSlot();
                 hotbarSlot.Load(GameManager.GetGameManager().ContentManager);
                 HotbarSlots.Add(hotbarSlot);
+            }
+        }
+
+        private HotbarSlot GetSelectedSlot()
+        {
+            return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
+        }
+
+        public void SelectNextSlot(bool nextSlotSelected)
+        {
+            HotbarSlot selectedSlot = GetSelectedSlot();
+            if (nextSlotSelected)
+            {
+                selectedSlot.isSelected = false;
+                int nextIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
+                HotbarSlots[nextIndex].isSelected = true;
+                //ShowMetaData(HotbarSlots[nextIndex]);
+            }
+            else
+            {
+                selectedSlot.isSelected = false;
+                int previousIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
+                HotbarSlots[previousIndex].isSelected = true;
             }
         }
 
@@ -74,8 +98,7 @@ namespace HealthyBusiness.InGameGUIObjects
                     spriteBatch,
                     (i > 0)                             // check if te iteration is the first index
                         ? HotbarSlots[i - 1]     // if it is not the first iteration, pass the previous slot
-                        : null                         // if it is the first iteration, pass null to prevent a index out of range exception
-                                                       //hotbarItems[i] // ready for when the player can add to the hotbar from the itempickup module       
+                        : null                         // if it is the first iteration, pass null to prevent a index out of range exception     
                 );
             }
 
@@ -86,5 +109,9 @@ namespace HealthyBusiness.InGameGUIObjects
             base.Draw(spriteBatch);
         }
 
+        private void ShowMetaData(Item item)
+        {
+            // TODO: black rectangle above the hotbar with the name of the item and price
+        }
     }
 }

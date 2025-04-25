@@ -17,6 +17,8 @@ namespace HealthyBusiness.Objects.GUI
 
         public Vector2 position;
 
+        public bool isSelected = false;
+
         public HotbarSlot(Item? item = null)
         {
             Item = item;
@@ -48,6 +50,8 @@ namespace HealthyBusiness.Objects.GUI
                 float x = previousSlot.LocalPosition.X + Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN;
 
                 LocalPosition = new Vector2(x, this.LocalPosition.Y);
+
+
             }
             else
             {
@@ -56,19 +60,33 @@ namespace HealthyBusiness.Objects.GUI
                 LocalPosition = new Vector2(x, LocalPosition.Y);
             }
 
-            spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, Globals.HOTBAR_SLOT_SIZE, Globals.HOTBAR_SLOT_SIZE), Color.LightGray);
+            double sideSize = (isSelected) ? Globals.HOTBAR_SLOT_SIZE * 1.05 : Globals.HOTBAR_SLOT_SIZE;
+
+            // Bereken offset om te centreren
+            float offset = (float)(sideSize - Globals.HOTBAR_SLOT_SIZE) / 2f;
+
+            // Teken het slot
+            spriteBatch.Draw(
+                rectangle,
+                new Rectangle(
+                    (int)(LocalPosition.X - offset),
+                    (int)(LocalPosition.Y - offset),
+                    (int)sideSize,
+                    (int)sideSize
+                ),
+                Color.LightGray);
 
             if (Item != null)
             {
                 // draw the item texture in the center of the slot
                 var itemTexture = Item.Texture;
+                
                 if (itemTexture != null)
                 {
                     var itemPosition = new Vector2(LocalPosition.X + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Width / 2), LocalPosition.Y + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Height / 2));
                     spriteBatch.Draw(itemTexture, new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height), Color.White);
                 }
             }
-
         }
     }
 }

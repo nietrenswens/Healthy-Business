@@ -23,7 +23,6 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (Parent is not Player)
                 throw new Exception("ItemPickupModule can only be added to a Player.");
 
-            var parentCollider = Parent!.GetGameObject<Collider>();
             Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
         }
 
