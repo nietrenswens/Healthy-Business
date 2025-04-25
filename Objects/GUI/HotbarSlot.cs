@@ -60,12 +60,10 @@ namespace HealthyBusiness.Objects.GUI
                 LocalPosition = new Vector2(x, LocalPosition.Y);
             }
 
-            double sideSize = (isSelected) ? Globals.HOTBAR_SLOT_SIZE * 1.05 : Globals.HOTBAR_SLOT_SIZE;
+            double sideSize = (isSelected) ? Globals.HOTBAR_SLOT_SIZE * 1.1 : Globals.HOTBAR_SLOT_SIZE;
 
-            // Bereken offset om te centreren
             float offset = (float)(sideSize - Globals.HOTBAR_SLOT_SIZE) / 2f;
 
-            // Teken het slot
             spriteBatch.Draw(
                 rectangle,
                 new Rectangle(
@@ -78,13 +76,28 @@ namespace HealthyBusiness.Objects.GUI
 
             if (Item != null)
             {
-                // draw the item texture in the center of the slot
                 var itemTexture = Item.Texture;
-                
+
                 if (itemTexture != null)
                 {
-                    var itemPosition = new Vector2(LocalPosition.X + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Width / 2), LocalPosition.Y + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Height / 2));
-                    spriteBatch.Draw(itemTexture, new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height), Color.White);
+
+                    float scale = (float)(sideSize / Globals.HOTBAR_SLOT_SIZE);
+
+                    // create width and height with the scale of the selected slot
+                    int itemWidth = (int)(itemTexture.Width * scale);
+                    int itemHeight = (int)(itemTexture.Height * scale);
+
+                    // new position to keep the item centered
+                    var itemPosition = new Vector2(
+                        (float)(LocalPosition.X - offset + (sideSize / 2) - (itemWidth / 2)),
+                        (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemHeight / 2))
+                    );
+
+                    spriteBatch.Draw(
+                        itemTexture,
+                        new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemWidth, itemHeight),
+                        Color.White
+                    );
                 }
             }
         }
