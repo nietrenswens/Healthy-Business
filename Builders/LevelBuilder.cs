@@ -18,7 +18,8 @@ namespace HealthyBusiness.Builders
                     if (y == height - 1 || y == 0 || x == width - 1 || x == 0)
                     {
                         level[x + y * width] = new Wall(tileLocation + offset);
-                    } else
+                    }
+                    else
                     {
                         level[x + y * width] = new Floor(tileLocation + offset);
                     }
