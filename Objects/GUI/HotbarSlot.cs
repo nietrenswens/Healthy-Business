@@ -35,6 +35,7 @@ namespace HealthyBusiness.Objects.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
         }
 
         public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)

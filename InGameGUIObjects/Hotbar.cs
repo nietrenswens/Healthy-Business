@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
@@ -44,7 +45,8 @@ namespace HealthyBusiness.InGameGUIObjects
                 selectedSlot.isSelected = false;
                 int nextIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
                 HotbarSlots[nextIndex].isSelected = true;
-                //ShowMetaData(HotbarSlots[nextIndex]);
+                ShowMetaData(HotbarSlots[nextIndex].Item);
+                //System.Diagnostics.Debug.WriteLine(HotbarSlots[nextIndex].Item);
             }
             else
             {
@@ -109,9 +111,10 @@ namespace HealthyBusiness.InGameGUIObjects
             base.Draw(spriteBatch);
         }
 
-        private void ShowMetaData(Item item)
+        private void ShowMetaData(Item? item)
         {
             // TODO: black rectangle above the hotbar with the name of the item and price
+            if (item == null) return;
         }
     }
 }
