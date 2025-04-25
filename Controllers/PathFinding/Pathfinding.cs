@@ -58,6 +58,8 @@ namespace HealthyBusiness.Controllers.PathFinding
 
                     // Adding to the queue
                     float cost = currentStep.Cost + Heuristics(nextLocation, targetLocation);
+                    if (cost > Globals.MAX_PATHFINDING_COST)
+                        return new();
                     Step step = new(cost, nextLocation, currentStep);
                     prioritizedSteps.Enqueue(step, cost);
                 }

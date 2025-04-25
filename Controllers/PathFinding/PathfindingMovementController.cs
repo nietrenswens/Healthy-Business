@@ -1,8 +1,11 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HealthyBusiness.Controllers.PathFinding
 {
@@ -10,10 +13,11 @@ namespace HealthyBusiness.Controllers.PathFinding
     {
         private TileLocation? _lastTargetTileLocation;
         private TileLocation? _currentStep;
+        private int _retryCount;
+        private Task pathFindingDiscoveryTask;
 
         public Stack<TileLocation> CurrentPath { get; private set; }
         public float Speed { get; private set; } = 1f;
-
         public GameObject? Target { get; set; }
 
 
@@ -21,6 +25,10 @@ namespace HealthyBusiness.Controllers.PathFinding
         {
             Speed = speed;
             CurrentPath = new Stack<TileLocation>();
+            _retryCount = 0;
+            pathFindingDiscoveryTask = new Task(async () => await PathFindingDiscovery());
+            pathFindingDiscoveryTask.Start();
+
         }
 
         private void SetNextStep()
@@ -46,10 +54,20 @@ namespace HealthyBusiness.Controllers.PathFinding
             {
                 Parent!.WorldPosition = targetPosition;
                 _currentStep = null;
-            } else
+            }
+            else
             {
                 direction.Normalize();
                 Parent!.WorldPosition += direction * Speed;
+            }
+        }
+
+        private async Task PathFindingDiscovery()
+        {
+            var discoveryTimer = new PeriodicTimer(TimeSpan.FromSeconds(2));
+            while (await discoveryTimer.WaitForNextTickAsync())
+            {
+                CalculatePath();
             }
         }
 
@@ -62,7 +80,7 @@ namespace HealthyBusiness.Controllers.PathFinding
             if (_lastTargetTileLocation != Target.TileLocation || CurrentPath.Count == 0)
             {
                 _lastTargetTileLocation = Target.TileLocation;
-                var path = Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).Skip(1).Take(3).ToList();
+                var path = Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).Skip(1).ToList();
                 path.Reverse();
                 CurrentPath = new Stack<TileLocation>(path);
             }
@@ -71,7 +89,6 @@ namespace HealthyBusiness.Controllers.PathFinding
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            CalculatePath();
             SetNextStep();
             Move();
         }
