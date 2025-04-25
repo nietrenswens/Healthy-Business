@@ -1,5 +1,4 @@
-﻿using HealthyBusiness.Objects.Creatures.Player;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -31,8 +30,6 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
         base.Update(gameTime);
         if (Parent != null)
         {
-            if (Parent is Player)
-                Console.WriteLine();
             Shape.Location = WorldPosition.ToPoint();
         }
     }

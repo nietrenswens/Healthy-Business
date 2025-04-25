@@ -22,15 +22,13 @@ namespace HealthyBusiness.Controllers
             if (Parent == null || parentCollider == null)
                 return;
 
-
-
             var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             var destination = Parent.GetGameObject<Collider>()!.WorldPosition + velocity;
             bool collided = false;
             var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), parentCollider.GetBoundingBox().Size));
-
             var solidGameObjects = GameManager.GetGameManager().CurrentLevel.GetGameObjects(_cantGoThrough).ToList();
+
             foreach (var gameObject in solidGameObjects)
             {
                 var collider = gameObject.GetGameObject<Collider>();
