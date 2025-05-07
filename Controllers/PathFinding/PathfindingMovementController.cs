@@ -52,7 +52,8 @@ namespace HealthyBusiness.Controllers.PathFinding
             {
                 Parent!.WorldPosition = targetPosition;
                 _currentStep = null;
-            } else
+            }
+            else
             {
                 direction.Normalize();
                 Parent!.WorldPosition += direction * Speed;
