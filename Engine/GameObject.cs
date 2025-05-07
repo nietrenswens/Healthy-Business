@@ -84,6 +84,7 @@ namespace HealthyBusiness.Engine
 
             foreach (var component in _componentsToBeRemoved)
             {
+                component.Unload();
                 Components.Remove(component);
             }
             _componentsToBeRemoved.Clear();

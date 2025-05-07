@@ -29,6 +29,11 @@ namespace HealthyBusiness.Controllers.PathFinding
 
         }
 
+        public override void Unload()
+        {
+            pathFindingDiscoveryTask.Dispose();
+        }
+
         private void SetNextStep()
         {
             if (_currentStep != null || CurrentPath == null || CurrentPath.Count == 0)

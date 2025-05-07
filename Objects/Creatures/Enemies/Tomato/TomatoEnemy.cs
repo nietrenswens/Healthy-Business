@@ -1,0 +1,23 @@
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Utils;
+using Microsoft.Xna.Framework;
+
+namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
+{
+    public class TomatoEnemy : Creature
+    {
+        public static float AggroRange = 10f;
+
+        public const float SPEED = 2f;
+
+        public TomatoEnemy(TileLocation tileLocation) : base(tileLocation.ToVector2(), 10, 10, "entities\\enemies\\tomato\\tomato")
+        {
+            var collider = new RectangleCollider(new(tileLocation.ToPoint(), new Point(64, 64)));
+            collider.CollisionGroup = CollisionGroup.None;
+            Add(collider);
+            var stateMachine = new TomatoStateMachine();
+            Add(stateMachine);
+        }
+
+    }
+}
