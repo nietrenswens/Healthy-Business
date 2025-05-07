@@ -33,6 +33,7 @@ namespace HealthyBusiness.Levels
             SpawnRandomItems(5);
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
+            AddGameObject(new TomatoEnemy(new(16, 9)));
         }
 
         public override void Update(GameTime gameTime)
@@ -71,13 +72,6 @@ namespace HealthyBusiness.Levels
             {
                 _collidableGameObjects.Remove(gameObject);
             }
-        }
-
-        public bool IsTileWalkable(TileLocation newLocation)
-        {
-            return GameObjects.ToList().Concat(GameObjectsToBeAdded)
-                .Where(go => go is Floor)
-                .Any(go => go.TileLocation == newLocation);
         }
 
         private void CheckCollision()

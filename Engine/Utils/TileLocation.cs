@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Creatures;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace HealthyBusiness.Engine.Utils
@@ -92,6 +95,27 @@ namespace HealthyBusiness.Engine.Utils
                 return false;
 
             return !a.Equals(b);
+        }
+
+        public static bool IsTileWalkable(TileLocation newLocation)
+        {
+            var gameManager = GameManager.GetGameManager();
+            var gameObjects = gameManager.CurrentLevel.GameObjects;
+
+            var isValidFloor = false;
+            foreach (GameObject go in gameObjects)
+            {
+                if (go is Floor && go.TileLocation == newLocation)
+                {
+                    isValidFloor = true;
+                    continue;
+                }
+                if (go is Creature && go.TileLocation == newLocation)
+                {
+                    return false;
+                }
+            }
+            return isValidFloor;
         }
 
         public override bool Equals(object obj)

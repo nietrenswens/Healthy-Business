@@ -1,7 +1,6 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Levels;
 using Microsoft.Xna.Framework;
 
 namespace HealthyBusiness.Controllers
@@ -57,7 +56,7 @@ namespace HealthyBusiness.Controllers
                 var randomX = GameManager.GetGameManager().RNG.Next(-2, 3);
                 var randomY = GameManager.GetGameManager().RNG.Next(-2, 3);
                 var newLocation = new TileLocation(currentLocation.X + randomX, currentLocation.Y + randomY);
-                if (((GameLevel)GameManager.GetGameManager().CurrentLevel).IsTileWalkable(newLocation))
+                if (TileLocation.IsTileWalkable(newLocation))
                 {
                     target = newLocation;
                 }
