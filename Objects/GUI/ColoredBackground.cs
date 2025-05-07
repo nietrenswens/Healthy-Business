@@ -11,9 +11,6 @@ namespace HealthyBusiness.Objects.GUI
         private float _height;
         private Texture2D _pixel;
 
-        public override float Width => _width;
-        public override float Height => _height;
-
         public ColoredBackground(Color color)
         {
             _width = GameManager.GetGameManager().GraphicsDevice.Viewport.Width;

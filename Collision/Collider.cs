@@ -1,10 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HealthyBusiness.Engine;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace HealthyBusiness.Collision
 {
-    public abstract class Collider
+    public abstract class Collider : GameObject
     {
+        public CollisionGroup CollisionGroup { get; set; } = CollisionGroup.None;
+
+        public abstract float Width { get; }
+        public abstract float Height { get; }
+        public abstract Vector2 Center { get; set; }
+
         /// <summary>
         /// Get the enclosing Rectangle that surrounds the Circle.
         /// </summary>
@@ -40,6 +47,11 @@ namespace HealthyBusiness.Collision
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            // Ensures that the base update won't be executed. Colliders shall never have Components
         }
 
         /// <summary>

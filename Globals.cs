@@ -15,5 +15,9 @@
         /// </summary>
         public const int ITEMPICKUPRANGE = TILESIZE * 1;
         #endregion
+
+        #region
+        public const int MAX_PATHFINDING_COST = 200;
+        #endregion
     }
 }

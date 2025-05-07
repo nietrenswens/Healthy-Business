@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine.GUI;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -29,10 +30,11 @@ namespace HealthyBusiness.Objects.GUI
         {
             base.Draw(spriteBatch);
             var textSize = _font.MeasureString(Text);
-            var position = Collider!.GetBoundingBox().Location.ToVector2();
+            var collider = GetGameObject<Collider>()!;
+            var position = collider.GetBoundingBox().Location.ToVector2();
             var textPosition = new Vector2(
-                position.X + (Width - textSize.X) / 2,
-                position.Y + (Height - textSize.Y) / 2 + paddingTop
+                position.X + (collider.Width - textSize.X) / 2,
+                position.Y + (collider.Height - textSize.Y) / 2 + paddingTop
             );
             spriteBatch.DrawString(_font, Text, textPosition, Color.White);
         }

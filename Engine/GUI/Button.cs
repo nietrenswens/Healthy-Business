@@ -27,14 +27,15 @@ namespace HealthyBusiness.Engine.GUI
             base.Load(content);
             _texture = content.Load<Texture2D>(_texturePath);
             _guiStyling = _guiStyling with { width = _texture.Width, height = _texture.Height };
-            SetCollider(new RectangleCollider(new Rectangle(_guiStyling.GetPosition().ToPoint(), new Point(_texture.Width, _texture.Height))));
+            Add(new RectangleCollider(new Rectangle(_guiStyling.GetPosition().ToPoint(), new Point(_texture.Width, _texture.Height))));
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            WorldPosition = _guiStyling.GetPosition();
             var inputManager = InputManager.GetInputManager();
-            if (inputManager.LeftMousePressed() && Collider!.Contains(inputManager.GetMousePosition()))
+            if (inputManager.LeftMousePressed() && GetGameObject<Collider>()!.Contains(inputManager.GetMousePosition()))
             {
                 Clicked?.Invoke(this, new EventArgs());
             }

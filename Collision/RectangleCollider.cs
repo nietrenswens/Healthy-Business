@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace HealthyBusiness.Collision;
@@ -6,10 +7,36 @@ namespace HealthyBusiness.Collision;
 public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 {
     public Rectangle Shape;
+    public override float Width { get => Shape.Width; }
+    public override float Height { get => Shape.Height; }
 
     public RectangleCollider(Rectangle shape)
     {
         this.Shape = shape;
+    }
+
+    public override Vector2 Center
+    {
+        get => new Vector2(Shape.X + Shape.Width / 2, Shape.Y + Shape.Height / 2);
+        set
+        {
+            Shape.X = (int)(value.X - Shape.Width / 2);
+            Shape.Y = (int)(value.Y - Shape.Height / 2);
+        }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        if (Parent != null)
+        {
+            Shape.Location = WorldPosition.ToPoint();
+        }
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
     }
 
     public override bool Contains(Vector2 loc)

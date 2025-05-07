@@ -9,6 +9,18 @@ namespace HealthyBusiness.Collision
         public Vector2 Start;
         public Vector2 End;
 
+        public override float Width => GetBoundingBox().Width;
+        public override float Height => GetBoundingBox().Height;
+
+        public override Vector2 Center
+        {
+            get => (Start + End) / 2;
+            set
+            {
+                throw new NotImplementedException("Center is not implemented for LinePieceCollider");
+            }
+        }
+
         /// <summary>
         /// The length of the LinePiece, changing the length moves the end vector to adjust the length.
         /// </summary>

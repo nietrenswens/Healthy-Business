@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
 using HealthyBusiness.Objects.Creatures.Player;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
@@ -25,7 +26,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var selectedItem = ((Player)Parent!).GetGameObject<ItemPickupModule>()!.SelectedItem;
             if (selectedItem == null)
                 return;
-            WorldPosition = selectedItem.Center;
+            WorldPosition = selectedItem.GetGameObject<Collider>()!.Center;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
