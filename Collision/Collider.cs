@@ -51,7 +51,7 @@ namespace HealthyBusiness.Collision
 
         public override void Update(GameTime gameTime)
         {
-
+            // Ensures that the base update won't be executed. Colliders shall never have Components
         }
 
         /// <summary>

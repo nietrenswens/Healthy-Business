@@ -13,7 +13,6 @@ namespace HealthyBusiness.Controllers.PathFinding
     {
         private TileLocation? _lastTargetTileLocation;
         private TileLocation? _currentStep;
-        private int _retryCount;
         private Task pathFindingDiscoveryTask;
 
         public Stack<TileLocation> CurrentPath { get; private set; }
@@ -25,7 +24,6 @@ namespace HealthyBusiness.Controllers.PathFinding
         {
             Speed = speed;
             CurrentPath = new Stack<TileLocation>();
-            _retryCount = 0;
             pathFindingDiscoveryTask = new Task(async () => await PathFindingDiscovery());
             pathFindingDiscoveryTask.Start();
 
@@ -54,8 +52,7 @@ namespace HealthyBusiness.Controllers.PathFinding
             {
                 Parent!.WorldPosition = targetPosition;
                 _currentStep = null;
-            }
-            else
+            } else
             {
                 direction.Normalize();
                 Parent!.WorldPosition += direction * Speed;
@@ -82,7 +79,7 @@ namespace HealthyBusiness.Controllers.PathFinding
                 _lastTargetTileLocation = Target.TileLocation;
                 var path = Pathfinding.PathFinding(Parent!.TileLocation, Target.TileLocation).Skip(1).ToList();
                 path.Reverse();
-                CurrentPath = new Stack<TileLocation>(path);
+                CurrentPath = new(path);
             }
         }
 
