@@ -10,6 +10,7 @@ using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,13 @@ namespace HealthyBusiness.Levels
 {
     public class GameLevel : Level
     {
+        // HealthyBusiness.cs code hier plaatsen
+
         private List<GameObject> _collidableGameObjects { get; set; }
+        //private SpriteBatch _spriteBatch = null!;
+        private bool _isPaused = false;
+        private KeyboardState _previousKeyboardState;
+
 
         public GameLevel()
         {
@@ -39,6 +46,18 @@ namespace HealthyBusiness.Levels
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            if (currentKeyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape))
+            {
+                _isPaused = !_isPaused;
+            }
+
+            if (_isPaused)
+            {
+                _previousKeyboardState = currentKeyboardState;
+                return;
+            }
+            _previousKeyboardState = currentKeyboardState;
             base.Update(gameTime);
 
         }
@@ -46,6 +65,10 @@ namespace HealthyBusiness.Levels
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            if (_isPaused)
+            {
+                GameManager.GetGameManager().PauseMenu.Draw(spriteBatch);
+            }
         }
 
         public override void AddGameObject(GameObject gameObject)
