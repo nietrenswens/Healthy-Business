@@ -40,7 +40,7 @@ namespace HealthyBusiness.Engine.Managers
         {
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
-            CurrentLevel = new GameLevel();
+            CurrentLevel = new MainMenu();
             PauseMenu = new PauseMenu();
             PauseMenu.Load(contentManager);
             _game = game;

@@ -8,29 +8,57 @@ using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.Engine.GUI;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Levels;
+using HealthyBusiness.Cameras;
+using Microsoft.Xna.Framework.Input;
 
 
 namespace HealthyBusiness.InGameGUIObjects
 {
     public class PauseMenu : GameObject
     {
-        private Texture2D? _backgroundTexture;
-        private SpriteFont? _font;
+        public bool IsClosed { get; private set; } = false;
 
         public override void Load(ContentManager content)
         {
-            _backgroundTexture = content.Load<Texture2D>("objects\\wall");
-            _font = content.Load<SpriteFont>("fonts\\pixelated_elegance\\title");
+            Add(new ColoredBackground(Color.Black * 0.5f));
+            Add(new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
+           
+            var resumeButton = new TextedButton("Resume", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
+            resumeButton.Clicked += ResumeButtonClicked;
+            var mainMenuButton = new TextedButton("Main Menu", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));
+            mainMenuButton.Clicked += QuitButtonClicked;
+
+            Add(resumeButton);
+            Add(mainMenuButton);
+        }
+
+        private void ResumeButtonClicked(object? sender, EventArgs e)
+        {
+            IsClosed = true;
+        }
+
+        private void QuitButtonClicked(object? sender, EventArgs e)
+        {
+            GameManager.GetGameManager().ChangeLevel(new MainMenu());
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+        public void Reset()
+        {
+            IsClosed = false;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-
-            spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, 1920, 1080), Color.Gray * 0.5f);
-            spriteBatch.DrawString(_font, "Paused", new Vector2(960 - _font.Texture.Width / 6, 300), Color.White);
-            spriteBatch.DrawString(_font, "Press 'Esc' to Resume", new Vector2(960 - _font.Texture.Width/2, 500), Color.White);
-
+            base.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

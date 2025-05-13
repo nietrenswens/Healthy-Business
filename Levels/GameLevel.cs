@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Builders;
+﻿using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Builders;
 using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
@@ -18,13 +19,9 @@ namespace HealthyBusiness.Levels
 {
     public class GameLevel : Level
     {
-        // HealthyBusiness.cs code hier plaatsen
-
         private List<GameObject> _collidableGameObjects { get; set; }
-        //private SpriteBatch _spriteBatch = null!;
         private bool _isPaused = false;
         private KeyboardState _previousKeyboardState;
-
 
         public GameLevel()
         {
@@ -47,18 +44,30 @@ namespace HealthyBusiness.Levels
         {
             CheckCollision();
             KeyboardState currentKeyboardState = Keyboard.GetState();
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape))
+
+            if (currentKeyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape) && !_isPaused)
             {
-                _isPaused = !_isPaused;
+                _isPaused = true;
             }
 
             if (_isPaused)
             {
+                var pauseMenu = GameManager.GetGameManager().PauseMenu;
+                pauseMenu.Update(gameTime);
+
+                if (pauseMenu.IsClosed)
+                {
+                    _isPaused = false;
+                    pauseMenu.Reset();
+                }
+
                 _previousKeyboardState = currentKeyboardState;
                 return;
             }
+
             _previousKeyboardState = currentKeyboardState;
             base.Update(gameTime);
+
 
         }
 
