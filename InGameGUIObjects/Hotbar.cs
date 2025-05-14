@@ -60,7 +60,7 @@ namespace HealthyBusiness.InGameGUIObjects
             //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
         }
 
-        public bool AddItem(Item item)
+        public bool AddItem(ValuedItem item)
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
@@ -71,8 +71,6 @@ namespace HealthyBusiness.InGameGUIObjects
                     return true;
                 }
             }
-
-            
 
             return false; // no empty slot 
         }
@@ -115,7 +113,7 @@ namespace HealthyBusiness.InGameGUIObjects
             base.Draw(spriteBatch);
         }
 
-        private void ShowMetaData(Item? item)
+        private void ShowMetaData(ValuedItem? item)
         {
             // TODO: black rectangle above the hotbar with the name of the item and price
             if (item == null) return;

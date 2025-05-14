@@ -12,14 +12,14 @@ namespace HealthyBusiness.Objects.GUI
     /// </summary>
     public class HotbarSlot : GameObject
     {
-        public Item? Item; // is nullable because not every slot has an item
+        public ValuedItem? Item; // is nullable because not every slot has an item
         public Texture2D? rectangle;
 
         public Vector2 position;
 
         public bool isSelected = false;
 
-        public HotbarSlot(Item? item = null)
+        public HotbarSlot(ValuedItem? item = null)
         {
             Item = item;
             LocalPosition = new Vector2(0, Globals.SCREENHEIGHT - Globals.HOTBAR_SLOT_SIZE - Globals.HOTBAR_SLOT_MARGIN);
