@@ -22,6 +22,7 @@ namespace HealthyBusiness.Levels
         private List<GameObject> _collidableGameObjects { get; set; }
         private bool _isPaused = false;
         private KeyboardState _previousKeyboardState;
+        private PauseMenu _pauseMenu;
 
         public GameLevel()
         {
@@ -38,34 +39,33 @@ namespace HealthyBusiness.Levels
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
             AddGameObject(new TomatoEnemy(new(16, 9)));
+            _pauseMenu = new PauseMenu();
+            _pauseMenu.Load(content);
         }
 
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
             KeyboardState currentKeyboardState = Keyboard.GetState();
-
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && !_previousKeyboardState.IsKeyDown(Keys.Escape) && !_isPaused)
+            var inputManager = InputManager.GetInputManager();
+            if (inputManager.IsKeyDown(Keys.Escape) && !inputManager.LastKeyboardState.IsKeyDown(Keys.Escape) && !_isPaused)
             {
                 _isPaused = true;
             }
 
             if (_isPaused)
             {
-                var pauseMenu = GameManager.GetGameManager().PauseMenu;
-                pauseMenu.Update(gameTime);
+                _pauseMenu.Update(gameTime);
 
-                if (pauseMenu.IsClosed)
+                if (_pauseMenu.IsClosed)
                 {
                     _isPaused = false;
-                    pauseMenu.Reset();
+                    _pauseMenu.Reset();
                 }
 
-                _previousKeyboardState = currentKeyboardState;
                 return;
             }
 
-            _previousKeyboardState = currentKeyboardState;
             base.Update(gameTime);
 
 
@@ -76,7 +76,7 @@ namespace HealthyBusiness.Levels
             base.Draw(spriteBatch);
             if (_isPaused)
             {
-                GameManager.GetGameManager().PauseMenu.Draw(spriteBatch);
+                _pauseMenu.Draw(spriteBatch);
             }
         }
 

@@ -46,10 +46,6 @@ namespace HealthyBusiness.InGameGUIObjects
             GameManager.GetGameManager().ChangeLevel(new MainMenu());
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
         public void Reset()
         {
             IsClosed = false;

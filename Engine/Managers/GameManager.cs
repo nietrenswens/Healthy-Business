@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Reflection.Metadata;
 
 namespace HealthyBusiness.Engine.Managers
 {
@@ -18,7 +17,6 @@ namespace HealthyBusiness.Engine.Managers
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Random RNG { get; private set; } = null!;
         public Level CurrentLevel { get; private set; } = null!;
-        public PauseMenu PauseMenu { get; private set; }
 
         private GameManager()
         {
@@ -41,8 +39,6 @@ namespace HealthyBusiness.Engine.Managers
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
             CurrentLevel = new MainMenu();
-            PauseMenu = new PauseMenu();
-            PauseMenu.Load(contentManager);
             _game = game;
         }
 
