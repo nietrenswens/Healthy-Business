@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
 using Microsoft.Xna.Framework;
 
 namespace HealthyBusiness.Cameras
@@ -22,7 +23,7 @@ namespace HealthyBusiness.Cameras
             var screenWidth = Globals.SCREENWIDTH;
             var screenHeight = Globals.SCREENHEIGHT;
 
-            var target = Target.Center;
+            var target = Target.GetGameObject<Collider>()?.Center ?? Target.WorldPosition;
 
             // Interpolate the camera position
             _position = Vector2.Lerp(_position, target, _interpolationSpeed);

@@ -2,6 +2,7 @@
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace HealthyBusiness.Controllers
 {
@@ -17,24 +18,24 @@ namespace HealthyBusiness.Controllers
 
         public void Move(Vector2 direction, GameTime gameTime)
         {
-            if (Parent == null || Parent.Collider == null)
+            var parentCollider = Parent?.GetGameObject<Collider>();
+            if (Parent == null || parentCollider == null)
                 return;
 
-
-
             var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            var rectCollider = (RectangleCollider)Parent.Collider;
 
-            var destination = Parent.WorldPosition + velocity;
+            var destination = Parent.GetGameObject<Collider>()!.WorldPosition + velocity;
             bool collided = false;
-            var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), rectCollider.Shape.Size));
+            var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), parentCollider.GetBoundingBox().Size));
+            var solidGameObjects = GameManager.GetGameManager().CurrentLevel.GetGameObjects(_cantGoThrough).ToList();
 
-            foreach (var gameObject in GameManager.GetGameManager().CurrentLevel.GetGameObjects(_cantGoThrough))
+            foreach (var gameObject in solidGameObjects)
             {
-                if (gameObject.Collider == null)
+                var collider = gameObject.GetGameObject<Collider>();
+                if (collider == null)
                     continue;
 
-                if (tempCollider.CheckIntersection(gameObject.Collider))
+                if (tempCollider.CheckIntersection(collider))
                 {
                     collided = true;
                     break;

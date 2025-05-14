@@ -1,5 +1,4 @@
-﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine.Interfaces;
+﻿using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
@@ -11,31 +10,15 @@ namespace HealthyBusiness.Engine
 {
     public abstract class GameObject : IGameAttribute
     {
-        public GameObject? Parent { get; set; }
-        public Collider? Collider { get; private set; }
-        public List<GameObject> Components { get; private set; }
-        public CollisionGroup CollisionGroup { get; protected set; }
-
-        public virtual float Width => Collider?.GetBoundingBox().Width ?? 0;
-        public virtual float Height => Collider?.GetBoundingBox().Height ?? 0;
-        public Vector2 Center
-        {
-            get
-            {
-                if (Width == 0 || Height == 0)
-                {
-                    return Vector2.Zero;
-                }
-                return new Vector2(WorldPosition.X + Width / 2, WorldPosition.Y + Height / 2);
-            }
-        }
-
-        public Vector2 LocalPosition;
-        public float LocalRotation;
-        public float LocalScale;
-
         private List<GameObject> _componentsToBeAdded = new List<GameObject>();
         private List<GameObject> _componentsToBeRemoved = new List<GameObject>();
+
+        public GameObject? Parent { get; set; }
+        public List<GameObject> Components { get; private set; }
+        public Vector2 LocalPosition;
+        public float LocalRotation = 0f;
+        public float LocalScale = 1f;
+
 
         public TileLocation TileLocation
         {
@@ -134,7 +117,7 @@ namespace HealthyBusiness.Engine
             {
                 return localSpace;
             }
-            Vector2 position = LocalPosition * Parent.WorldScale;
+            Vector2 position = LocalPosition;
             position.Rotate(Parent.WorldRotation);
             return position + Parent.WorldPosition;
         }
@@ -187,11 +170,6 @@ namespace HealthyBusiness.Engine
                     yield return typedComponent;
                 }
             }
-        }
-
-        protected void SetCollider(Collider collider)
-        {
-            this.Collider = collider;
         }
     }
 }

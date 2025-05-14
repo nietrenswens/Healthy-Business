@@ -1,5 +1,6 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Objects.Items;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HealthyBusiness.InGameGUIObjects
@@ -37,23 +39,42 @@ namespace HealthyBusiness.InGameGUIObjects
             return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
         }
 
-        public void SelectNextSlot(bool nextSlotSelected)
+        public void SelectNextSlot(bool moveToNextSlot)
         {
+            GameLevel currentLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
+            
             HotbarSlot selectedSlot = GetSelectedSlot();
-            if (nextSlotSelected)
+
+            var currentItemMeta = currentLevel.GUIObjects.Attributes.OfType<ItemMetaData>().FirstOrDefault();
+            if (currentItemMeta != null)
+            {
+                currentLevel.GUIObjects.Remove(currentItemMeta);
+            }
+
+            int selectedIndex = 0;
+
+            if (moveToNextSlot)
             {
                 selectedSlot.isSelected = false;
-                int nextIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
-                HotbarSlots[nextIndex].isSelected = true;
-                ShowMetaData(HotbarSlots[nextIndex].Item);
+                selectedIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
+                HotbarSlots[selectedIndex].isSelected = true;
+                ShowMetaData(HotbarSlots[selectedIndex].Item);
                 //System.Diagnostics.Debug.WriteLine(HotbarSlots[nextIndex].Item);
             }
             else
             {
                 selectedSlot.isSelected = false;
-                int previousIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
-                HotbarSlots[previousIndex].isSelected = true;
+                selectedIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
+                HotbarSlots[selectedIndex].isSelected = true;
             }
+
+            var currentItem = HotbarSlots[selectedIndex].Item;
+
+            if(currentItem != null)
+            {
+                currentLevel.GUIObjects.Add(new ItemMetaData(currentItem));
+            }
+
         }
 
         public bool AddItem(Item item)
@@ -115,6 +136,12 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             // TODO: black rectangle above the hotbar with the name of the item and price
             if (item == null) return;
+
+            var font = GameManager.GetGameManager().ContentManager.Load<SpriteFont>("fonts\\pixelated_elegance\\small");
+
+            var text = item.Name + " - " + item.price.ToString() + "DAM PIECES";
+
+            //SpriteBatch spriteBatch = GameManager.GetGameManager().SpriteBatch;
         }
     }
 }

@@ -15,19 +15,23 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
     {
         public Item? SelectedItem { get; private set; }
 
-        private Vector2 _center => ((CircleCollider)Collider!).Center;
+        private Vector2 _center => ((CircleCollider)GetGameObject<Collider>()!).Center;
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
             if (Parent is not Player)
                 throw new Exception("ItemPickupModule can only be added to a Player.");
-            SetCollider(new CircleCollider(Parent.Center, Globals.ITEMPICKUPRANGE));
+
+            var parentCollider = Parent!.GetGameObject<Collider>();
+            Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
         }
 
         public override void Update(GameTime gameTime)
         {
-            ((CircleCollider)Collider!).Center = WorldPosition + (new Vector2(Parent!.Width, Parent.Height) / 2);
+            base.Update(gameTime);
+            var parentCollider = Parent!.GetGameObject<Collider>();
+            ((CircleCollider)GetGameObject<Collider>()!).Center = WorldPosition + (new Vector2(parentCollider!.Width, parentCollider.Height) / 2);
             CheckCollision();
             CheckInput();
         }
@@ -39,8 +43,8 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
                 .OfType<Item>();
 
             var closestItem = items
-                .Where(item => item.Collider!.Intersects((CircleCollider)Collider!))
-                .Select(item => new { Item = item, Distance = (_center - item.Center).Length() })
+                .Where(item => item.GetGameObject<Collider>()!.Intersects((CircleCollider)GetGameObject<Collider>()!))
+                .Select(item => new { Item = item, Distance = (_center - item.GetGameObject<Collider>()!.Center).Length() })
                 .OrderBy(x => x.Distance)
                 .FirstOrDefault();
 

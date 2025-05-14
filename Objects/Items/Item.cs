@@ -26,7 +26,6 @@ namespace HealthyBusiness.Objects.Items
         {
             _textureName = textureName;
             WorldPosition = tileLocation.ToVector2();
-            CollisionGroup = CollisionGroup.Item;
             Name = name;
             ItemPrice = ItemPrice.Medium;
             price = InitilizePrice();
@@ -54,12 +53,15 @@ namespace HealthyBusiness.Objects.Items
             base.Load(content);
             Texture = content.Load<Texture2D>(_textureName);
             SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Texture.Width, Texture.Height))));
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Texture.Width, Texture.Height)));
+            collider.CollisionGroup = CollisionGroup.Item;
+            Add(collider);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Collider is RectangleCollider rectangleCollider)
+            if (GetGameObject<Collider>() is RectangleCollider rectangleCollider)
                 rectangleCollider.Shape.Location = WorldPosition.ToPoint();
         }
 

@@ -21,5 +21,9 @@
         public const int HOTBAR_SLOT_SIZE = 100;
         public const int HOTBAR_SLOT_MARGIN = 10;
         #endregion
+
+        #region
+        public const int MAX_PATHFINDING_COST = 200;
+        #endregion
     }
 }

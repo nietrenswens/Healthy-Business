@@ -7,7 +7,9 @@ namespace HealthyBusiness.Collision
     {
         public float X;
         public float Y;
-        public Vector2 Center
+        public override float Width => GetBoundingBox().Width;
+        public override float Height => GetBoundingBox().Height;
+        public override Vector2 Center
         {
             get
             {
@@ -56,6 +58,15 @@ namespace HealthyBusiness.Collision
             return (Center - coordinates).Length() < Radius;
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (Parent != null)
+            {
+                Center = Parent.WorldPosition;
+            }
+        }
+
         /// <summary>
         /// Gets whether or not the Circle intersects another Circle.
         /// </summary>
@@ -66,7 +77,6 @@ namespace HealthyBusiness.Collision
             var distance = (Center - other.Center).Length();
             return distance < Radius + other.Radius;
         }
-
 
         /// <summary>
         /// Gets whether or not the Circle intersects the Rectangle.

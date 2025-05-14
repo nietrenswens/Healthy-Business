@@ -13,7 +13,6 @@ namespace HealthyBusiness.Objects
 
         public Wall(TileLocation tileLocation)
         {
-            CollisionGroup = CollisionGroup.Solid;
             WorldPosition = tileLocation.ToVector2();
         }
 
@@ -21,7 +20,14 @@ namespace HealthyBusiness.Objects
         {
             base.Load(content);
             _texture = content.Load<Texture2D>("objects\\wall");
-            SetCollider(new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE))));
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)));
+            collider.CollisionGroup = CollisionGroup.Solid;
+            Add(collider);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

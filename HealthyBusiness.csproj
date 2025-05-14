@@ -12,6 +12,11 @@
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\Enemies\**" />
+    <EmbeddedResource Remove="Controllers\Enemies\**" />
+    <None Remove="Controllers\Enemies\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
