@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HealthyBusiness.Objects.Items
 {
-    public enum ItemPrice
+    public enum ItemRarity
     {
         Low,
         Medium,

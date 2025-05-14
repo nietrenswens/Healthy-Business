@@ -46,6 +46,7 @@ namespace HealthyBusiness.InGameGUIObjects
             HotbarSlot selectedSlot = GetSelectedSlot();
 
             var currentItemMeta = currentLevel.GUIObjects.Attributes.OfType<ItemMetaData>().FirstOrDefault();
+
             if (currentItemMeta != null)
             {
                 currentLevel.GUIObjects.Remove(currentItemMeta);
@@ -72,12 +73,14 @@ namespace HealthyBusiness.InGameGUIObjects
 
             if(currentItem != null)
             {
-                currentLevel.GUIObjects.Add(new ItemMetaData(currentItem));
+                currentLevel.GUIObjects.Add(new ItemMetaData(
+                    (ValuedItem)currentItem)
+                );
             }
 
         }
 
-        public bool AddItem(Item item)
+        public bool AddItem(ValuedItem item)
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
@@ -88,8 +91,6 @@ namespace HealthyBusiness.InGameGUIObjects
                     return true;
                 }
             }
-
-            
 
             return false; // no empty slot 
         }
@@ -132,7 +133,7 @@ namespace HealthyBusiness.InGameGUIObjects
             base.Draw(spriteBatch);
         }
 
-        private void ShowMetaData(Item? item)
+        private void ShowMetaData(ValuedItem? item)
         {
             // TODO: black rectangle above the hotbar with the name of the item and price
             if (item == null) return;

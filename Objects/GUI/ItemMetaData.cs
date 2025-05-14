@@ -13,8 +13,8 @@ namespace HealthyBusiness.Objects.GUI
 {
     class ItemMetaData : GameObject
     {
-        private Item _item;
-        public ItemMetaData(Item item)
+        private ValuedItem _item;
+        public ItemMetaData(ValuedItem item)
         {
             _item = item;
         }
@@ -24,7 +24,5 @@ namespace HealthyBusiness.Objects.GUI
             Add(new Text("fonts\\pixelated_elegance\\medium", $"{_item.Name} ${_item.price}", Color.White, guiStyling: new(
                 verticalFloat: VerticalAlign.Bottom, marginBottom: Globals.HOTBAR_SLOT_SIZE + 20, horizontalFloat: HorizontalAlign.Center)));
         }
-
-
     }
 }

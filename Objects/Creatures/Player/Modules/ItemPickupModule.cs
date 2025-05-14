@@ -63,7 +63,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
                 
                 if(!gameLevel.GUIObjects.Attributes.OfType<Hotbar>()
                     .First()
-                    .AddItem(SelectedItem))
+                    .AddItem((ValuedItem)SelectedItem))
                 {
                     return; // no empty slot
                 }
