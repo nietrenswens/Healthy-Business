@@ -26,7 +26,7 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             Add(new ColoredBackground(Color.Black * 0.5f));
             Add(new Text("fonts\\pixelated_elegance\\title", "Paused", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
-           
+
             var resumeButton = new TextedButton("Resume", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
             resumeButton.Clicked += ResumeButtonClicked;
             var mainMenuButton = new TextedButton("Main Menu", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));

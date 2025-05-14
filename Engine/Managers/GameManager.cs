@@ -24,7 +24,7 @@ namespace HealthyBusiness.Engine.Managers
         {
             RNG = new();
         }
-        
+
 
 
         public static GameManager GetGameManager()
