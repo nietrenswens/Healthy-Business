@@ -14,6 +14,7 @@ namespace HealthyBusiness.Objects.Items
         public Texture2D? Texture { get; private set; }
         private Texture2D? _texture;
 
+
         private string _textureName;
 
         public Item(TileLocation tileLocation, string textureName, string name)

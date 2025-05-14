@@ -41,6 +41,8 @@ namespace HealthyBusiness.Objects.GUI
         public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)
         {
             base.Draw(spriteBatch);
+            //System.Diagnostics.Debug.WriteLine(Item);
+
 
             // TODO: kijken hoe we de X en Y dynamisch kunnen maken zodat het beneden komt te staan
             // TODO: item texture moet gecentreerd gedrawd worden in de slot
@@ -73,30 +75,24 @@ namespace HealthyBusiness.Objects.GUI
                     (int)sideSize,
                     (int)sideSize
                 ),
-                Color.LightGray);
+                Color.LightGray * 0.1f);
 
-            if (Item != null)
+            if(Item != null)
             {
+                // draw the item texture in the center of the slot
                 var itemTexture = Item.Texture;
+                System.Diagnostics.Debug.WriteLine("nigga balls: " + itemTexture);
 
                 if (itemTexture != null)
                 {
-
-                    float scale = (float)(sideSize / Globals.HOTBAR_SLOT_SIZE);
-
-                    // create width and height with the scale of the selected slot
-                    int itemWidth = (int)(itemTexture.Width * scale);
-                    int itemHeight = (int)(itemTexture.Height * scale);
-
-                    // new position to keep the item centered
                     var itemPosition = new Vector2(
-                        (float)(LocalPosition.X - offset + (sideSize / 2) - (itemWidth / 2)),
-                        (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemHeight / 2))
+                        (float)(LocalPosition.X - offset + (sideSize / 2) - (itemTexture.Width / 2)),
+                        (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemTexture.Height / 2))
                     );
 
                     spriteBatch.Draw(
                         itemTexture,
-                        new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemWidth, itemHeight),
+                        new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height),
                         Color.White
                     );
                 }
