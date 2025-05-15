@@ -24,6 +24,15 @@ namespace HealthyBusiness.Engine.Managers
         {
             LoadMap("Room_Builder_64x64", 0, contentManager);
             LoadMap("Interiors_64x64_1", 8588, contentManager);
+            LoadMap("Interiors_64x64_2", 9644, contentManager);
+            LoadMap("Interiors_64x64_3", 10700, contentManager);
+            LoadMap("Interiors_64x64_4", 11756, contentManager);
+            LoadMap("Interiors_64x64_6", 12812, contentManager);
+            LoadMap("Interiors_64x64_7", 13866, contentManager);
+            LoadMap("Interiors_64x64_8", 14924, contentManager);
+            LoadMap("Interiors_64x64_9", 15980, contentManager);
+            LoadMap("Interiors_64x64_10", 17036, contentManager);
+            LoadMap("Interiors_64x64_5", 18092, contentManager);
         }
 
         private void LoadMap(string mapName, int firstGid, ContentManager contentManager)
