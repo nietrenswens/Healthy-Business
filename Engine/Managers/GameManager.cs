@@ -17,6 +17,7 @@ namespace HealthyBusiness.Engine.Managers
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Random RNG { get; private set; } = null!;
         public Level CurrentLevel { get; private set; } = null!;
+        public TileMapsManager tileMapsManager { get; private set; } = null!;
 
         private GameManager()
         {
@@ -39,11 +40,13 @@ namespace HealthyBusiness.Engine.Managers
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
             CurrentLevel = new MainMenu();
+            tileMapsManager = new TileMapsManager();
             _game = game;
         }
 
         public void Load(ContentManager content)
         {
+            tileMapsManager.Load(content);
             CurrentLevel.Load(content);
         }
 

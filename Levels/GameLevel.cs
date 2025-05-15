@@ -29,9 +29,9 @@ namespace HealthyBusiness.Levels
         public override void Load(ContentManager content)
         {
             base.Load(content);
-            var player = new Player(new TileLocation(4, 4));
+            var player = new Player(new TileLocation(4, 6));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            AddGameObject(LevelBuilder.CreateRectangularWithWallWithGapLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT, Globals.MAPWIDTH / 2));
+            AddGameObject(LevelLoader.LoadMap("Maps/test/test.tmx"));
             SpawnRandomItems(5);
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
