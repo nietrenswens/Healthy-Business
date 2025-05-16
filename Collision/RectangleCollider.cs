@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HealthyBusiness.Engine.Managers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -10,9 +11,13 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
     public override float Width { get => Shape.Width; }
     public override float Height { get => Shape.Height; }
 
+    private Texture2D _texture;
+
     public RectangleCollider(Rectangle shape)
     {
         this.Shape = shape;
+        _texture = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+        _texture.SetData(new[] { Color.White });
     }
 
     public override Vector2 Center
@@ -36,6 +41,8 @@ public class RectangleCollider : Collider, IEquatable<RectangleCollider>
 
     public override void Draw(SpriteBatch spriteBatch)
     {
+        if (Globals.DEBUG)
+            spriteBatch.Draw(_texture, Shape, Color.White * 0.5f);
         base.Draw(spriteBatch);
     }
 
