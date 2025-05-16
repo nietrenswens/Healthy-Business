@@ -5,6 +5,7 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -31,7 +32,8 @@ namespace HealthyBusiness.Levels
             AddGameObject(LevelBuilder.CreateRectangularWithWallWithGapLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT, Globals.MAPWIDTH / 2));
             SpawnRandomItems(5);
             AddGameObject(player);
-            AddGameObject(EnemyBuilder.CreateTomatoEnemy(new TileLocation(12, 8), player));
+            AddGameObject(new TomatoEnemy(new(15, 5)));
+            AddGameObject(new TomatoEnemy(new(16, 9)));
         }
 
         public override void Update(GameTime gameTime)

@@ -1,17 +1,15 @@
 ﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
 namespace HealthyBusiness.Controllers
 {
-    public class CollidableMovementController : GameObject
+    public class CollidableMovementController : MovementController
     {
-        private float _speed = 0.4f; // Adjusted speed for smoother movement
         private CollisionGroup _cantGoThrough;
 
-        public CollidableMovementController(CollisionGroup cantGoThrough)
+        public CollidableMovementController(CollisionGroup cantGoThrough) : base(0.4f)
         {
             _cantGoThrough = cantGoThrough;
         }
@@ -22,7 +20,7 @@ namespace HealthyBusiness.Controllers
             if (Parent == null || parentCollider == null)
                 return;
 
-            var velocity = direction * _speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            var velocity = direction * Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             var destination = Parent.GetGameObject<Collider>()!.WorldPosition + velocity;
             bool collided = false;
