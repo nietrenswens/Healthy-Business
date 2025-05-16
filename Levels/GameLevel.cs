@@ -20,10 +20,13 @@ namespace HealthyBusiness.Levels
     {
         private List<GameObject> _collidableGameObjects { get; set; }
         private PauseMenu _pauseMenu = null!;
+        
+        public TileMapsManager TileMapsManager { get; set; }
 
         public GameLevel()
         {
             _collidableGameObjects = new List<GameObject>();
+            TileMapsManager = new TileMapsManager();
         }
 
         public override void Load(ContentManager content)
@@ -31,7 +34,7 @@ namespace HealthyBusiness.Levels
             base.Load(content);
             var player = new Player(new TileLocation(4, 6));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            AddGameObject(LevelLoader.LoadMap("Maps/test/test.tmx"));
+            AddGameObject(LevelLoader.LoadMap("Maps/test/test.tmx", content));
             SpawnRandomItems(5);
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
