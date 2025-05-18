@@ -41,99 +41,60 @@ namespace HealthyBusiness.Objects.GUI
         public void Draw(SpriteBatch spriteBatch, HotbarSlot? previousSlot)
         {
             base.Draw(spriteBatch);
-            //System.Diagnostics.Debug.WriteLine(Item);
 
-
-            // TODO: kijken hoe we de X en Y dynamisch kunnen maken zodat het beneden komt te staan
-            // TODO: item texture moet gecentreerd gedrawd worden in de slot
-
-            // in order to make the spacing even, we need to calculate the position of the previous slot
+            // positioning of the slot
             if (previousSlot != null)
             {
                 float x = previousSlot.LocalPosition.X + Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN;
-
-                LocalPosition = new Vector2(x, this.LocalPosition.Y);
-
-
+                LocalPosition = new Vector2(x, LocalPosition.Y);
             }
             else
             {
-                var numberOfSlots = Globals.HOTBAR_SLOTS;
-                var x = Globals.SCREENWIDTH / 2 - (numberOfSlots * (Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN)) / 2;
+                int numberOfSlots = Globals.HOTBAR_SLOTS;
+                float x = Globals.SCREENWIDTH / 2f - (numberOfSlots * (Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN)) / 2f;
                 LocalPosition = new Vector2(x, LocalPosition.Y);
             }
 
-            double sideSize = (isSelected) ? Globals.HOTBAR_SLOT_SIZE * 1.1 : Globals.HOTBAR_SLOT_SIZE;
-
+            // scale the slot if it is selected
+            double sideSize = isSelected ? Globals.HOTBAR_SLOT_SIZE * 1.1 : Globals.HOTBAR_SLOT_SIZE;
             float offset = (float)(sideSize - Globals.HOTBAR_SLOT_SIZE) / 2f;
+            float scale = (float)(sideSize / Globals.HOTBAR_SLOT_SIZE);
 
+            // arne slot drawing ;)
             spriteBatch.Draw(
                 rectangle,
                 new Rectangle(
                     (int)(LocalPosition.X - offset),
                     (int)(LocalPosition.Y - offset),
                     (int)sideSize,
-                    (int)sideSize
-                ),
-                Color.LightGray * 0.1f);
+                    (int)sideSize),
+                Color.LightGray
+            );
 
-            if(Item != null)
+            if (Item != null)
             {
-                // draw the item texture in the center of the slot
                 var itemTexture = Item.Texture;
-                System.Diagnostics.Debug.WriteLine("nigga balls: " + itemTexture);
 
                 if (itemTexture != null)
                 {
+                    // scale the new item width and height with the scale of the slot
+                    int itemWidth = (int)(itemTexture.Width * scale);
+                    int itemHeight = (int)(itemTexture.Height * scale);
+
+                    // scale the position of the texture with the scale of the slot
                     var itemPosition = new Vector2(
-                        (float)(LocalPosition.X - offset + (sideSize / 2) - (itemTexture.Width / 2)),
-                        (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemTexture.Height / 2))
+                        (float)(LocalPosition.X - offset + (sideSize / 2) - (itemWidth / 2)),
+                        (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemHeight / 2))
                     );
 
-                    spriteBatch.Draw(itemTexture, new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height), Color.White);
+                    spriteBatch.Draw(
+                        itemTexture,
+                        new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemWidth, itemHeight),
+                        Color.White
+                    );
                 }
             }
-
-            //if (Item != null)
-            //{
-            //    //var itemTexture = Item.Texture;
-            //    var itemTexture = Item.Texture;
-
-            //    if (itemTexture != null)
-            //    {
-
-            //        float scale = (float)(sideSize / Globals.HOTBAR_SLOT_SIZE);
-
-            //        // create width and height with the scale of the selected slot
-            //        int itemWidth = (int)(itemTexture.Width * scale);
-            //        int itemHeight = (int)(itemTexture.Height * scale);
-
-            //        // new position to keep the item centered
-            //        var itemPosition = new Vector2(
-            //            (float)(LocalPosition.X - offset + (sideSize / 2) - (itemWidth / 2)),
-            //            (float)(LocalPosition.Y - offset + (sideSize / 2) - (itemHeight / 2))
-            //        );
-
-            //        spriteBatch.Draw(
-            //            itemTexture,
-            //            new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemWidth, itemHeight),
-            //            Color.White
-            //        );
-            //    }
-            //}
-            //spriteBatch.Draw(rectangle, new Rectangle((int)LocalPosition.X, (int)LocalPosition.Y, Globals.HOTBAR_SLOT_SIZE, Globals.HOTBAR_SLOT_SIZE), Color.LightGray);
-
-            //if (Item != null)
-            //{
-            //    // draw the item texture in the center of the slot
-            //    var itemTexture = Item.Texture;
-            //    if (itemTexture != null)
-            //    {
-            //        var itemPosition = new Vector2(LocalPosition.X + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Width / 2), LocalPosition.Y + (Globals.HOTBAR_SLOT_SIZE / 2) - (itemTexture.Height / 2));
-            //        spriteBatch.Draw(itemTexture, new Rectangle((int)itemPosition.X, (int)itemPosition.Y, itemTexture.Width, itemTexture.Height), Color.White);
-            //    }
-            //}
-
         }
+
     }
 }

@@ -11,7 +11,15 @@ namespace HealthyBusiness.Objects.Items
     public class Item : GameObject
     {
         public string Name { get; private set; }
-        public Texture2D? Texture { get; private set; }
+        //public Texture2D? Texture { get; private set; }
+        public Texture2D? Texture
+        {
+            get
+            {
+                return _texture;
+            }
+        }
+
         private Texture2D? _texture;
 
 
