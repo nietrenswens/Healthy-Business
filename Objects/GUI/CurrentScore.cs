@@ -45,7 +45,7 @@ namespace HealthyBusiness.Objects.GUI
                 if(hotbarSlot.Item != null)
                 {
                     ValuedItem item = hotbarSlot.Item;
-                    totalScore += item.price;
+                    totalScore += item.Price;
                 }
             }
 

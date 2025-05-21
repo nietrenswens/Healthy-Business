@@ -21,7 +21,7 @@ namespace HealthyBusiness.Objects.GUI
 
         public override void Load(ContentManager content)
         {
-            Add(new Text("fonts\\pixelated_elegance\\medium", $"{_item.Name} ${_item.price}", Color.White, guiStyling: new(
+            Add(new Text("fonts\\pixelated_elegance\\medium", $"{_item.Name} ${_item.Price}", Color.White, guiStyling: new(
                 verticalFloat: VerticalAlign.Bottom, marginBottom: Globals.HOTBAR_SLOT_SIZE + 20, horizontalFloat: HorizontalAlign.Center)));
         }
     }
