@@ -4,6 +4,7 @@ using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
 using HealthyBusiness.Objects.Creatures.Player;
@@ -18,6 +19,7 @@ namespace HealthyBusiness.Levels
     public class GameLevel : Level
     {
         private List<GameObject> _collidableGameObjects { get; set; }
+        private PauseMenu _pauseMenu = null!;
 
         public GameLevel()
         {
@@ -34,18 +36,24 @@ namespace HealthyBusiness.Levels
             AddGameObject(player);
             AddGameObject(new TomatoEnemy(new(15, 5)));
             AddGameObject(new TomatoEnemy(new(16, 9)));
+            _pauseMenu = new PauseMenu();
+            _pauseMenu.Load(content);
         }
 
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
-            base.Update(gameTime);
-
+            _pauseMenu.Update(gameTime);
+            if (!_pauseMenu.IsPaused)
+            {
+                base.Update(gameTime);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            _pauseMenu.Draw(spriteBatch);
         }
 
         public override void AddGameObject(GameObject gameObject)
