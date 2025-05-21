@@ -14,16 +14,16 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HealthyBusiness.Levels
+namespace HealthyBusiness.Scenes
 {
-    public class GameLevel : Level
+    public class GameScene : Scene
     {
         private List<GameObject> _collidableGameObjects { get; set; }
         private PauseMenu _pauseMenu = null!;
         
         public TileMapsManager TileMapsManager { get; set; }
 
-        public GameLevel()
+        public GameScene()
         {
             _collidableGameObjects = new List<GameObject>();
             TileMapsManager = new TileMapsManager();

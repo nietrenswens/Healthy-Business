@@ -25,7 +25,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 
         public override void Update(GameTime gameTime)
         {
-            var player = GameManager.GetGameManager().CurrentLevel.GameObjects.OfType<Player.Player>().First();
+            var player = GameManager.GetGameManager().CurrentScene.GameObjects.OfType<Player.Player>().First();
             var linecollider = new LinePieceCollider(Parent!.WorldPosition, player.GetGameObject<Collider>()!.Center);
             switch (State)
             {
@@ -38,7 +38,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                 case TomatoEnemyState.Attack:
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
-                        GameManager.GetGameManager().CurrentLevel.RemoveGameObject(Parent!);
+                        GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
                         return;
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)

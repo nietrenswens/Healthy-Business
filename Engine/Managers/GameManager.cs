@@ -1,5 +1,6 @@
-﻿using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Levels;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,13 +11,13 @@ namespace HealthyBusiness.Engine.Managers
     public class GameManager
     {
         private static GameManager _gameManager = null!;
-        private Level? _nextLevel;
+        private Scene? _nextScene;
         private Game _game = null!;
 
         public ContentManager ContentManager { get; private set; } = null!;
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Random RNG { get; private set; } = null!;
-        public Level CurrentLevel { get; private set; } = null!;
+        public Scene CurrentScene { get; private set; } = null!;
 
         private GameManager()
         {
@@ -38,36 +39,36 @@ namespace HealthyBusiness.Engine.Managers
         {
             ContentManager = contentManager;
             GraphicsDevice = graphicsDevice;
-            CurrentLevel = new MainMenu();
+            CurrentScene = new MainMenu();
             _game = game;
         }
 
         public void Load(ContentManager content)
         {
-            CurrentLevel.Load(content);
+            CurrentScene.Load(content);
         }
 
         public void Update(GameTime gameTime)
         {
             InputManager.GetInputManager().Update();
-            if (_nextLevel != null)
+            if (_nextScene != null)
             {
-                CurrentLevel.Unload();
-                CurrentLevel = _nextLevel;
-                _nextLevel = null;
-                CurrentLevel.Load(ContentManager);
+                CurrentScene.Unload();
+                CurrentScene = _nextScene;
+                _nextScene = null;
+                CurrentScene.Load(ContentManager);
             }
-            CurrentLevel.Update(gameTime);
+            CurrentScene.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            CurrentLevel.Draw(spriteBatch);
+            CurrentScene.Draw(spriteBatch);
         }
 
-        public void ChangeLevel(Level newLevel)
+        public void ChangeScene(Scene newScene)
         {
-            _nextLevel = newLevel;
+            _nextScene = newScene;
         }
 
         public void Exit()

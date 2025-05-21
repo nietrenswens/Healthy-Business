@@ -1,7 +1,7 @@
 ﻿using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace HealthyBusiness.Engine
 
             foreach (var tileset in map.Tilesets)
             {
-                ((GameLevel)gm.CurrentLevel).TileMapsManager.LoadMap(tileset.Name, tileset.FirstGid - 1, contentManager);
+                ((GameScene)gm.CurrentScene).TileMapsManager.LoadMap(tileset.Name, tileset.FirstGid - 1, contentManager);
             }
 
             foreach (var layer in map.Layers)
@@ -39,7 +39,7 @@ namespace HealthyBusiness.Engine
                             var gid = tile.Gid - 1;
                             if (gid == -1)
                                 continue;
-                            var tileMap = ((GameLevel)gm.CurrentLevel).TileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
+                            var tileMap = ((GameScene)gm.CurrentScene).TileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
                             gameObjects.Add(new Solid(new TileLocation(tile.X, tile.Y), tileMap.Tiles[gid]));
                         }
                         break;
@@ -49,7 +49,7 @@ namespace HealthyBusiness.Engine
                             var gid = tile.Gid - 1;
                             if (gid == -1)
                                 continue;
-                            var tileMap = ((GameLevel)gm.CurrentLevel).TileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
+                            var tileMap = ((GameScene)gm.CurrentScene).TileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
                             gameObjects.Add(new Floor(new TileLocation(tile.X, tile.Y), tileMap.Tiles[gid]));
                         }
                         break;

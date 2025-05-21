@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
 
-namespace HealthyBusiness.Levels
+namespace HealthyBusiness.Scenes
 {
-    public class MainMenu : Level
+    public class MainMenu : Scene
     {
         public override void Load(ContentManager content)
         {
@@ -30,7 +30,7 @@ namespace HealthyBusiness.Levels
 
         private void PlayButtonClicked(object? sender, EventArgs e)
         {
-            GameManager.GetGameManager().ChangeLevel(new GameLevel());
+            GameManager.GetGameManager().ChangeScene(new GameScene());
 
         }
 
