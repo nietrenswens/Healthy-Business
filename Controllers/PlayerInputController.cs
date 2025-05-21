@@ -57,13 +57,14 @@ namespace HealthyBusiness.Controllers
             {
                 direction.Y = 1;
             }
-            if(_inputManager.IsMouseScrollingUp()) {
-                if(hotbar != null) hotbar.SelectNextSlot(nextSlotSelected: false); // more readable than putting "false"
+            if (_inputManager.IsMouseScrollingUp())
+            {
+                if (hotbar != null) hotbar.SelectNextSlot(nextSlotSelected: false); // more readable than putting "false"
 
             }
             if (_inputManager.IsMouseScrollingDown())
             {
-                if(hotbar != null) hotbar.SelectNextSlot(nextSlotSelected: true); // same goes for here. More readable than just "true"
+                if (hotbar != null) hotbar.SelectNextSlot(nextSlotSelected: true); // same goes for here. More readable than just "true"
             }
 
             if (direction != Vector2.Zero)

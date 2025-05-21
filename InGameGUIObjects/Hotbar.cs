@@ -1,5 +1,6 @@
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Objects.Items;
 using Microsoft.Xna.Framework;
@@ -44,8 +45,6 @@ namespace HealthyBusiness.InGameGUIObjects
                 selectedSlot.isSelected = false;
                 int nextIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
                 HotbarSlots[nextIndex].isSelected = true;
-                ShowMetaData(HotbarSlots[nextIndex].Item);
-                //System.Diagnostics.Debug.WriteLine(HotbarSlots[nextIndex].Item);
             }
             else
             {
@@ -53,11 +52,8 @@ namespace HealthyBusiness.InGameGUIObjects
                 int previousIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
                 HotbarSlots[previousIndex].isSelected = true;
             }
-
-            //System.Diagnostics.Debug.WriteLine(createdHotbarSlots.Count);
-
-            // draw the hotbar container // TODO: niet nodig waarschijnlijk
-            //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
+            selectedSlot = GetSelectedSlot();
+            ShowMetaData(selectedSlot.Item);
         }
 
         public bool AddItem(ValuedItem item)
@@ -68,6 +64,10 @@ namespace HealthyBusiness.InGameGUIObjects
                 if (slot.Item == null)
                 {
                     slot.Item = item;
+                    if (GetSelectedSlot() == slot)
+                    {
+                        ShowMetaData(item);
+                    }
                     return true;
                 }
             }
@@ -106,17 +106,23 @@ namespace HealthyBusiness.InGameGUIObjects
                 );
             }
 
-            //System.Diagnostics.Debug.WriteLine(HotbarSlots.Count);
-
-            // draw the hotbar container // TODO: niet nodig waarschijnlijk
-            //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
             base.Draw(spriteBatch);
         }
 
         private void ShowMetaData(ValuedItem? item)
         {
-            // TODO: black rectangle above the hotbar with the name of the item and price
-            if (item == null) return;
+            var gameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
+            var currentMetaDataGui = gameLevel.GUIObjects.Attributes.OfType<ValuedItemMetaDataGUI>().FirstOrDefault();
+            if (currentMetaDataGui != null)
+            {
+                gameLevel.GUIObjects.Remove(currentMetaDataGui);
+            }
+
+            if (item != null)
+            {
+                gameLevel.GUIObjects.Add(new ValuedItemMetaDataGUI(item));
+            }
+
         }
     }
 }
