@@ -4,7 +4,6 @@ using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace HealthyBusiness.Objects.Items
 {
@@ -15,9 +14,6 @@ namespace HealthyBusiness.Objects.Items
 
         public string Name { get; private set; }
         public Texture2D? Texture => _texture;
-
-
-
 
         public Item(TileLocation tileLocation, string textureName, string name)
         {

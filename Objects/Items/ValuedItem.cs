@@ -12,7 +12,6 @@ namespace HealthyBusiness.Objects.Items
         public ValuedItem(TileLocation tileLocation, string textureName, string name, ItemRarity rarity) : base(tileLocation, textureName, name)
         {
             ItemRarity = rarity;
-
             Price = InitilizePrice(rarity);
         }
 
