@@ -19,6 +19,8 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public List<HotbarSlot> HotbarSlots = new List<HotbarSlot>();
 
+        public CurrentScore hotbarCurrentScore = new CurrentScore();
+
         public Hotbar()
         {
             InitializeHotbarSlots();
@@ -34,12 +36,8 @@ namespace HealthyBusiness.InGameGUIObjects
             }
         }
 
-        private HotbarSlot GetSelectedSlot()
-        {
-            return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
-        }
 
-        public void SelectNextSlot(bool moveToNextSlot)
+        public void SelectNextSlot(ScrollDirection scrollDirection)
         {
             GameLevel currentLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
             
@@ -54,20 +52,18 @@ namespace HealthyBusiness.InGameGUIObjects
 
             int selectedIndex = 0;
 
-            if (moveToNextSlot)
+            selectedSlot.isSelected = false;
+
+            if (scrollDirection == ScrollDirection.Down)
             {
-                selectedSlot.isSelected = false;
                 selectedIndex = (HotbarSlots.IndexOf(selectedSlot) + 1) % AMOUNT_OF_SLOTS;
-                HotbarSlots[selectedIndex].isSelected = true;
-                ShowMetaData(HotbarSlots[selectedIndex].Item);
-                //System.Diagnostics.Debug.WriteLine(HotbarSlots[nextIndex].Item);
             }
             else
             {
-                selectedSlot.isSelected = false;
                 selectedIndex = (HotbarSlots.IndexOf(selectedSlot) - 1 + AMOUNT_OF_SLOTS) % AMOUNT_OF_SLOTS;
-                HotbarSlots[selectedIndex].isSelected = true;
             }
+
+            HotbarSlots[selectedIndex].isSelected = true;
 
             var currentItem = HotbarSlots[selectedIndex].Item;
 
@@ -77,7 +73,6 @@ namespace HealthyBusiness.InGameGUIObjects
                     (ValuedItem)currentItem)
                 );
             }
-
         }
 
         public bool AddItem(ValuedItem item)
@@ -88,21 +83,16 @@ namespace HealthyBusiness.InGameGUIObjects
                 if (slot.Item == null)
                 {
                     slot.Item = item;
+
+                    // update the score
+                    hotbarCurrentScore.UpdateScore(this);
+
                     return true;
                 }
+
             }
 
             return false; // no empty slot 
-        }
-
-        public override void Load(ContentManager content)
-        {
-            base.Load(content);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
         }
 
         public override void Unload()
@@ -120,29 +110,27 @@ namespace HealthyBusiness.InGameGUIObjects
 
                 slot.Draw(
                     spriteBatch,
-                    (i > 0)                             // check if te iteration is the first index
-                        ? HotbarSlots[i - 1]     // if it is not the first iteration, pass the previous slot
-                        : null                         // if it is the first iteration, pass null to prevent a index out of range exception     
+                    (i > 0)                             
+                        ? HotbarSlots[i - 1]     
+                        : null                             
                 );
             }
 
-            //System.Diagnostics.Debug.WriteLine(HotbarSlots.Count);
 
             // draw the hotbar container // TODO: niet nodig waarschijnlijk
             //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
             base.Draw(spriteBatch);
         }
 
-        private void ShowMetaData(ValuedItem? item)
+        private HotbarSlot GetSelectedSlot()
         {
-            // TODO: black rectangle above the hotbar with the name of the item and price
-            if (item == null) return;
-
-            var font = GameManager.GetGameManager().ContentManager.Load<SpriteFont>("fonts\\pixelated_elegance\\small");
-
-            var text = item.Name + " - " + item.price.ToString() + "DAM PIECES";
-
-            //SpriteBatch spriteBatch = GameManager.GetGameManager().SpriteBatch;
+            return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
         }
+    }
+
+    public enum ScrollDirection
+    {
+        Up,
+        Down
     }
 }

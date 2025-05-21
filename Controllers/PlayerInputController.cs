@@ -31,15 +31,8 @@ namespace HealthyBusiness.Controllers
             var direction = Vector2.Zero;
 
             GameLevel currentGameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
-            //Hotbar hotbar = currentGameLevel.GUIObjects.Attributes.OfType<Hotbar>()
-            //    .First();
-
-            // TODO: when the game is initlized, the hotbar is not yet created. We need to fix this but for now we skip it when it is null
-            Hotbar hotbar = currentGameLevel.GUIObjects.Attributes.Where(x => x is Hotbar).FirstOrDefault() as Hotbar;
-
-            //System.Diagnostics.Debug.WriteLine(currentGameLevel.GUIObjects.Attributes.ToString);
-
-
+      
+            Hotbar? hotbar = currentGameLevel.GUIObjects.Attributes.Where(x => x is Hotbar).FirstOrDefault() as Hotbar;
 
             if (_inputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
             {
@@ -58,12 +51,12 @@ namespace HealthyBusiness.Controllers
                 direction.Y = 1;
             }
             if(_inputManager.IsMouseScrollingUp()) {
-                if(hotbar != null) hotbar.SelectNextSlot(moveToNextSlot: false); // more readable than putting "false"
+                if(hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Up);
 
             }
             if (_inputManager.IsMouseScrollingDown())
             {
-                if(hotbar != null) hotbar.SelectNextSlot(moveToNextSlot: true); // same goes for here. More readable than just "true"
+                if(hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Down);
             }
 
             if (direction != Vector2.Zero)

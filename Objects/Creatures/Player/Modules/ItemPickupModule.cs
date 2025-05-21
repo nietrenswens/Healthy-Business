@@ -69,11 +69,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
                 }
                
                 GameManager.GetGameManager().CurrentLevel.RemoveGameObject(SelectedItem);
-                // TODO: add item to the hotbar of the player 
-                // the way to do it should be: gamemanager.hotbar.AddItem(SelectedItem); and the drawing of the hotbar does the rest
-
-
-
+ 
                 SelectedItem = null;
             }
         }
