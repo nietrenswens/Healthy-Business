@@ -52,5 +52,12 @@ namespace HealthyBusiness.Objects.Creatures.Player
         {
             base.OnCollision(other);
         }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            _animation.Draw(spriteBatch, WorldPosition, LocalScale/2);
+            //base.Draw(spriteBatch);
+        }
+
     }
 }
