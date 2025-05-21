@@ -11,6 +11,7 @@ using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,27 +19,35 @@ namespace HealthyBusiness.Scenes
 {
     public class GameScene : Scene
     {
+        private Level? _nextLevel;
+        private Vector2? _playerSpawnLocation;
         private List<GameObject> _collidableGameObjects { get; set; }
         private PauseMenu _pauseMenu = null!;
         
         public TileMapsManager TileMapsManager { get; set; }
+        public List<Level> Levels { get; private set; }
+        public Level Currentlevel = null!;
+        public bool HasNextLevel => _nextLevel != null;
 
         public GameScene()
         {
             _collidableGameObjects = new List<GameObject>();
             TileMapsManager = new TileMapsManager();
+            Levels = new List<Level>();
+            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom"));
+            Levels.Add(new("Maps\\test\\restroom.tmx", "restroom", topLevelId: "order_room"));
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
-            var player = new Player(new TileLocation(4, 6));
+            var player = new Player(new TileLocation(1, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            AddGameObject(LevelLoader.LoadMap("Maps/test/test.tmx", content));
             SpawnRandomItems(5);
+            Levels.ForEach(level => level.Load(content));
+            Currentlevel = Levels[0];
+            AddGameObject(Currentlevel.GameObjects);
             AddGameObject(player);
-            AddGameObject(new TomatoEnemy(new(15, 5)));
-            AddGameObject(new TomatoEnemy(new(16, 9)));
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
         }
@@ -47,9 +56,16 @@ namespace HealthyBusiness.Scenes
         {
             CheckCollision();
             _pauseMenu.Update(gameTime);
+
             if (!_pauseMenu.IsPaused)
             {
                 base.Update(gameTime);
+            }
+            
+            if (_nextLevel != null)
+            {
+                ChangeLevel(_nextLevel);
+                _nextLevel = null;
             }
         }
 
@@ -62,7 +78,10 @@ namespace HealthyBusiness.Scenes
         public override void AddGameObject(GameObject gameObject)
         {
             base.AddGameObject(gameObject);
-            if (!gameObject.GetGameObject<Collider>()?.CollisionGroup.HasFlag(CollisionGroup.None) ?? false)
+            var hasFlag = gameObject.CollisionGroup == CollisionGroup.None;
+            if (gameObject is Player)
+                Console.WriteLine();
+            if (!hasFlag)
             {
                 _collidableGameObjects.Add(gameObject);
             }
@@ -85,14 +104,39 @@ namespace HealthyBusiness.Scenes
             }
         }
 
+        public void ScheduleLevelChange(Level level, Vector2 playerSpawnLocation)
+        {
+            _nextLevel = level;
+            _playerSpawnLocation = playerSpawnLocation;
+        }
+
+        private void ChangeLevel(Level level)
+        {
+            var player = GameObjects.OfType<Player>().First();
+            Unload();
+            Currentlevel = level;
+            AddGameObject(Currentlevel.GameObjects);
+            player.WorldPosition = (Vector2)_playerSpawnLocation!;
+            AddGameObject(player);
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
+            _collidableGameObjects.Clear();
+        }
+
         private void CheckCollision()
         {
             foreach (var gameObject in _collidableGameObjects)
             {
                 foreach (var other in _collidableGameObjects)
                 {
-                    if (gameObject != other && gameObject.GetGameObject<Collider>() != null && other.GetGameObject<Collider>() != null)
+                    var collider = gameObject.GetGameObject<Collider>();
+                    if (gameObject != other && collider != null && other.GetGameObject<Collider>() != null)
                     {
+                        if (collider.CollisionGroup == CollisionGroup.Utility)
+                            Console.WriteLine();
                         if (gameObject.GetGameObject<Collider>()!.CheckIntersection(other.GetGameObject<Collider>()!))
                         {
                             gameObject.OnCollision(other);

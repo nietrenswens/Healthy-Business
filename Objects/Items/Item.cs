@@ -19,6 +19,7 @@ namespace HealthyBusiness.Objects.Items
             _textureName = textureName;
             WorldPosition = tileLocation.ToVector2();
             Name = name;
+            CollisionGroup = CollisionGroup.Item;
         }
 
         public override void Load(ContentManager content)
@@ -26,7 +27,6 @@ namespace HealthyBusiness.Objects.Items
             base.Load(content);
             _texture = content.Load<Texture2D>(_textureName);
             var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(_texture.Width, _texture.Height)));
-            collider.CollisionGroup = CollisionGroup.Item;
             Add(collider);
         }
 

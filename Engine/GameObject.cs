@@ -1,10 +1,12 @@
-﻿using HealthyBusiness.Engine.Interfaces;
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthyBusiness.Engine
 {
@@ -12,9 +14,11 @@ namespace HealthyBusiness.Engine
     {
         private List<GameObject> _componentsToBeAdded = new List<GameObject>();
         private List<GameObject> _componentsToBeRemoved = new List<GameObject>();
+        public CollisionGroup CollisionGroup { get; set; } = CollisionGroup.None;
 
         public GameObject? Parent { get; set; }
         public List<GameObject> Components { get; private set; }
+        public IReadOnlyList<GameObject> AllComponents => Components.Concat(_componentsToBeAdded).ToList();
         public Vector2 LocalPosition;
         public float LocalRotation = 0f;
         public float LocalScale = 1f;

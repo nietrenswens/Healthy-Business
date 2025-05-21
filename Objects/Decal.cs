@@ -1,5 +1,4 @@
-﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -7,27 +6,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HealthyBusiness.Objects
 {
-    public class Solid : GameObject
+    public class Decal : GameObject
     {
         private Tile _tile;
 
-        public Solid(TileLocation tileLocation, Tile tile)
+        public Decal(TileLocation tileLocation, Tile tile)
         {
             WorldPosition = tileLocation.ToVector2();
             _tile = tile;
-            CollisionGroup = CollisionGroup.Solid;
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
-            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)));
-            Add(collider);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

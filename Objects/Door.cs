@@ -1,0 +1,94 @@
+﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Scenes;
+using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
+
+namespace HealthyBusiness.Objects
+{
+    public class Door : GameObject
+    {
+        public DoorType DoorType { get; private set; }
+        public string DestinationlevelId { get; private set; }
+
+        public Door(TileLocation tileLocation, DoorType doorType, string destinationLevelId)
+        {
+            DoorType = doorType;
+            WorldPosition = tileLocation.ToVector2();
+            DestinationlevelId = destinationLevelId;
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Globals.TILESIZE, Globals.TILESIZE)));
+            CollisionGroup = CollisionGroup.Utility;
+            Add(collider);
+        }
+
+        public override void OnCollision(GameObject other)
+        {
+            if (other is not Player)
+                return;
+
+            var player = (Player)other;
+            var gameScene = (GameScene)GameManager.GetGameManager().CurrentScene;
+            var nextLevel = gameScene.Levels.FirstOrDefault(l => l.Id == DestinationlevelId);
+
+            if (nextLevel == null)
+                throw new Exception($"Level with ID {DestinationlevelId} not found.");
+
+            var destinationDoor = nextLevel.Doors.FirstOrDefault(d => d.DoorType == DoorType.Opposite());
+            if (destinationDoor == null)
+                throw new Exception($"Destination door not found for level {DestinationlevelId}.");
+
+            if (!gameScene.HasNextLevel)
+                gameScene.ScheduleLevelChange(nextLevel, destinationDoor.EntitySpawnLocation());
+        }
+
+        public Vector2 EntitySpawnLocation()
+        {
+            Vector2 dest;
+            switch (DoorType)
+            {
+                case DoorType.Left:
+                    dest = new TileLocation(TileLocation.X + 1, TileLocation.Y).ToVector2() + new Vector2(64, 0);
+                    break;
+                case DoorType.Right:
+                    dest = new TileLocation(TileLocation.X - 1, TileLocation.Y).ToVector2() - new Vector2(64, 0);
+                    break;
+                case DoorType.Top:
+                    dest = new TileLocation(TileLocation.X, TileLocation.Y + 1).ToVector2() + new Vector2(0, 64);
+                    break;
+                case DoorType.Bottom:
+                    dest = new TileLocation(TileLocation.X, TileLocation.Y - 1).ToVector2() - new Vector2(0, 64);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(DoorType), DoorType, null);
+            }
+            return dest;
+        }
+    }
+
+    public enum DoorType
+    {
+        Left = 0,
+        Right = 1,
+        Top = 2,
+        Bottom = 3,
+    }
+
+    public static class DoorTypeExtensions
+    {
+        public static DoorType Opposite(this DoorType doorType)
+        {
+            return doorType switch
+            {
+                DoorType.Left => DoorType.Right,
+                DoorType.Right => DoorType.Left,
+                DoorType.Top => DoorType.Bottom,
+                DoorType.Bottom => DoorType.Top,
+                _ => throw new ArgumentOutOfRangeException(nameof(doorType), doorType, null)
+            };
+        }
+    }
+}

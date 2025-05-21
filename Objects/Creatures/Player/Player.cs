@@ -17,6 +17,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
             Add(new ItemPickupModule());
+            CollisionGroup = CollisionGroup.Player;
         }
 
         public Player(TileLocation tileLocation) : this(tileLocation.ToVector2())
@@ -28,9 +29,8 @@ namespace HealthyBusiness.Objects.Creatures.Player
             var width = (int)(Texture.Width * LocalScale);
             var height = (int)(Texture.Height * LocalScale);
 
-            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height / 2)));
-            collider.LocalPosition = new Vector2(0, height / 2);
-            collider.CollisionGroup = CollisionGroup.Player;
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width / 4, height / 4)));
+            collider.LocalPosition = new Vector2((width / 2) - (width / 8), height - height / 4);
             Add(collider);
             base.Load(content);
         }

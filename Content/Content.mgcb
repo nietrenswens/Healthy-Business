@@ -161,7 +161,7 @@
 /processorParam:TextureFormat=Color
 /build:objects/wall.png
 
-#begin tilemaps/Interiors_64x64_1.png
+#begin tilemaps/Interior-1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -171,9 +171,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_1.png
+/build:tilemaps/Interior-1.png
 
-#begin tilemaps/Interiors_64x64_10.png
+#begin tilemaps/Interior-10.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -183,9 +183,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_10.png
+/build:tilemaps/Interior-10.png
 
-#begin tilemaps/Interiors_64x64_11.png
+#begin tilemaps/Interior-11.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -195,9 +195,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_11.png
+/build:tilemaps/Interior-11.png
 
-#begin tilemaps/Interiors_64x64_12.png
+#begin tilemaps/Interior-12.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -207,9 +207,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_12.png
+/build:tilemaps/Interior-12.png
 
-#begin tilemaps/Interiors_64x64_13.png
+#begin tilemaps/Interior-13.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -219,9 +219,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_13.png
+/build:tilemaps/Interior-13.png
 
-#begin tilemaps/Interiors_64x64_14.png
+#begin tilemaps/Interior-14.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -231,9 +231,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_14.png
+/build:tilemaps/Interior-14.png
 
-#begin tilemaps/Interiors_64x64_15.png
+#begin tilemaps/Interior-2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -243,9 +243,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_15.png
+/build:tilemaps/Interior-2.png
 
-#begin tilemaps/Interiors_64x64_16.png
+#begin tilemaps/Interior-3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -255,9 +255,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_16.png
+/build:tilemaps/Interior-3.png
 
-#begin tilemaps/Interiors_64x64_2.png
+#begin tilemaps/Interior-4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -267,9 +267,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_2.png
+/build:tilemaps/Interior-4.png
 
-#begin tilemaps/Interiors_64x64_3.png
+#begin tilemaps/Interior-5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -279,9 +279,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_3.png
+/build:tilemaps/Interior-5.png
 
-#begin tilemaps/Interiors_64x64_4.png
+#begin tilemaps/Interior-6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -291,9 +291,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_4.png
+/build:tilemaps/Interior-6.png
 
-#begin tilemaps/Interiors_64x64_5.png
+#begin tilemaps/Interior-7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -303,9 +303,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_5.png
+/build:tilemaps/Interior-7.png
 
-#begin tilemaps/Interiors_64x64_6.png
+#begin tilemaps/Interior-8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -315,9 +315,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_6.png
+/build:tilemaps/Interior-8.png
 
-#begin tilemaps/Interiors_64x64_7.png
+#begin tilemaps/Interior-9.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -327,31 +327,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_7.png
-
-#begin tilemaps/Interiors_64x64_8.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_8.png
-
-#begin tilemaps/Interiors_64x64_9.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:tilemaps/Interiors_64x64_9.png
+/build:tilemaps/Interior-9.png
 
 #begin tilemaps/Room_Builder_64x64.png
 /importer:TextureImporter
@@ -364,4 +340,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tilemaps/Room_Builder_64x64.png
+
+#begin tilemaps/Utilities.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tilemaps/Utilities.png
 
