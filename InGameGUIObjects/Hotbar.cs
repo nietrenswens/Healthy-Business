@@ -19,11 +19,13 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public List<HotbarSlot> HotbarSlots = new List<HotbarSlot>();
 
-        public CurrentScore hotbarCurrentScore = new CurrentScore();
+        //public CurrentScore hotbarCurrentScore = new CurrentScore();
 
         public Hotbar()
         {
             InitializeHotbarSlots();
+            GameLevel currentLevel = ((GameLevel)GameManager.GetGameManager().CurrentLevel);
+            currentLevel.GUIObjects.Add(new CurrentScore());  
         }
 
         public void InitializeHotbarSlots()
@@ -83,9 +85,6 @@ namespace HealthyBusiness.InGameGUIObjects
                 if (slot.Item == null)
                 {
                     slot.Item = item;
-
-                    // update the score
-                    hotbarCurrentScore.UpdateScore(this);
 
                     return true;
                 }

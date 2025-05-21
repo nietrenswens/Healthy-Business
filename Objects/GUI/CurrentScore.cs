@@ -53,16 +53,35 @@ namespace HealthyBusiness.Objects.GUI
             Score = totalScore;
 
             System.Diagnostics.Debug.WriteLine(Score);
+            AddText();
+        }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            var hotbar = ((GameLevel)GameManager.GetGameManager().CurrentLevel).GUIObjects.Attributes.OfType<Hotbar>().FirstOrDefault();
+
+            if (hotbar != null)
+            {
+                UpdateScore(hotbar);
+            }
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
-            GameLevel currentLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
+            AddText();
+        }
 
-            currentLevel.GUIObjects.Add(
-                new Text("fonts\\pixelated_elegance\\med", Score.ToString(), Color.White, new GUIStyling(marginTop: 0, horizontalFloat: HorizontalAlign.Center))
+        public void AddText()
+        {
+            if(Components.OfType<Text>().Any())
+            {
+                Remove(Components.OfType<Text>().First());
+            }
+
+            Add(
+                new Text("fonts\\pixelated_elegance\\title", Score.ToString(), Color.White, new GUIStyling(marginTop: 0, horizontalFloat: HorizontalAlign.Right))
             );
         }
     }
