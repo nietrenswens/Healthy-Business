@@ -1,4 +1,4 @@
-﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
@@ -23,7 +23,6 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (Parent is not Player)
                 throw new Exception("ItemPickupModule can only be added to a Player.");
 
-            var parentCollider = Parent!.GetGameObject<Collider>();
             Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
         }
 
@@ -57,7 +56,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
 
         private void CheckInput()
         {
-            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
+            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null && SelectedItem is ValuedItem)
             {
                 var gameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
                 

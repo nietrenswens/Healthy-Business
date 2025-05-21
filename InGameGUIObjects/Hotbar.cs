@@ -1,4 +1,4 @@
-﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.GUI;
