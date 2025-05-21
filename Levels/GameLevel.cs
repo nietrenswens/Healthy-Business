@@ -1,17 +1,16 @@
-﻿using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Builders;
+﻿using HealthyBusiness.Builders;
 using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,9 +19,7 @@ namespace HealthyBusiness.Levels
     public class GameLevel : Level
     {
         private List<GameObject> _collidableGameObjects { get; set; }
-        private bool _isPaused = false;
-        private KeyboardState _previousKeyboardState;
-        private PauseMenu _pauseMenu;
+        private PauseMenu _pauseMenu = null!;
 
         public GameLevel()
         {
@@ -46,38 +43,17 @@ namespace HealthyBusiness.Levels
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            var inputManager = InputManager.GetInputManager();
-            if (inputManager.IsKeyDown(Keys.Escape) && !inputManager.LastKeyboardState.IsKeyDown(Keys.Escape) && !_isPaused)
+            _pauseMenu.Update(gameTime);
+            if (!_pauseMenu.IsPaused)
             {
-                _isPaused = true;
+                base.Update(gameTime);
             }
-
-            if (_isPaused)
-            {
-                _pauseMenu.Update(gameTime);
-
-                if (_pauseMenu.IsClosed)
-                {
-                    _isPaused = false;
-                    _pauseMenu.Reset();
-                }
-
-                return;
-            }
-
-            base.Update(gameTime);
-
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            if (_isPaused)
-            {
-                _pauseMenu.Draw(spriteBatch);
-            }
+            _pauseMenu.Draw(spriteBatch);
         }
 
         public override void AddGameObject(GameObject gameObject)

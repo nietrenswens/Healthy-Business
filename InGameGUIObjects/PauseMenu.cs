@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Levels;
+using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using HealthyBusiness.Objects.GUI;
-using HealthyBusiness.Engine.GUI;
-using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Levels;
-using HealthyBusiness.Cameras;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 
 namespace HealthyBusiness.InGameGUIObjects
 {
     public class PauseMenu : GameObject
     {
-        public bool IsClosed { get; private set; } = false;
+        public bool IsPaused { get; private set; }
+
+        public PauseMenu()
+        {
+            IsPaused = false;
+        }
 
         public override void Load(ContentManager content)
         {
@@ -36,9 +36,19 @@ namespace HealthyBusiness.InGameGUIObjects
             Add(mainMenuButton);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            var inputManager = InputManager.GetInputManager();
+            if (inputManager.IsKeyPressed(Keys.Escape))
+            {
+                IsPaused = !IsPaused;
+            }
+        }
+
         private void ResumeButtonClicked(object? sender, EventArgs e)
         {
-            IsClosed = true;
+            IsPaused = false;
         }
 
         private void QuitButtonClicked(object? sender, EventArgs e)
@@ -46,13 +56,10 @@ namespace HealthyBusiness.InGameGUIObjects
             GameManager.GetGameManager().ChangeLevel(new MainMenu());
         }
 
-        public void Reset()
-        {
-            IsClosed = false;
-        }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (!IsPaused)
+                return;
             spriteBatch.Begin();
             base.Draw(spriteBatch);
             spriteBatch.End();
