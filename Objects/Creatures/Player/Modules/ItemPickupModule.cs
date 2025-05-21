@@ -56,17 +56,17 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
 
         private void CheckInput()
         {
-            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
+            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null && SelectedItem is ValuedItem)
             {
                 var gameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
-                
-                if(!gameLevel.GUIObjects.Attributes.OfType<Hotbar>()
+
+                if (!gameLevel.GUIObjects.Attributes.OfType<Hotbar>()
                     .First()
-                    .AddItem(SelectedItem))
+                    .AddItem((ValuedItem)SelectedItem))
                 {
                     return; // no empty slot
                 }
-               
+
                 GameManager.GetGameManager().CurrentLevel.RemoveGameObject(SelectedItem);
                 // TODO: add item to the hotbar of the player 
                 // the way to do it should be: gamemanager.hotbar.AddItem(SelectedItem); and the drawing of the hotbar does the rest
