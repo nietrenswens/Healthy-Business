@@ -20,8 +20,6 @@ namespace HealthyBusiness.Engine
         private int _amountOfRows;
         private bool _isLooping;
 
-        
-
         public Animation(int frameWidth, int frameHeight, int frameDuration, int rowPlaying, int amountOfRows, bool isLooping = false)
         {
             _frameWidth = frameWidth;
