@@ -53,11 +53,11 @@ namespace HealthyBusiness.Objects.Creatures.Player
             base.OnCollision(other);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            Animation.Draw(spriteBatch, WorldPosition, LocalScale/2);
-            //base.Draw(spriteBatch);
-        }
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    Animation.Draw(spriteBatch, WorldPosition, LocalScale/2);
+        //    //base.Draw(spriteBatch);
+        //}
 
     }
 }
