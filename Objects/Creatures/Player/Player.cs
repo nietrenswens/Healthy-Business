@@ -1,18 +1,19 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using HealthyBusiness.Animations;
 
 namespace HealthyBusiness.Objects.Creatures.Player
 {
-    public class Player : Creature
+    public class Player : Creature, IAnimatedCreature
     {
-
-        protected Animation _animation;
 
         public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
@@ -38,29 +39,18 @@ namespace HealthyBusiness.Objects.Creatures.Player
             Add(collider);
             base.Load(content);
 
-            _animation = new PlayerAnimation("entities\\daniel", 3);
+            Animation = new PlayerAnimation("entities\\daniel");
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (_animation.CurrentRow != 3)
-            {
-                _animation.SetRow(3);
-            }
-            _animation.Update(gameTime);
+            Animation.Update(gameTime);
         }
 
         public override void OnCollision(GameObject other)
         {
             base.OnCollision(other);
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            _animation.Draw(spriteBatch, WorldPosition, LocalScale/2);
-            //base.Draw(spriteBatch);
-        }
-
     }
 }

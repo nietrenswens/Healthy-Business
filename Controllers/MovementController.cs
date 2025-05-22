@@ -11,6 +11,9 @@ namespace HealthyBusiness.Controllers
         public float Speed { get; set; }
 
         protected TileLocation? _targetLocation;
+        
+        private Vector2 _lastMoveDirection = Vector2.Zero;
+
 
         private Vector2 _lastMoveDirection = Vector2.Zero;
 
