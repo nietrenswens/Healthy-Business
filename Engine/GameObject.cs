@@ -18,6 +18,7 @@ namespace HealthyBusiness.Engine
 
         public GameObject? Parent { get; set; }
         public List<GameObject> Components { get; private set; }
+        public bool IsPersistent { get; protected set; } = false;
         public IReadOnlyList<GameObject> AllComponents => Components.Concat(_componentsToBeAdded).ToList();
         public Vector2 LocalPosition;
         public float LocalRotation = 0f;

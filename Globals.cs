@@ -9,7 +9,7 @@
         public const int MAPWIDTH = 20;
         public const int MAPHEIGHT = 10;
 
-        public const bool DEBUG = true;
+        public const bool DEBUG = false;
 
         #region Player globals
         /// <summary>

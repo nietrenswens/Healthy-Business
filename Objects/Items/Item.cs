@@ -20,6 +20,7 @@ namespace HealthyBusiness.Objects.Items
             WorldPosition = tileLocation.ToVector2();
             Name = name;
             CollisionGroup = CollisionGroup.Item;
+            IsPersistent = true;
         }
 
         public override void Load(ContentManager content)

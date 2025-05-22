@@ -6,7 +6,6 @@ using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects;
-using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -28,25 +27,21 @@ namespace HealthyBusiness.Scenes
         public List<Level> Levels { get; private set; }
         public Level Currentlevel = null!;
         public bool HasNextLevel => _nextLevel != null;
+        public LevelManager LevelManager { get; private set; }
 
         public GameScene()
         {
             _collidableGameObjects = new List<GameObject>();
-            TileMapsManager = new TileMapsManager();
-            Levels = new List<Level>();
-            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom"));
-            Levels.Add(new("Maps\\test\\restroom.tmx", "restroom", topLevelId: "order_room"));
+            LevelManager = new(this);
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
+            LevelManager.Load(content);
             var player = new Player(new TileLocation(1, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             SpawnRandomItems(5);
-            Levels.ForEach(level => level.Load(content));
-            Currentlevel = Levels[0];
-            AddGameObject(Currentlevel.GameObjects);
             AddGameObject(player);
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
@@ -61,12 +56,9 @@ namespace HealthyBusiness.Scenes
             {
                 base.Update(gameTime);
             }
-            
-            if (_nextLevel != null)
-            {
-                ChangeLevel(_nextLevel);
-                _nextLevel = null;
-            }
+
+            LevelManager.Update(gameTime);
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -79,8 +71,6 @@ namespace HealthyBusiness.Scenes
         {
             base.AddGameObject(gameObject);
             var hasFlag = gameObject.CollisionGroup == CollisionGroup.None;
-            if (gameObject is Player)
-                Console.WriteLine();
             if (!hasFlag)
             {
                 _collidableGameObjects.Add(gameObject);
@@ -102,22 +92,6 @@ namespace HealthyBusiness.Scenes
             {
                 _collidableGameObjects.Remove(gameObject);
             }
-        }
-
-        public void ScheduleLevelChange(Level level, Vector2 playerSpawnLocation)
-        {
-            _nextLevel = level;
-            _playerSpawnLocation = playerSpawnLocation;
-        }
-
-        private void ChangeLevel(Level level)
-        {
-            var player = GameObjects.OfType<Player>().First();
-            Unload();
-            Currentlevel = level;
-            AddGameObject(Currentlevel.GameObjects);
-            player.WorldPosition = (Vector2)_playerSpawnLocation!;
-            AddGameObject(player);
         }
 
         public override void Unload()

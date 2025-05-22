@@ -30,9 +30,15 @@ namespace HealthyBusiness.Objects
             if (other is not Player)
                 return;
 
+            if (DoorType == DoorType.Exit)
+            {
+                GameManager.GetGameManager().ChangeScene(new MainMenu());
+                return;
+            }
+
             var player = (Player)other;
             var gameScene = (GameScene)GameManager.GetGameManager().CurrentScene;
-            var nextLevel = gameScene.Levels.FirstOrDefault(l => l.Id == DestinationlevelId);
+            var nextLevel = gameScene.LevelManager.Levels.FirstOrDefault(l => l.Id == DestinationlevelId);
 
             if (nextLevel == null)
                 throw new Exception($"Level with ID {DestinationlevelId} not found.");
@@ -41,8 +47,8 @@ namespace HealthyBusiness.Objects
             if (destinationDoor == null)
                 throw new Exception($"Destination door not found for level {DestinationlevelId}.");
 
-            if (!gameScene.HasNextLevel)
-                gameScene.ScheduleLevelChange(nextLevel, destinationDoor.EntitySpawnLocation());
+            if (!gameScene.LevelManager.HasNextLevel)
+                gameScene.LevelManager.ScheduleLevelChange(nextLevel, destinationDoor.EntitySpawnLocation());
         }
 
         public Vector2 EntitySpawnLocation()
@@ -57,7 +63,7 @@ namespace HealthyBusiness.Objects
                     dest = new TileLocation(TileLocation.X - 1, TileLocation.Y).ToVector2() - new Vector2(64, 0);
                     break;
                 case DoorType.Top:
-                    dest = new TileLocation(TileLocation.X, TileLocation.Y + 1).ToVector2() + new Vector2(0, 64);
+                    dest = new TileLocation(TileLocation.X, TileLocation.Y + 1).ToVector2();
                     break;
                 case DoorType.Bottom:
                     dest = new TileLocation(TileLocation.X, TileLocation.Y - 1).ToVector2() - new Vector2(0, 64);
@@ -75,6 +81,7 @@ namespace HealthyBusiness.Objects
         Right = 1,
         Top = 2,
         Bottom = 3,
+        Exit = 4,
     }
 
     public static class DoorTypeExtensions
