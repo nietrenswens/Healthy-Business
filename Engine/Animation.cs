@@ -7,6 +7,7 @@ namespace HealthyBusiness.Engine
     public class Animation
     {
         public bool IsFinished { get; set; }
+        private bool _isPaused = false;
 
         protected Texture2D _texture;
 
@@ -16,19 +17,28 @@ namespace HealthyBusiness.Engine
         private int _time;
         private int _frameDuration;
         private int _rowPlaying;
+        private int _amountOfRows;
         private bool _isLooping;
 
-        public Animation(int frameWidth, int frameHeight, int frameDuration, int rowPlaying, bool isLooping = true)
+        
+
+        public Animation(int frameWidth, int frameHeight, int frameDuration, int rowPlaying, int amountOfRows, bool isLooping = false)
         {
             _frameWidth = frameWidth;
             _frameHeight = frameHeight;
             _frameDuration = frameDuration;
             _rowPlaying = rowPlaying;
+            _amountOfRows = amountOfRows;
             _isLooping = isLooping;
         }
 
         public void SetRow(int row)
         {
+            if (row >= _amountOfRows)
+            {
+                row = 0;
+            }
+
             _rowPlaying = row;
             _currentFrameIndex = 0;
             _time = 0;
@@ -37,7 +47,7 @@ namespace HealthyBusiness.Engine
 
         public void Update(GameTime gameTime)
         {
-            if (IsFinished) return;
+            if (IsFinished || _isPaused) return;
 
             _time += gameTime.ElapsedGameTime.Milliseconds;
             int totalFrames = _texture.Width / _frameWidth;
@@ -59,7 +69,7 @@ namespace HealthyBusiness.Engine
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position, float scale = 1f)
         {
-            if (IsFinished) return;
+            if (IsFinished || _rowPlaying >= _amountOfRows) return;
 
             Rectangle sourceRectangle = new Rectangle(
                 _currentFrameIndex * _frameWidth,
@@ -79,6 +89,17 @@ namespace HealthyBusiness.Engine
             );
 
             spriteBatch.Draw(_texture, destinationRectangle, sourceRectangle, Color.White);
+        }
+
+        public void Pause()
+        {
+            _isPaused = true;
+            _currentFrameIndex = 0;
+        }
+
+        public void Resume()
+        {
+            _isPaused = false;
         }
 
         public int CurrentRow => _rowPlaying;
