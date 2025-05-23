@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Objects.Creatures.Player;
+﻿using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace HealthyBusiness.Engine.Managers
     public class LevelManager
     {
         private Level? _nextLevel;
-        private Vector2? _playerSpawnLocation;
+        private TileLocation? _playerSpawnLocation;
         private Scene _scene;
 
         public List<Level> Levels { get; private set; }
@@ -20,12 +21,13 @@ namespace HealthyBusiness.Engine.Managers
         {
             _scene = scene;
             Levels = new List<Level>();
-            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom", topLevelId: "kitchen"));
+            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom", topLevelId: "kitchen", rightLevelId: "party_room"));
             Levels.Add(new("Maps\\test\\restroom.tmx", "restroom", topLevelId: "order_room"));
             Levels.Add(new("Maps\\test\\kitchen.tmx", "kitchen", bottomLevelId: "order_room"));
+            Levels.Add(new("Maps\\test\\party_room.tmx", "party_room", leftlevelId: "order_room"));
         }
 
-        public void ScheduleLevelChange(Level level, Vector2 playerSpawnLocation)
+        public void ScheduleLevelChange(Level level, TileLocation playerSpawnLocation)
         {
             _nextLevel = level;
             _playerSpawnLocation = playerSpawnLocation;
@@ -55,7 +57,7 @@ namespace HealthyBusiness.Engine.Managers
             Currentlevel = level;
             _scene.AddGameObject(Currentlevel.GameObjects);
             _scene.AddGameObject(Currentlevel.SavedGameObjects);
-            player.WorldPosition = (Vector2)_playerSpawnLocation!;
+            player.SetFeetPosition(_playerSpawnLocation!);
             _scene.AddGameObject(player);
         }
 

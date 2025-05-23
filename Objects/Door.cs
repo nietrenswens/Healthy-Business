@@ -51,22 +51,22 @@ namespace HealthyBusiness.Objects
                 gameScene.LevelManager.ScheduleLevelChange(nextLevel, destinationDoor.EntitySpawnLocation());
         }
 
-        public Vector2 EntitySpawnLocation()
+        public TileLocation EntitySpawnLocation()
         {
-            Vector2 dest;
+            TileLocation dest;
             switch (DoorType)
             {
                 case DoorType.Left:
-                    dest = new TileLocation(TileLocation.X + 1, TileLocation.Y).ToVector2() + new Vector2(64, 0);
+                    dest = new TileLocation(TileLocation.X + 1, TileLocation.Y);
                     break;
                 case DoorType.Right:
-                    dest = new TileLocation(TileLocation.X - 1, TileLocation.Y).ToVector2() - new Vector2(64, 0);
+                    dest = new TileLocation(TileLocation.X - 1, TileLocation.Y);
                     break;
                 case DoorType.Top:
-                    dest = new TileLocation(TileLocation.X, TileLocation.Y + 1).ToVector2();
+                    dest = new TileLocation(TileLocation.X, TileLocation.Y + 1);
                     break;
                 case DoorType.Bottom:
-                    dest = new TileLocation(TileLocation.X, TileLocation.Y - 1).ToVector2() - new Vector2(0, 64);
+                    dest = new TileLocation(TileLocation.X, TileLocation.Y - 1);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(DoorType), DoorType, null);

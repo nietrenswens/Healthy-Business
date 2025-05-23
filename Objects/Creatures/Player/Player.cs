@@ -34,6 +34,10 @@ namespace HealthyBusiness.Objects.Creatures.Player
             Add(collider);
             base.Load(content);
         }
+        public void SetFeetPosition(TileLocation location)
+        {
+            WorldPosition = location.ToVector2() - new Vector2(0, Globals.TILESIZE);
+        }
 
         public override void Update(GameTime gameTime)
         {
