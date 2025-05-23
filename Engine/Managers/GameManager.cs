@@ -1,5 +1,3 @@
-using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
