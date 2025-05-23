@@ -67,8 +67,11 @@ namespace HealthyBusiness.Engine
         {
             List<GameObject> gameObjects = new List<GameObject>();
             GameManager gm = GameManager.GetGameManager();
+
+            // Load map file
             var map = new TmxMap(PathToMap);
 
+            // Load tilesets and textures.
             foreach (var tileset in map.Tilesets)
             {
                 _tileMapsManager.LoadMap(tileset.Name, tileset.FirstGid - 1, contentManager);
@@ -76,6 +79,7 @@ namespace HealthyBusiness.Engine
 
             foreach (var layer in map.Layers)
             {
+                // Look through layers, find type and set object type accordingly.
                 var type = layer.Properties["type"];
                 switch (type)
                 {
@@ -108,6 +112,7 @@ namespace HealthyBusiness.Engine
                                 continue;
                             gid = gid - ts.FirstGid + 1;
 
+                            // For utilities, there is more advanced logic as these wont be displayed but will be used for game objects.
                             if (gid >= 0 && gid <= 4)
                             {
                                 var doorType = (DoorType)gid;
