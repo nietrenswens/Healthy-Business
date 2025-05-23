@@ -1,5 +1,4 @@
-﻿using HealthyBusiness.Builders;
-using HealthyBusiness.Cameras;
+﻿using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
@@ -12,7 +11,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HealthyBusiness.Scenes
 {
@@ -41,7 +39,6 @@ namespace HealthyBusiness.Scenes
             LevelManager.Load(content);
             var player = new Player(new TileLocation(1, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            SpawnRandomItems(5);
             AddGameObject(player);
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
@@ -118,24 +115,6 @@ namespace HealthyBusiness.Scenes
                         }
                     }
                 }
-            }
-        }
-
-        private void SpawnRandomItems(int number)
-        {
-            for (int i = 0; i < number; i++)
-            {
-                var floorTiles = GameObjects.ToList().Concat(GameObjectsToBeAdded)
-                    .Where(go => go is Floor).ToList();
-                if (floorTiles.Count == 0)
-                {
-                    break;
-                }
-                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
-                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
-
-                var item = ItemBuilder.CreateRandomItem(randomTileLocation);
-                AddGameObject(item);
             }
         }
     }

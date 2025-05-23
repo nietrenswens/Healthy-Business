@@ -46,17 +46,22 @@ namespace HealthyBusiness.Engine.Managers
         {
             Levels.ForEach(level => level.Load(contentManager));
             Currentlevel = Levels[0];
+            LoadCurrentLevel();
+        }
+
+        private void LoadCurrentLevel()
+        {
+            _scene.Unload();
             _scene.AddGameObject(Currentlevel.GameObjects);
             _scene.AddGameObject(Currentlevel.SavedGameObjects);
         }
+
         private void ChangeLevel(Level level)
         {
             var player = _scene.GameObjects.OfType<Player>().First();
             SavePersistentGameObjects();
-            _scene.Unload();
             Currentlevel = level;
-            _scene.AddGameObject(Currentlevel.GameObjects);
-            _scene.AddGameObject(Currentlevel.SavedGameObjects);
+            LoadCurrentLevel();
             player.SetFeetPosition(_playerSpawnLocation!);
             _scene.AddGameObject(player);
         }

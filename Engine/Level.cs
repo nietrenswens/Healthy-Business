@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine.Managers;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
 using Microsoft.Xna.Framework.Content;
@@ -40,12 +41,21 @@ namespace HealthyBusiness.Engine
 
         public void Load(ContentManager contentManager)
         {
-            GameObjects = GetTiles(contentManager);
+            GenerateGameObjects(contentManager);
         }
 
         public void SaveGameObjects(GameObject[] gameObjects)
         {
             SavedGameObjects = gameObjects;
+        }
+
+        public void GenerateGameObjects(ContentManager contentManager)
+        {
+            GameObjects = GetTiles(contentManager);
+            var rng = GameManager.GetGameManager().RNG;
+
+            var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
+            SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
         }
 
         /// <summary>
@@ -143,5 +153,42 @@ namespace HealthyBusiness.Engine
 
             return gameObjects.ToArray();
         }
+
+        private void SpawnRandomItems(int number)
+        {
+            List<GameObject> gameObjects = new();
+            var floorTiles = GameObjects.Where(go => go is Floor).ToList();
+            HashSet<TileLocation> usedLocations = new HashSet<TileLocation>();
+
+            if (floorTiles.Count == 0)
+            {
+                return;
+            }
+
+            if (number >= floorTiles.Count / 2)
+                number = floorTiles.Count / 2;
+
+            for (int i = 0; i < number; i++)
+            {
+                int retries = 0;
+                if (retries > 4)
+                    break;
+
+                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                while (usedLocations.Contains(randomTileLocation))
+                {
+                    randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                    randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+                    retries++;
+                }
+
+                var item = ItemBuilder.CreateRandomItem(randomTileLocation);
+                gameObjects.Add(item);
+                SavedGameObjects = gameObjects.ToArray();
+            }
+        }
+
     }
 }
