@@ -1,117 +1,199 @@
-﻿using HealthyBusiness.Cameras;
-using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Builders;
 using HealthyBusiness.Engine.Managers;
-using Microsoft.Xna.Framework;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using TiledSharp;
 
 namespace HealthyBusiness.Engine
 {
-    public abstract class Level
+    public class Level
     {
-        private AttributeManager<GameObject> _gameObjectsManager;
+        private TileMapsManager _tileMapsManager;
+        public string PathToMap { get; private set; }
+        public List<Door> Doors { get; private set; }
+        public string Id { get; private set; }
+        public string? TopLevelId { get; private set; }
+        public string? BottomlevelId { get; private set; }
+        public string? LeftLevelId { get; private set; }
+        public string? RightLevelId { get; private set; }
 
-        public Camera CurrentCamera { get; private set; } = null!;
-        public IReadOnlyList<GameObject> GameObjects => _gameObjectsManager.Attributes;
-        public IReadOnlyList<GameObject> GameObjectsToBeAdded => _gameObjectsManager.AttributesToBeAdded;
+        public GameObject[] GameObjects { get; private set; }
+        public GameObject[] SavedGameObjects { get; private set; }
 
-        public Level()
+        public Level(string pathToMap, string id, string? topLevelId = null, string? bottomLevelId = null, string? leftlevelId = null, string? rightLevelId = null)
         {
-            _gameObjectsManager = new AttributeManager<GameObject>();
+            _tileMapsManager = new TileMapsManager();
+            PathToMap = pathToMap;
+            Doors = new List<Door>();
+            Id = id;
+            TopLevelId = topLevelId;
+            BottomlevelId = bottomLevelId;
+            LeftLevelId = leftlevelId;
+            RightLevelId = rightLevelId;
+
+            GameObjects = [];
+            SavedGameObjects = [];
+        }
+
+        public void Load(ContentManager contentManager)
+        {
+            GenerateGameObjects(contentManager);
+        }
+
+        public void SaveGameObjects(GameObject[] gameObjects)
+        {
+            SavedGameObjects = gameObjects;
+        }
+
+        public void GenerateGameObjects(ContentManager contentManager)
+        {
+            GameObjects = GetTiles(contentManager);
+            var rng = GameManager.GetGameManager().RNG;
+
+            var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
+            SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
         }
 
         /// <summary>
-        /// Used for updating the level.
+        /// 
         /// </summary>
-        /// <param name="gameTime"></param>
-        public virtual void Update(GameTime gameTime)
-        {
-            // Update logic for the level
-            _gameObjectsManager.Update(gameTime);
-        }
-
-        /// <summary>
-        /// Used for loading the level, this includes adding gameObjects to the level and loading textures.
-        /// </summary>
-        /// <param name="content"></param>
-        public virtual void Load(ContentManager content)
-        {
-            // Load content for the level
-            _gameObjectsManager.Load(content);
-        }
-
-        /// <summary>
-        /// Used for unloading the level, this includes removing gameObjects from the level and unloading textures.
-        /// </summary>
-        public virtual void Unload()
-        {
-            // Unload content for the level
-            _gameObjectsManager.Unload();
-        }
-
-        /// <summary>
-        /// Used for drawing the level.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            // Draw logic for the level
-            spriteBatch.Begin(transformMatrix: CurrentCamera.GetWorldTransformationMatrix(), samplerState: SamplerState.PointClamp);
-            _gameObjectsManager.Draw(spriteBatch);
-            spriteBatch.End();
-        }
-
-        /// <summary>
-        /// Adds a game object to the level.
-        /// </summary>
-        /// <param name="gameObject"></param>
-        public virtual void AddGameObject(GameObject gameObject)
-        {
-            _gameObjectsManager.Add(gameObject);
-        }
-
-        /// <summary>
-        /// Adds gameobjects to the level.
-        /// </summary>
-        /// <param name="gameObjects"></param>
-        public virtual void AddGameObject(GameObject[] gameObjects)
-        {
-            _gameObjectsManager.Add(gameObjects);
-        }
-
-        /// <summary>
-        /// Removes a game object from the level.
-        /// </summary>
-        /// <param name="gameObject"></param>
-        public virtual void RemoveGameObject(GameObject gameObject)
-        {
-            _gameObjectsManager.Remove(gameObject);
-        }
-
-        /// <summary>
-        /// Sets the camera for the level.
-        /// </summary>
-        /// <param name="camera"></param>
-        public void SetCamera(Camera camera)
-        {
-            CurrentCamera = camera;
-        }
-
-        /// <summary>
-        /// Returns all game objects in the level that are in the specified collision group.
-        /// </summary>
-        /// <param name="collisionGroup"></param>
+        /// <param name="pathToMap">TMX file containing map info</param>
         /// <returns></returns>
-        public IEnumerable<GameObject> GetGameObjects(CollisionGroup collisionGroup)
+        public GameObject[] GetTiles(ContentManager contentManager)
         {
-            foreach (var gameObject in GameObjects)
+            List<GameObject> gameObjects = new List<GameObject>();
+            GameManager gm = GameManager.GetGameManager();
+
+            // Load map file
+            var map = new TmxMap(PathToMap);
+
+            // Load tilesets and textures.
+            foreach (var tileset in map.Tilesets)
             {
-                if (gameObject.GetGameObject<Collider>()?.CollisionGroup.HasFlag(collisionGroup) ?? false)
+                _tileMapsManager.LoadMap(tileset.Name, tileset.FirstGid - 1, contentManager);
+            }
+
+            foreach (var layer in map.Layers)
+            {
+                // Look through layers, find type and set object type accordingly.
+                var type = layer.Properties["type"];
+                switch (type)
                 {
-                    yield return gameObject;
+                    case "solid":
+                        foreach (var tile in layer.Tiles)
+                        {
+                            var gid = tile.Gid - 1;
+                            if (gid == -1)
+                                continue;
+                            var tileMap = _tileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
+                            gameObjects.Add(new Solid(new TileLocation(tile.X, tile.Y), tileMap.Tiles[gid]));
+                        }
+                        break;
+                    case "floor":
+                        foreach (var tile in layer.Tiles)
+                        {
+                            var gid = tile.Gid - 1;
+                            if (gid == -1)
+                                continue;
+                            var tileMap = _tileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
+                            gameObjects.Add(new Floor(new TileLocation(tile.X, tile.Y), tileMap.Tiles[gid]));
+                        }
+                        break;
+                    case "utilities":
+                        var ts = map.Tilesets.First(ts => ts.Name == "Utilities");
+                        foreach (var tile in layer.Tiles)
+                        {
+                            var gid = tile.Gid - 1;
+                            if (gid == -1)
+                                continue;
+                            gid = gid - ts.FirstGid + 1;
+
+                            // For utilities, there is more advanced logic as these wont be displayed but will be used for game objects.
+                            if (gid >= 0 && gid <= 4)
+                            {
+                                var doorType = (DoorType)gid;
+                                string destinationLevelId = "";
+                                switch (doorType)
+                                {
+                                    case DoorType.Left:
+                                        destinationLevelId = LeftLevelId ?? throw new Exception("Left level ID is not set.");
+                                        break;
+                                    case DoorType.Right:
+                                        destinationLevelId = RightLevelId ?? throw new Exception("Right level ID is not set.");
+                                        break;
+                                    case DoorType.Top:
+                                        destinationLevelId = TopLevelId ?? throw new Exception("Top level ID is not set.");
+                                        break;
+                                    case DoorType.Bottom:
+                                        destinationLevelId = BottomlevelId ?? throw new Exception("Bottom level ID is not set.");
+                                        break;
+                                    case DoorType.Exit:
+                                        destinationLevelId = "exit";
+                                        break;
+                                }
+                                var door = new Door(new TileLocation(tile.X, tile.Y), (DoorType)gid, destinationLevelId);
+                                gameObjects.Add(door);
+                                Doors.Add(door);
+                            }
+                        }
+                        break;
+                    case "decal":
+                        foreach (var tile in layer.Tiles)
+                        {
+                            var gid = tile.Gid - 1;
+                            if (gid == -1)
+                                continue;
+                            var tileMap = _tileMapsManager.TileMaps.First(ts => ts.FirstGid <= gid && ts.FirstGid + ts.Tiles.Count > gid);
+                            gameObjects.Add(new Decal(new TileLocation(tile.X, tile.Y), tileMap.Tiles[gid]));
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
+
+            return gameObjects.ToArray();
         }
+
+        private void SpawnRandomItems(int number)
+        {
+            List<GameObject> gameObjects = new();
+            var floorTiles = GameObjects.Where(go => go is Floor).ToList();
+            HashSet<TileLocation> usedLocations = new HashSet<TileLocation>();
+
+            if (floorTiles.Count == 0)
+            {
+                return;
+            }
+
+            if (number >= floorTiles.Count / 2)
+                number = floorTiles.Count / 2;
+
+            for (int i = 0; i < number; i++)
+            {
+                int retries = 0;
+                if (retries > 4)
+                    break;
+
+                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                while (usedLocations.Contains(randomTileLocation))
+                {
+                    randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                    randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+                    retries++;
+                }
+
+                var item = ItemBuilder.CreateRandomItem(randomTileLocation);
+                gameObjects.Add(item);
+                SavedGameObjects = gameObjects.ToArray();
+            }
+        }
+
     }
 }
