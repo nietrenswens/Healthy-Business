@@ -18,7 +18,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 
         public TomatoEnemy(TileLocation tileLocation) : base(tileLocation.ToVector2(), 10, 10)
         {
-            Animation = new TomatoAnimation("entities\\enemies\\tomato\\tomato");
+            Animation = new TomatoAnimation("entities\\enemies\\tomato\\tomato3");
             var collider = new RectangleCollider(new(tileLocation.ToPoint(), new Point(64, 64)));
             collider.CollisionGroup = CollisionGroup.None;
             Add(collider);

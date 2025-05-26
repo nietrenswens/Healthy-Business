@@ -12,7 +12,7 @@ namespace HealthyBusiness.Animations
     public class TomatoAnimation : Animation
     {
         public TomatoAnimation(string spriteSheetName)
-            : base(128, 128, 100, 0, 1, true)
+            : base(128, 128, 100, 0, 2, true)
         {
             _texture = GameManager.GetGameManager().ContentManager.Load<Texture2D>(spriteSheetName);
         }
