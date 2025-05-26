@@ -40,7 +40,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     }
                     break;
                 case TomatoEnemyState.Attack:
-                    if(Parent is Creature creature2)
+                    if (Parent is Creature creature2)
                     {
                         creature2.Animation?.Resume();
                     }

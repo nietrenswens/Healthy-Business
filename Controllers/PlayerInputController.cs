@@ -58,7 +58,7 @@ namespace HealthyBusiness.Controllers
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
             }
-            
+
 
             (Parent as IAnimatedCreature)?.OnDirectionChanged(direction);
         }
