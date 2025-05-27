@@ -19,8 +19,6 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public List<HotbarSlot> HotbarSlots = new List<HotbarSlot>();
 
-        //public CurrentScore hotbarCurrentScore = new CurrentScore();
-
         public Hotbar()
         {
             InitializeHotbarSlots();
@@ -115,9 +113,6 @@ namespace HealthyBusiness.InGameGUIObjects
                 );
             }
 
-
-            // draw the hotbar container // TODO: niet nodig waarschijnlijk
-            //Texture2D hotbarcontainer = new Texture2D(spriteBatch.GraphicsDevice, 100, 100);
             base.Draw(spriteBatch);
         }
 

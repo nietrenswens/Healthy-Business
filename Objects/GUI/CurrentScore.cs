@@ -30,10 +30,6 @@ namespace HealthyBusiness.Objects.GUI
 
         public void UpdateScore(Hotbar hotbar)
         {
-            // get the hotbar 
-            //GameLevel currentLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
-
-            //Hotbar? hotbar = currentLevel.GUIObjects.Attributes.OfType<Hotbar>().FirstOrDefault() ?? null;
             // loop through the items of the hotbar and count the scores
             int totalScore = 0;
 
