@@ -6,8 +6,6 @@ namespace HealthyBusiness.Collision
 {
     public abstract class Collider : GameObject
     {
-        public CollisionGroup CollisionGroup { get; set; } = CollisionGroup.None;
-
         public abstract float Width { get; }
         public abstract float Height { get; }
         public abstract Vector2 Center { get; set; }

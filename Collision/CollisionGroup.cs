@@ -10,4 +10,5 @@ public enum CollisionGroup
     Player = 2,
     Solid = 4,
     Item = 8,
+    Utility = 16,
 }

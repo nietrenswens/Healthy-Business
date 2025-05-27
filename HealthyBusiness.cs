@@ -1,4 +1,5 @@
 ﻿using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.InGameGUIObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -33,11 +34,7 @@ public class HealthyBusiness : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
         GameManager.GetGameManager().Update(gameTime);
-
         base.Update(gameTime);
     }
 

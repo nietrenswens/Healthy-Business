@@ -9,6 +9,8 @@
         public const int MAPWIDTH = 20;
         public const int MAPHEIGHT = 10;
 
+        public const bool DEBUG = false;
+
         #region Player globals
         /// <summary>
         /// The range at which the player can pick up items in pixels.
