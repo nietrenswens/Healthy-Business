@@ -3,7 +3,6 @@ using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
@@ -42,7 +41,8 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             LevelManager.Load(content);
-            var player = new Player(new TileLocation(1, 4));
+            var player = new Player(LevelManager.SpawnLocation);
+            player.SetFeetPosition(LevelManager.SpawnLocation);
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(player);
             GUIObjects.Add(new Hotbar());

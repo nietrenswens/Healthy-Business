@@ -2,6 +2,8 @@
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Doors;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
@@ -113,29 +115,34 @@ namespace HealthyBusiness.Engine
                             gid = gid - ts.FirstGid + 1;
 
                             // For utilities, there is more advanced logic as these wont be displayed but will be used for game objects.
-                            if (gid >= 0 && gid <= 4)
+                            if (gid >= 0 && gid <= 3)
                             {
-                                var doorType = (DoorType)gid;
+                                var doorType = (DoorDirection)gid;
                                 string destinationLevelId = "";
                                 switch (doorType)
                                 {
-                                    case DoorType.Left:
+                                    case DoorDirection.Left:
                                         destinationLevelId = LeftLevelId ?? throw new Exception("Left level ID is not set.");
                                         break;
-                                    case DoorType.Right:
+                                    case DoorDirection.Right:
                                         destinationLevelId = RightLevelId ?? throw new Exception("Right level ID is not set.");
                                         break;
-                                    case DoorType.Top:
+                                    case DoorDirection.Top:
                                         destinationLevelId = TopLevelId ?? throw new Exception("Top level ID is not set.");
                                         break;
-                                    case DoorType.Bottom:
+                                    case DoorDirection.Bottom:
                                         destinationLevelId = BottomlevelId ?? throw new Exception("Bottom level ID is not set.");
                                         break;
-                                    case DoorType.Exit:
-                                        destinationLevelId = "exit";
-                                        break;
                                 }
-                                var door = new Door(new TileLocation(tile.X, tile.Y), (DoorType)gid, destinationLevelId);
+                                var door = new NavigationalDoor(new TileLocation(tile.X, tile.Y), (DoorDirection)gid, destinationLevelId);
+                                gameObjects.Add(door);
+                                Doors.Add(door);
+                            }
+
+                            if (gid >= 4 && gid <= 7)
+                            {
+                                var direction = (DoorDirection)(gid - 4);
+                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new MainMenu()));
                                 gameObjects.Add(door);
                                 Doors.Add(door);
                             }
