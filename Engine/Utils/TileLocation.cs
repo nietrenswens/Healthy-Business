@@ -100,7 +100,7 @@ namespace HealthyBusiness.Engine.Utils
         public static bool IsTileWalkable(TileLocation newLocation)
         {
             var gameManager = GameManager.GetGameManager();
-            var gameObjects = gameManager.CurrentLevel.GameObjects;
+            var gameObjects = gameManager.CurrentScene.GameObjects;
 
             var isValidFloor = false;
             foreach (GameObject go in gameObjects)

@@ -2,8 +2,8 @@
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -53,7 +53,7 @@ namespace HealthyBusiness.InGameGUIObjects
 
         private void QuitButtonClicked(object? sender, EventArgs e)
         {
-            GameManager.GetGameManager().ChangeLevel(new MainMenu());
+            GameManager.GetGameManager().ChangeScene(new MainMenu());
         }
 
         public override void Draw(SpriteBatch spriteBatch)
