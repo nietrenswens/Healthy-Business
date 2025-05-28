@@ -30,7 +30,7 @@ namespace HealthyBusiness.Scenes
 
         private void PlayButtonClicked(object? sender, EventArgs e)
         {
-            GameManager.GetGameManager().ChangeScene(new GameScene(GameSceneType.PlayableLevel));
+            GameManager.GetGameManager().ChangeScene(new GameScene(GameSceneType.Apartment));
 
         }
 

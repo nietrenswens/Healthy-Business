@@ -1,7 +1,9 @@
 ﻿using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Doors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +18,20 @@ namespace HealthyBusiness.Engine.Managers
         public List<Level> Levels { get; private set; }
         public Level Currentlevel { get; private set; } = null!;
         public bool HasNextLevel => _nextLevel != null;
+
+        public TileLocation SpawnLocation
+        {
+            get
+            {
+                if (_playerSpawnLocation != null)
+                    return _playerSpawnLocation;
+
+                var entrance = Currentlevel.Doors.OfType<ExitDoor>().FirstOrDefault();
+                if (entrance != null)
+                    return entrance.EntitySpawnLocation();
+                throw new InvalidOperationException("No player spawn location set and no exit door found in the current level.");
+            }
+        }
 
         public LevelManager(Scene scene)
         {
