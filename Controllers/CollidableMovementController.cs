@@ -9,7 +9,7 @@ namespace HealthyBusiness.Controllers
     {
         private CollisionGroup _cantGoThrough;
 
-        public CollidableMovementController(CollisionGroup cantGoThrough) : base(0.4f)
+        public CollidableMovementController(CollisionGroup cantGoThrough) : base(0.2f)
         {
             _cantGoThrough = cantGoThrough;
         }

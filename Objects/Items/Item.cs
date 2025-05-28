@@ -9,17 +9,17 @@ namespace HealthyBusiness.Objects.Items
 {
     public class Item : GameObject
     {
-        public string Name { get; private set; }
-
-        private string _textureName;
         private Texture2D? _texture;
+        private string _textureName;
+
+        public string Name { get; private set; }
+        public Texture2D? Texture => _texture;
 
         public Item(TileLocation tileLocation, string textureName, string name)
         {
             _textureName = textureName;
             WorldPosition = tileLocation.ToVector2();
             Name = name;
-            CollisionGroup = CollisionGroup.Item;
             IsPersistent = true;
         }
 
@@ -27,7 +27,8 @@ namespace HealthyBusiness.Objects.Items
         {
             base.Load(content);
             _texture = content.Load<Texture2D>(_textureName);
-            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(_texture.Width, _texture.Height)));
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(Texture!.Width, Texture.Height)));
+            collider.CollisionGroup = CollisionGroup.Item;
             Add(collider);
         }
 

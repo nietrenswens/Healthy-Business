@@ -66,5 +66,15 @@ namespace HealthyBusiness.Engine.Managers
         {
             return new Vector2(CurrentMouseState.X, CurrentMouseState.Y);
         }
+
+        public bool IsMouseScrollingUp()
+        {
+            return CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue;
+        }
+
+        public bool IsMouseScrollingDown()
+        {
+            return CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue;
+        }
     }
 }

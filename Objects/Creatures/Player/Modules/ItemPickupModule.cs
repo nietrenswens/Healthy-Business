@@ -1,8 +1,9 @@
-﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Items;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -22,15 +23,15 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             if (Parent is not Player)
                 throw new Exception("ItemPickupModule can only be added to a Player.");
 
-            var parentCollider = Parent!.GetGameObject<Collider>();
-            Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
+            if (GetGameObject<CircleCollider>() == null)
+                Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             var parentCollider = Parent!.GetGameObject<Collider>();
-            ((CircleCollider)GetGameObject<Collider>()!).Center = WorldPosition + (new Vector2(parentCollider!.Width, parentCollider.Height) / 2);
+            ((CircleCollider)GetGameObject<Collider>()!).Center = Parent.GetGameObject<Collider>()!.Center;
             CheckCollision();
             CheckInput();
         }
@@ -38,7 +39,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
         private void CheckCollision()
         {
             var items = GameManager.GetGameManager()
-                .CurrentScene.GetGameObjects(CollisionGroup.Item)
+                .CurrentScene.GameObjects
                 .OfType<Item>();
 
             var closestItem = items
@@ -54,10 +55,24 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
             }
         }
 
+        public override void Unload()
+        {
+            base.Unload();
+        }
+
         private void CheckInput()
         {
-            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
+            if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null && SelectedItem is ValuedItem)
             {
+                var gameLevel = (GameScene)GameManager.GetGameManager().CurrentScene;
+
+                if (!gameLevel.GUIObjects.Attributes.OfType<Hotbar>()
+                    .First()
+                    .AddItem((ValuedItem)SelectedItem))
+                {
+                    return; // no empty slot
+                }
+
                 GameManager.GetGameManager().CurrentScene.RemoveGameObject(SelectedItem);
                 SelectedItem = null;
             }
