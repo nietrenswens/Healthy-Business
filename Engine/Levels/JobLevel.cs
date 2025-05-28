@@ -10,62 +10,38 @@ using System.Collections.Generic;
 using System.Linq;
 using TiledSharp;
 
-namespace HealthyBusiness.Engine
+namespace HealthyBusiness.Engine.Levels
 {
-    public class Level
+    public class JobLevel : Level
     {
-        private TileMapsManager _tileMapsManager;
-        public string PathToMap { get; private set; }
-        public List<Door> Doors { get; private set; }
-        public string Id { get; private set; }
         public string? TopLevelId { get; private set; }
         public string? BottomlevelId { get; private set; }
         public string? LeftLevelId { get; private set; }
         public string? RightLevelId { get; private set; }
 
-        public GameObject[] GameObjects { get; private set; }
-        public GameObject[] SavedGameObjects { get; private set; }
-
-        public Level(string pathToMap, string id, string? topLevelId = null, string? bottomLevelId = null, string? leftlevelId = null, string? rightLevelId = null)
+        public JobLevel(string pathToMap, string id, string? topLevelId = null, string? bottomLevelId = null, string? leftlevelId = null, string? rightLevelId = null) : base(pathToMap, id)
         {
-            _tileMapsManager = new TileMapsManager();
-            PathToMap = pathToMap;
-            Doors = new List<Door>();
-            Id = id;
             TopLevelId = topLevelId;
             BottomlevelId = bottomLevelId;
             LeftLevelId = leftlevelId;
             RightLevelId = rightLevelId;
-
-            GameObjects = [];
-            SavedGameObjects = [];
         }
 
-        public void Load(ContentManager contentManager)
+        public override void Load(ContentManager contentManager)
         {
+            base.Load(contentManager);
             GenerateGameObjects(contentManager);
-        }
-
-        public void SaveGameObjects(GameObject[] gameObjects)
-        {
-            SavedGameObjects = gameObjects;
         }
 
         public void GenerateGameObjects(ContentManager contentManager)
         {
-            GameObjects = GetTiles(contentManager);
             var rng = GameManager.GetGameManager().RNG;
 
             var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
             SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pathToMap">TMX file containing map info</param>
-        /// <returns></returns>
-        public GameObject[] GetTiles(ContentManager contentManager)
+        public override GameObject[] GetTiles(ContentManager contentManager)
         {
             List<GameObject> gameObjects = new List<GameObject>();
             GameManager gm = GameManager.GetGameManager();
@@ -142,7 +118,7 @@ namespace HealthyBusiness.Engine
                             if (gid >= 4 && gid <= 7)
                             {
                                 var direction = (DoorDirection)(gid - 4);
-                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new MainMenu()));
+                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new GameScene(GameSceneType.Apartment)));
                                 gameObjects.Add(door);
                                 Doors.Add(door);
                             }
@@ -201,6 +177,5 @@ namespace HealthyBusiness.Engine
                 SavedGameObjects = gameObjects.ToArray();
             }
         }
-
     }
 }

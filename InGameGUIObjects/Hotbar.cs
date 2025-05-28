@@ -18,7 +18,7 @@ namespace HealthyBusiness.InGameGUIObjects
         public Hotbar()
         {
             InitializeHotbarSlots();
-            GameScene currentLevel = ((GameScene)GameManager.GetGameManager().CurrentScene);
+            GameScene currentLevel = ((GameScene)GameManager.GetGameManager().CurrentlyLoadingScene);
             currentLevel.GUIObjects.Add(new CurrentScore());
         }
 
