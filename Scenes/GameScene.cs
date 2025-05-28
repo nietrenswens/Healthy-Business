@@ -1,8 +1,8 @@
-﻿using HealthyBusiness.Cameras;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
@@ -19,20 +19,30 @@ namespace HealthyBusiness.Scenes
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
 
-        public LevelManager LevelManager { get; private set; }
+        public LevelManager LevelManager { get; private set; } = null!;
 
-        public GameScene()
+        public GameScene(GameSceneType gameSceneType)
         {
             _collidableGameObjects = new List<GameObject>();
             GUIObjects = new();
             LevelManager = new(this);
+            switch (gameSceneType)
+            {
+                case GameSceneType.PlayableLevel:
+                    LevelManager.AddDefaultLevel();
+                    break;
+                case GameSceneType.Apartment:
+                    LevelManager.AddApartment();
+                    break;
+            }
         }
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
             LevelManager.Load(content);
-            var player = new Player(new TileLocation(1, 4));
+            var player = new Player(LevelManager.SpawnLocation);
+            player.SetFeetPosition(LevelManager.SpawnLocation);
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(player);
             GUIObjects.Add(new Hotbar());
@@ -118,5 +128,11 @@ namespace HealthyBusiness.Scenes
                 }
             }
         }
+    }
+
+    public enum GameSceneType
+    {
+        PlayableLevel,
+        Apartment
     }
 }

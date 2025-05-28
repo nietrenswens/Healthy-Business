@@ -17,12 +17,12 @@ namespace HealthyBusiness.Engine.Managers
         public Random RNG { get; private set; } = null!;
         public Scene CurrentScene { get; private set; } = null!;
 
+        public Scene CurrentlyLoadingScene => _nextScene;
+
         private GameManager()
         {
             RNG = new();
         }
-
-
 
         public static GameManager GetGameManager()
         {
@@ -51,10 +51,8 @@ namespace HealthyBusiness.Engine.Managers
             InputManager.GetInputManager().Update();
             if (_nextScene != null)
             {
-                CurrentScene.Unload();
-                CurrentScene = _nextScene;
+                DoSceneTransition(_nextScene);
                 _nextScene = null;
-                CurrentScene.Load(ContentManager);
             }
             CurrentScene.Update(gameTime);
         }
@@ -72,6 +70,18 @@ namespace HealthyBusiness.Engine.Managers
         public void Exit()
         {
             _game.Exit();
+        }
+
+        private void DoSceneTransition(Scene newScene)
+        {
+            _nextScene = newScene;
+            CurrentScene.Unload();
+
+            CurrentScene = new MainMenu();
+            CurrentScene.Load(ContentManager);
+
+            newScene.Load(ContentManager);
+            CurrentScene = newScene;
         }
     }
 }

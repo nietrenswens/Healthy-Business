@@ -1,7 +1,10 @@
-﻿using HealthyBusiness.Engine.Utils;
+﻿using HealthyBusiness.Engine.Levels;
+using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Doors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,14 +20,24 @@ namespace HealthyBusiness.Engine.Managers
         public Level Currentlevel { get; private set; } = null!;
         public bool HasNextLevel => _nextLevel != null;
 
+        public TileLocation SpawnLocation
+        {
+            get
+            {
+                if (_playerSpawnLocation != null)
+                    return _playerSpawnLocation;
+
+                var entrance = Currentlevel.Doors.OfType<ExitDoor>().FirstOrDefault();
+                if (entrance != null)
+                    return entrance.EntitySpawnLocation();
+                throw new InvalidOperationException("No player spawn location set and no exit door found in the current level.");
+            }
+        }
+
         public LevelManager(Scene scene)
         {
             _scene = scene;
             Levels = new List<Level>();
-            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom", topLevelId: "kitchen", rightLevelId: "party_room"));
-            Levels.Add(new("Maps\\test\\restroom.tmx", "restroom", topLevelId: "order_room"));
-            Levels.Add(new("Maps\\test\\kitchen.tmx", "kitchen", bottomLevelId: "order_room"));
-            Levels.Add(new("Maps\\test\\party_room.tmx", "party_room", leftlevelId: "order_room"));
         }
 
         public void ScheduleLevelChange(Level level, TileLocation playerSpawnLocation)
@@ -73,7 +86,6 @@ namespace HealthyBusiness.Engine.Managers
                 .Where(go => go.IsPersistent)
                 .ToList();
             level.SaveGameObjects(persistentGameObjects.ToArray());
-
         }
 
     }
