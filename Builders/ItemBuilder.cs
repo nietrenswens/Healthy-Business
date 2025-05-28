@@ -10,27 +10,27 @@ namespace HealthyBusiness.Builders
     {
         public static Item CreateFries(TileLocation location)
         {
-            return new Item(location, "items\\fries", "Fries");
+            return new ValuedItem(location, "items\\fries", "Fries", ItemRarity.Low);
         }
 
         public static Item CreateColonelFries(TileLocation location)
         {
-            return new Item(location, "items\\colonel_fries", "Colonel fries");
+            return new ValuedItem(location, "items\\colonel_fries", "Colonel fries", ItemRarity.High);
         }
 
         public static Item CreateBurger(TileLocation location)
         {
-            return new Item(location, "items\\burger", "Burger");
+            return new ValuedItem(location, "items\\burger", "Burger", ItemRarity.Medium);
         }
 
         public static Item CreateDinoNugget1(TileLocation location)
         {
-            return new Item(location, "items\\dino1", "Dino nugget");
+            return new ValuedItem(location, "items\\dino1", "Dino nugget", ItemRarity.Low);
         }
 
         public static Item CreateDinoNugget2(TileLocation location)
         {
-            return new Item(location, "items\\dino2", "Dino nugget");
+            return new ValuedItem(location, "items\\dino2", "Dino nugget", ItemRarity.Medium);
         }
 
         public static GameObject CreateRandomItem(TileLocation randomTileLocation)

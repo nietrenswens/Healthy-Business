@@ -4,7 +4,6 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,20 +15,16 @@ namespace HealthyBusiness.Scenes
 {
     public class GameScene : Scene
     {
-        private Level? _nextLevel;
-        private Vector2? _playerSpawnLocation;
         private List<GameObject> _collidableGameObjects { get; set; }
+        public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
-        
-        public TileMapsManager TileMapsManager { get; set; }
-        public List<Level> Levels { get; private set; }
-        public Level Currentlevel = null!;
-        public bool HasNextLevel => _nextLevel != null;
+
         public LevelManager LevelManager { get; private set; }
 
         public GameScene()
         {
             _collidableGameObjects = new List<GameObject>();
+            GUIObjects = new();
             LevelManager = new(this);
         }
 
@@ -40,6 +35,7 @@ namespace HealthyBusiness.Scenes
             var player = new Player(new TileLocation(1, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(player);
+            GUIObjects.Add(new Hotbar());
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
         }
@@ -47,6 +43,8 @@ namespace HealthyBusiness.Scenes
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
+            base.Update(gameTime);
+            GUIObjects.Update(gameTime);
             _pauseMenu.Update(gameTime);
 
             if (!_pauseMenu.IsPaused)
@@ -61,6 +59,9 @@ namespace HealthyBusiness.Scenes
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            GUIObjects.Draw(spriteBatch);
+            spriteBatch.End();
             _pauseMenu.Draw(spriteBatch);
         }
 

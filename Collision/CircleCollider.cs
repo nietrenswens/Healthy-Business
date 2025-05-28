@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HealthyBusiness.Engine.Managers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace HealthyBusiness.Collision
@@ -23,6 +25,8 @@ namespace HealthyBusiness.Collision
         }
         public float Radius;
 
+        private Texture2D _texture;
+
         /// <summary>
         /// Creates a new Circle object.
         /// </summary>
@@ -34,6 +38,8 @@ namespace HealthyBusiness.Collision
             this.X = x;
             this.Y = y;
             this.Radius = radius;
+            _texture = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+            _texture.SetData(new[] { Color.Pink });
         }
 
         /// <summary>
@@ -45,6 +51,8 @@ namespace HealthyBusiness.Collision
         {
             this.Center = center;
             this.Radius = radius;
+            _texture = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+            _texture.SetData(new[] { Color.Pink });
         }
 
 
@@ -107,6 +115,13 @@ namespace HealthyBusiness.Collision
             {
                 return (compensatedBottomRight - compensatedCircleCenter).Length() < Radius;
             }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (Globals.DEBUG)
+                spriteBatch.Draw(_texture, GetBoundingBox(), Color.Pink * 0.5f);
         }
 
         /// <summary>
