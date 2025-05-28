@@ -21,10 +21,6 @@ namespace HealthyBusiness.Engine.Managers
         {
             _scene = scene;
             Levels = new List<Level>();
-            Levels.Add(new("Maps\\test\\order_room.tmx", "order_room", bottomLevelId: "restroom", topLevelId: "kitchen", rightLevelId: "party_room"));
-            Levels.Add(new("Maps\\test\\restroom.tmx", "restroom", topLevelId: "order_room"));
-            Levels.Add(new("Maps\\test\\kitchen.tmx", "kitchen", bottomLevelId: "order_room"));
-            Levels.Add(new("Maps\\test\\party_room.tmx", "party_room", leftlevelId: "order_room"));
         }
 
         public void ScheduleLevelChange(Level level, TileLocation playerSpawnLocation)
@@ -73,7 +69,6 @@ namespace HealthyBusiness.Engine.Managers
                 .Where(go => go.IsPersistent)
                 .ToList();
             level.SaveGameObjects(persistentGameObjects.ToArray());
-
         }
 
     }
