@@ -43,7 +43,6 @@ namespace HealthyBusiness.Objects.GUI
             // update the total score of the class
             Score = totalScore;
 
-            System.Diagnostics.Debug.WriteLine(Score);
             AddText();
         }
 

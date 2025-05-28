@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Cameras;
+﻿using HealthyBusiness.Builders;
+using HealthyBusiness.Cameras;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
@@ -19,13 +20,22 @@ namespace HealthyBusiness.Scenes
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
 
-        public LevelManager LevelManager { get; private set; }
+        public LevelManager LevelManager { get; private set; } = null!;
 
-        public GameScene()
+        public GameScene(GameSceneType gameSceneType)
         {
             _collidableGameObjects = new List<GameObject>();
             GUIObjects = new();
             LevelManager = new(this);
+            switch (gameSceneType)
+            {
+                case GameSceneType.PlayableLevel:
+                    LevelManager.AddDefaultLevel();
+                    break;
+                case GameSceneType.Apartment:
+                    LevelManager.AddApartment();
+                    break;
+            }
         }
 
         public override void Load(ContentManager content)
@@ -118,5 +128,11 @@ namespace HealthyBusiness.Scenes
                 }
             }
         }
+    }
+
+    public enum GameSceneType
+    {
+        PlayableLevel,
+        Apartment
     }
 }
