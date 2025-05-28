@@ -14,7 +14,6 @@ namespace HealthyBusiness.Controllers
 
         private Vector2 _lastMoveDirection = Vector2.Zero;
 
-
         public MovementController(float speed)
         {
             Speed = speed;

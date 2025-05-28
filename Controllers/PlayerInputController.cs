@@ -15,7 +15,7 @@ namespace HealthyBusiness.Controllers
     public class PlayerInputController : GameObject
     {
         private InputManager _inputManager => InputManager.GetInputManager();
-        private MovementController? _movement;
+        private MovementController _movement;
 
         public override void Load(ContentManager content)
         {
@@ -75,7 +75,6 @@ namespace HealthyBusiness.Controllers
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
             }
-
 
             (Parent as Creature)?.OnDirectionChanged(direction);
         }

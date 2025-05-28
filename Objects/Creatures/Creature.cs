@@ -12,12 +12,12 @@ namespace HealthyBusiness.Objects.Creatures
         private string? _textureName;
 
         public Texture2D Texture = null!;
-        public Animation Animation { get; set; } = null!;
+        public Animation? Animation { get; set; }
+        public int Health { get; set; }
+        public int MaxHealth { get; set; }
 
         public float Width => GetGameObject<Collider>()!.Width;
         public float Height => GetGameObject<Collider>()!.Height;
-        public int Health { get; set; }
-        public int MaxHealth { get; set; }
 
         public Creature(Vector2 spawnPosition, int health, int maxHealth, string? textureName = null)
         {
