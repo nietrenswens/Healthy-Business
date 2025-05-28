@@ -4,7 +4,6 @@ using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace HealthyBusiness.Objects.Items
 {
@@ -21,6 +20,7 @@ namespace HealthyBusiness.Objects.Items
             _textureName = textureName;
             WorldPosition = tileLocation.ToVector2();
             Name = name;
+            IsPersistent = true;
         }
 
         public override void Load(ContentManager content)

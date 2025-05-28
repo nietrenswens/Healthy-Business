@@ -3,16 +3,11 @@ using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.Items;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthyBusiness.Objects.GUI
 {
@@ -22,7 +17,7 @@ namespace HealthyBusiness.Objects.GUI
     public class CurrentScore : GameObject
     {
         public int Score { get; set; }
-        
+
         public CurrentScore()
         {
             Score = 0;
@@ -38,7 +33,7 @@ namespace HealthyBusiness.Objects.GUI
             foreach (HotbarSlot hotbarSlot in hotbar.HotbarSlots)
             {
                 //totalScore += item.price
-                if(hotbarSlot.Item != null)
+                if (hotbarSlot.Item != null)
                 {
                     ValuedItem item = hotbarSlot.Item;
                     totalScore += item.Price;
@@ -55,7 +50,7 @@ namespace HealthyBusiness.Objects.GUI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            var hotbar = ((GameLevel)GameManager.GetGameManager().CurrentLevel).GUIObjects.Attributes.OfType<Hotbar>().FirstOrDefault();
+            var hotbar = ((GameScene)GameManager.GetGameManager().CurrentScene).GUIObjects.Attributes.OfType<Hotbar>().FirstOrDefault();
 
             if (hotbar != null)
             {
@@ -71,7 +66,7 @@ namespace HealthyBusiness.Objects.GUI
 
         public void AddText()
         {
-            if(Components.OfType<Text>().Any())
+            if (Components.OfType<Text>().Any())
             {
                 Remove(Components.OfType<Text>().First());
             }

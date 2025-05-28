@@ -2,7 +2,6 @@
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -17,7 +16,6 @@ namespace HealthyBusiness.Objects.Creatures.Player
             LocalScale = 4;
             Add(new CollidableMovementController(CollisionGroup.Solid));
             Add(new PlayerInputController());
-            Add(new ItemPickupModule());
             Add(new ItemPickupModule());
             CollisionGroup = CollisionGroup.Player;
         }

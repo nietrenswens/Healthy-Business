@@ -1,15 +1,11 @@
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Objects.Items;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
@@ -22,8 +18,8 @@ namespace HealthyBusiness.InGameGUIObjects
         public Hotbar()
         {
             InitializeHotbarSlots();
-            GameLevel currentLevel = ((GameLevel)GameManager.GetGameManager().CurrentLevel);
-            currentLevel.GUIObjects.Add(new CurrentScore());  
+            GameScene currentLevel = ((GameScene)GameManager.GetGameManager().CurrentScene);
+            currentLevel.GUIObjects.Add(new CurrentScore());
         }
 
         public void InitializeHotbarSlots()
@@ -39,8 +35,8 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public void SelectNextSlot(ScrollDirection scrollDirection)
         {
-            GameLevel currentLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
-            
+            GameScene currentLevel = (GameScene)GameManager.GetGameManager().CurrentScene;
+
             HotbarSlot selectedSlot = GetSelectedSlot();
 
             var currentItemMeta = currentLevel.GUIObjects.Attributes.OfType<ItemMetaData>().FirstOrDefault();
@@ -67,7 +63,7 @@ namespace HealthyBusiness.InGameGUIObjects
 
             var currentItem = HotbarSlots[selectedIndex].Item;
 
-            if(currentItem != null)
+            if (currentItem != null)
             {
                 currentLevel.GUIObjects.Add(new ItemMetaData(
                     (ValuedItem)currentItem)
@@ -107,9 +103,9 @@ namespace HealthyBusiness.InGameGUIObjects
 
                 slot.Draw(
                     spriteBatch,
-                    (i > 0)                             
-                        ? HotbarSlots[i - 1]     
-                        : null                             
+                    (i > 0)
+                        ? HotbarSlots[i - 1]
+                        : null
                 );
             }
 

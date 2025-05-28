@@ -1,8 +1,8 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Levels;
 using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -30,8 +30,8 @@ namespace HealthyBusiness.Controllers
             Player player = GetPlayer();
             var direction = Vector2.Zero;
 
-            GameLevel currentGameLevel = (GameLevel)GameManager.GetGameManager().CurrentLevel;
-      
+            GameScene currentGameLevel = (GameScene)GameManager.GetGameManager().CurrentScene;
+
             Hotbar? hotbar = currentGameLevel.GUIObjects.Attributes.Where(x => x is Hotbar).FirstOrDefault() as Hotbar;
 
             if (_inputManager.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
@@ -50,13 +50,14 @@ namespace HealthyBusiness.Controllers
             {
                 direction.Y = 1;
             }
-            if(_inputManager.IsMouseScrollingUp()) {
-                if(hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Up);
+            if (_inputManager.IsMouseScrollingUp())
+            {
+                if (hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Up);
 
             }
             if (_inputManager.IsMouseScrollingDown())
             {
-                if(hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Down);
+                if (hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Down);
             }
 
             if (direction != Vector2.Zero)

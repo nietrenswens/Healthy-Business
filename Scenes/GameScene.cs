@@ -4,7 +4,6 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,16 +15,10 @@ namespace HealthyBusiness.Scenes
 {
     public class GameScene : Scene
     {
-        private Level? _nextLevel;
-        private Vector2? _playerSpawnLocation;
         private List<GameObject> _collidableGameObjects { get; set; }
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
-        
-        public TileMapsManager TileMapsManager { get; set; }
-        public List<Level> Levels { get; private set; }
-        public Level Currentlevel = null!;
-        public bool HasNextLevel => _nextLevel != null;
+
         public LevelManager LevelManager { get; private set; }
 
         public GameScene()
@@ -41,13 +34,8 @@ namespace HealthyBusiness.Scenes
             LevelManager.Load(content);
             var player = new Player(new TileLocation(1, 4));
             SetCamera(new GameObjectCenteredCamera(player, 1f));
-            AddGameObject(LevelBuilder.CreateRectangularWithWallWithGapLevel(Globals.MAPWIDTH, Globals.MAPHEIGHT, Globals.MAPWIDTH / 2));
-            SpawnRandomItems(7);
             AddGameObject(player);
-            AddGameObject(new TomatoEnemy(new(15, 5)));
-            AddGameObject(new TomatoEnemy(new(16, 9)));
             GUIObjects.Add(new Hotbar());
-            AddGameObject(player);
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
         }
