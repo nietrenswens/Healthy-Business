@@ -38,7 +38,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
         private void CheckCollision()
         {
             var items = GameManager.GetGameManager()
-                .CurrentLevel.GetGameObjects(CollisionGroup.Item)
+                .CurrentScene.GetGameObjects(CollisionGroup.Item)
                 .OfType<Item>();
 
             var closestItem = items
@@ -58,7 +58,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
         {
             if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E) && SelectedItem != null)
             {
-                GameManager.GetGameManager().CurrentLevel.RemoveGameObject(SelectedItem);
+                GameManager.GetGameManager().CurrentScene.RemoveGameObject(SelectedItem);
                 SelectedItem = null;
             }
         }

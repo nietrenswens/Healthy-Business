@@ -14,7 +14,7 @@ namespace HealthyBusiness.Controllers.PathFinding
         {
             PriorityQueue<Step, float> prioritizedSteps = new();
             HashSet<TileLocation> visitedLocations = new();
-            var gameObjects = GameManager.GetGameManager().CurrentLevel.GameObjects.Where(go => go is Floor).ToList();
+            var gameObjects = GameManager.GetGameManager().CurrentScene.GameObjects.Where(go => go is Floor).ToList();
 
             prioritizedSteps.Enqueue(new Step(0, originLocation), 0);
 

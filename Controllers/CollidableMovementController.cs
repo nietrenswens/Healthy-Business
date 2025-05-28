@@ -25,7 +25,7 @@ namespace HealthyBusiness.Controllers
             var destination = Parent.GetGameObject<Collider>()!.WorldPosition + velocity;
             bool collided = false;
             var tempCollider = new RectangleCollider(new Rectangle(destination.ToPoint(), parentCollider.GetBoundingBox().Size));
-            var solidGameObjects = GameManager.GetGameManager().CurrentLevel.GetGameObjects(_cantGoThrough).ToList();
+            var solidGameObjects = GameManager.GetGameManager().CurrentScene.GetGameObjects(_cantGoThrough).ToList();
 
             foreach (var gameObject in solidGameObjects)
             {
