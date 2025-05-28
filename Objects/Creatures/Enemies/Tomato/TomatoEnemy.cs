@@ -8,7 +8,7 @@ using HealthyBusiness.Animations;
 
 namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 {
-    public class TomatoEnemy : Creature, IAnimatedCreature
+    public class TomatoEnemy : Creature
     {
 
         public static float AggroRange = 10f;

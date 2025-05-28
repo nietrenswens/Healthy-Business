@@ -1,6 +1,7 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.Creatures;
 using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -60,7 +61,7 @@ namespace HealthyBusiness.Controllers
             }
 
 
-            (Parent as IAnimatedCreature)?.OnDirectionChanged(direction);
+            (Parent as Creature)?.OnDirectionChanged(direction);
         }
 
         private Player GetPlayer()

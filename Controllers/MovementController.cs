@@ -2,6 +2,7 @@
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
 using HealthyBusiness.Engine.Interfaces;
+using HealthyBusiness.Objects.Creatures;
 
 namespace HealthyBusiness.Controllers
 {
@@ -30,7 +31,7 @@ namespace HealthyBusiness.Controllers
             if (direction != _lastMoveDirection)
             {
                 _lastMoveDirection = direction;
-                (Parent as IAnimatedCreature)?.OnDirectionChanged(direction);
+                (Parent as Creature)?.OnDirectionChanged(direction);
             }
         }
 
@@ -59,7 +60,7 @@ namespace HealthyBusiness.Controllers
                 if (direction != _lastMoveDirection)
                 {
                     _lastMoveDirection = direction;
-                    (Parent as IAnimatedCreature)?.OnDirectionChanged(direction);
+                    (Parent as Creature)?.OnDirectionChanged(direction);
                 }
             }
         }

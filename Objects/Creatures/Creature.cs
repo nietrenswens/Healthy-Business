@@ -12,7 +12,7 @@ namespace HealthyBusiness.Objects.Creatures
         private string? _textureName;
 
         public Texture2D Texture = null!;
-        public Animation Animation;
+        public Animation Animation { get; set; } = null!;
 
         public float Width => GetGameObject<Collider>()!.Width;
         public float Height => GetGameObject<Collider>()!.Height;
