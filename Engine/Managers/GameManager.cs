@@ -17,6 +17,8 @@ namespace HealthyBusiness.Engine.Managers
         public Random RNG { get; private set; } = null!;
         public Scene CurrentScene { get; private set; } = null!;
 
+        public Scene CurrentlyLoadingScene => _nextScene;
+
         private GameManager()
         {
             RNG = new();
@@ -74,8 +76,12 @@ namespace HealthyBusiness.Engine.Managers
         {
             _nextScene = newScene;
             CurrentScene.Unload();
-            CurrentScene = newScene;
+
+            CurrentScene = new MainMenu();
             CurrentScene.Load(ContentManager);
+
+            newScene.Load(ContentManager);
+            CurrentScene = newScene;
         }
     }
 }
