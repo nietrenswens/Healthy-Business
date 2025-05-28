@@ -30,12 +30,20 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
             switch (State)
             {
                 case TomatoEnemyState.Idle:
+                    if (Parent is Creature creature)
+                    {
+                        creature.Animation?.Pause();
+                    }
                     if (linecollider.Length <= TomatoEnemy.AggroRange * Globals.TILESIZE)
                     {
                         SetAttack(player);
                     }
                     break;
                 case TomatoEnemyState.Attack:
+                    if (Parent is Creature creature2)
+                    {
+                        creature2.Animation?.Resume();
+                    }
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
                         GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);

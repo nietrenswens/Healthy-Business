@@ -1,6 +1,8 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
+using HealthyBusiness.Engine.Interfaces;
+using HealthyBusiness.Objects.Creatures;
 
 namespace HealthyBusiness.Controllers
 {
@@ -9,6 +11,8 @@ namespace HealthyBusiness.Controllers
         public float Speed { get; set; }
 
         protected TileLocation? _targetLocation;
+
+        private Vector2 _lastMoveDirection = Vector2.Zero;
 
         public MovementController(float speed)
         {
@@ -21,6 +25,12 @@ namespace HealthyBusiness.Controllers
             {
                 direction.Normalize();
                 Parent!.WorldPosition += direction * Speed;
+            }
+
+            if (direction != _lastMoveDirection)
+            {
+                _lastMoveDirection = direction;
+                (Parent as Creature)?.OnDirectionChanged(direction);
             }
         }
 
@@ -45,6 +55,12 @@ namespace HealthyBusiness.Controllers
             {
                 direction.Normalize();
                 Parent.WorldPosition += direction * Speed;
+
+                if (direction != _lastMoveDirection)
+                {
+                    _lastMoveDirection = direction;
+                    (Parent as Creature)?.OnDirectionChanged(direction);
+                }
             }
         }
     }

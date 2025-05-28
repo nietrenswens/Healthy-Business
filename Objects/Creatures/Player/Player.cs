@@ -1,16 +1,20 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using HealthyBusiness.Animations;
 
 namespace HealthyBusiness.Objects.Creatures.Player
 {
     public class Player : Creature
     {
+
         public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
             LocalScale = 4;
@@ -33,6 +37,8 @@ namespace HealthyBusiness.Objects.Creatures.Player
             collider.LocalPosition = new Vector2((width / 2) - (width / 8), height - height / 4);
             Add(collider);
             base.Load(content);
+
+            Animation = new PlayerAnimation("entities\\daniel");
         }
         public void SetFeetPosition(TileLocation location)
         {
@@ -42,6 +48,7 @@ namespace HealthyBusiness.Objects.Creatures.Player
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Animation.Update(gameTime);
         }
 
         public override void OnCollision(GameObject other)

@@ -1,5 +1,7 @@
-﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.Creatures;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.Player;
 using HealthyBusiness.Scenes;
@@ -13,6 +15,7 @@ namespace HealthyBusiness.Controllers
     public class PlayerInputController : GameObject
     {
         private InputManager _inputManager => InputManager.GetInputManager();
+        private MovementController _movement;
 
         public override void Load(ContentManager content)
         {
@@ -22,6 +25,8 @@ namespace HealthyBusiness.Controllers
             {
                 throw new Exception("PlayerInputController must be attached to a GameObject");
             }
+            _movement = Parent?.GetGameObject<MovementController>();
+
         }
 
         public override void Update(GameTime gameTime)
@@ -63,12 +68,15 @@ namespace HealthyBusiness.Controllers
             if (direction != Vector2.Zero)
             {
                 direction.Normalize();
+                _movement?.Move(direction);
             }
             ;
             if (direction != Vector2.Zero)
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
             }
+
+            (Parent as Creature)?.OnDirectionChanged(direction);
         }
 
         private Player GetPlayer()
