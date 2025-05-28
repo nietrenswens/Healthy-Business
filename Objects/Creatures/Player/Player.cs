@@ -12,7 +12,7 @@ using HealthyBusiness.Animations;
 
 namespace HealthyBusiness.Objects.Creatures.Player
 {
-    public class Player : Creature, IAnimatedCreature
+    public class Player : Creature
     {
 
         public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
