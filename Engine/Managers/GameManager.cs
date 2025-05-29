@@ -76,10 +76,6 @@ namespace HealthyBusiness.Engine.Managers
         {
             _nextScene = newScene;
             CurrentScene.Unload();
-
-            CurrentScene = new MainMenu();
-            CurrentScene.Load(ContentManager);
-
             newScene.Load(ContentManager);
             CurrentScene = newScene;
         }

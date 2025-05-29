@@ -40,6 +40,9 @@ namespace HealthyBusiness.Controllers
                 }
             }
 
+            velocity.Normalize();
+            velocity *= Speed * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (!collided)
                 Parent.WorldPosition += velocity;
         }
