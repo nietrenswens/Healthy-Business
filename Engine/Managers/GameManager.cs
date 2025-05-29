@@ -65,6 +65,7 @@ namespace HealthyBusiness.Engine.Managers
         public void ChangeScene(Scene newScene)
         {
             _nextScene = newScene;
+
         }
 
         public void Exit()
@@ -77,11 +78,12 @@ namespace HealthyBusiness.Engine.Managers
             _nextScene = newScene;
             CurrentScene.Unload();
 
-            CurrentScene = new MainMenu();
+            //CurrentScene = new MainMenu();
             CurrentScene.Load(ContentManager);
 
             newScene.Load(ContentManager);
             CurrentScene = newScene;
+
         }
     }
 }

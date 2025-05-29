@@ -1,7 +1,9 @@
 ﻿using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Creatures.Employee;
 using HealthyBusiness.Objects.Doors;
+using HealthyBusiness.Objects.Items;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -98,6 +100,35 @@ namespace HealthyBusiness.Engine.Levels
             }
 
             return gameObjects.ToArray();
+        }
+
+        public override void Load(ContentManager contentManager)
+        {
+            base.Load(contentManager);
+            SpawnTheDam();
+        }
+
+        private void SpawnTheDam()
+        {
+            Employer dam = new Employer(new TileLocation(10, 7));
+            dam.Load(GameManager.GetGameManager().ContentManager);
+            GameManager gm = GameManager.GetGameManager();
+
+            GameScene currentScene = gm.CurrentScene as GameScene;
+
+            List<GameObject> GameObjectsList = new List<GameObject>();
+            
+
+            if (currentScene != null)
+            {
+                GameObjectsList.Add(dam);
+            }
+            else
+            {
+                throw new Exception("Current scene is not a GameScene.");
+            }
+
+            SavedGameObjects = GameObjectsList.ToArray();
         }
     }
 }

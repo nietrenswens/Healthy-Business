@@ -3,12 +3,16 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "restroom.tmx",
+    "activeFile": "apartment.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "file.lastUsedOpenFilter": "Alle Bestanden (*)",
     "fileStates": {
+        "Doors.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Interior-1.tsx": {
             "scaleInDock": 0.5,
             "scaleInEditor": 1
@@ -140,20 +144,44 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
-        "order_room.tmx": {
-            "scale": 1,
-            "selectedLayer": 5,
+        "apartment.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 401,
-                "y": 466
+                "x": 336,
+                "y": 548
+            }
+        },
+        "kitchen.tmx": {
+            "scale": 0.8376116071428571,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 407.10992671552305,
+                "y": 324.7328447701533
+            }
+        },
+        "order_room.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 437.33333333333337,
+                "y": 436
+            }
+        },
+        "party_room.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 433.33333333333337,
+                "y": 460
             }
         },
         "restroom.tmx": {
             "scale": 0.75,
-            "selectedLayer": 5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 454.6666666666667,
-                "y": 414.6666666666667
+                "x": 492,
+                "y": 514.6666666666665
             }
         },
         "template.tmx": {
@@ -173,7 +201,7 @@
             }
         }
     },
-    "last.imagePath": "C:/Users/Rens/Documents/Healthy Business/Spritesheets/Interiors",
+    "last.imagePath": "C:/Users/Rens/Nextcloud/School/2024-2025/Healthy Business/Spritesheets",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 64,
     "map.tileWidth": 64,
@@ -186,7 +214,8 @@
         "Interior-6.tsx",
         "Interior-7.tsx",
         "Interior-8.tsx",
-        "restroom.tmx"
+        "restroom.tmx",
+        "apartment.tmx"
     ],
     "project": "test.tiled-project",
     "recentFiles": [
@@ -199,9 +228,9 @@
         "Interior-7.tsx",
         "Interior-8.tsx",
         "restroom.tmx",
-        "template.tmx",
-        "Interior-14.tsx",
-        "Interior-13.tsx"
+        "apartment.tmx",
+        "Doors.tsx",
+        "kitchen.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

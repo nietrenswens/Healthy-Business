@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="10" height="6" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="1">
+ <tileset firstgid="1" source="Room_Builder_64x64.tsx"/>
+ <tileset firstgid="8589" source="Utilities.tsx"/>
+ <tileset firstgid="8593" source="Interior-1.tsx"/>
+ <tileset firstgid="9809" source="Interior-2.tsx"/>
+ <tileset firstgid="11025" source="Interior-3.tsx"/>
+ <tileset firstgid="12241" source="Interior-6.tsx"/>
+ <layer id="1" name="Floor" width="10" height="6">
+  <properties>
+   <property name="type" value="floor"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,1036,1036,0,0,0,0,0,0,
+0,0,1112,1112,1112,1112,1112,1112,1112,0,
+0,0,1112,1112,1112,1112,1112,1112,1112,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Floor fg" width="10" height="6">
+  <properties>
+   <property name="type" value="floor"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="Non walkable floor" width="10" height="6">
+  <properties>
+   <property name="type" value="solid"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,1036,0,0,1036,1036,1036,1036,1036,0,
+0,1112,0,0,0,0,0,0,0,0,
+0,1112,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="Wall" width="10" height="6">
+  <properties>
+   <property name="type" value="solid"/>
+  </properties>
+  <data encoding="csv">
+468,2076,2076,2076,2076,2076,2076,2076,2076,470,
+544,2152,2152,2152,2152,2152,2152,2152,2152,546,
+544,0,0,0,0,0,0,0,0,546,
+544,0,0,0,0,0,0,0,0,546,
+544,0,0,0,0,0,0,0,0,546,
+620,621,621,621,621,621,621,621,0,622
+</data>
+ </layer>
+ <layer id="8" name="Objects bg" width="10" height="6">
+  <properties>
+   <property name="type" value="solid"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,13281,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Objects" width="10" height="6">
+  <properties>
+   <property name="type" value="solid"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,13297,0,0,13358,13359,13360,13277,13278,0,
+0,13304,0,0,0,0,0,0,0,0,
+0,13320,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Objects fg" width="10" height="6">
+  <properties>
+   <property name="type" value="decal"/>
+  </properties>
+  <data encoding="csv">
+0,13399,13401,13400,0,0,0,13245,13246,0,
+0,13415,13417,13416,13380,13343,13344,13261,13262,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="Utilities" width="10" height="6">
+  <properties>
+   <property name="type" value="utilities"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,8592,0
+</data>
+ </layer>
+</map>
