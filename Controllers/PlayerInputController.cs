@@ -1,8 +1,7 @@
 using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Objects.Creatures;
 using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Objects.Creatures;
 using HealthyBusiness.Objects.Creatures.Player;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
@@ -65,12 +64,6 @@ namespace HealthyBusiness.Controllers
                 if (hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Down);
             }
 
-            if (direction != Vector2.Zero)
-            {
-                direction.Normalize();
-                _movement?.Move(direction);
-            }
-            ;
             if (direction != Vector2.Zero)
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
