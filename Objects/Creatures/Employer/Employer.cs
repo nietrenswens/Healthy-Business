@@ -1,17 +1,14 @@
-﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine.Utils;
+﻿using System.Linq;
 using HealthyBusiness.Engine;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System.Linq;
-using HealthyBusiness.Objects.GUI;
-using HealthyBusiness.Engine.GUI;
-using HealthyBusiness.Objects.Creatures.Player;
-using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Objects.Items;
 using HealthyBusiness.Scenes;
-using System;
+using Microsoft.Xna.Framework;
+using HealthyBusiness.Collision;
+using HealthyBusiness.Engine.GUI;
+using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.Engine.Utils;
+using Microsoft.Xna.Framework.Content;
+using HealthyBusiness.Engine.Managers;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
 {
@@ -28,13 +25,12 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         private Text? _text;
 
         GameScene currentScene;
-        GameManager gm = GameManager.GetGameManager();
 
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
             LocalScale = 4;
             CollisionGroup = CollisionGroup.Player;
-            currentScene = (GameScene)gm.CurrentlyLoadingScene;
+            currentScene = (GameScene)GameManager.GetGameManager().CurrentlyLoadingScene;
         }
 
         public Employer(TileLocation tileLocation) : this(tileLocation.ToVector2())
@@ -96,31 +92,9 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                 .OfType<Creatures.Player.Player>()
                 .FirstOrDefault();
 
-            if (player != null && GetGameObject<Collider>() is Collider collider &&
-                player.GetGameObject<Collider>() is Collider playerCollider)
+            if(player != null)
             {
-                bool isStillColliding = collider.CheckIntersection(playerCollider);
-
-                if (isStillColliding)
-                {
-                   var textAttributesList = currentScene.GUIObjects.Attributes
-                        .OfType<Text>()
-                        .ToList();
-
-                    if (textAttributesList.Count > 0 && _text != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("text already exists");
-                        return;
-                    }
-
-                    playerIsInRange = true;
-                    ChangeGui();
-                }
-                else if(!isStillColliding)
-                {
-                    playerIsInRange = false;
-                    RemoveInteractionText();
-                }
+                HandlePlayerInteraction(player);
             }
         }
 
@@ -145,14 +119,52 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     )
                 );
                 currentScene.GUIObjects.Add(_text);
+            } else
+            {
+                currentScene.GUIObjects.Remove(_text);
+                _text = null;
             }
         }
 
-        private void RemoveInteractionText()
+        // TODO: make the Creatures.Player.Player -> Player but it is not working rn
+        private void HandlePlayerInteraction(Creatures.Player.Player player)
         {
+            if (player != null && GetGameObject<Collider>() is Collider collider &&
+                player.GetGameObject<Collider>() is Collider playerCollider)
+            {
+                bool isStillColliding = collider.CheckIntersection(playerCollider);
 
-            currentScene.GUIObjects.Remove(_text);
-            _text = null;
+                if (isStillColliding)
+                {
+                    if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
+                    {
+                        // TODO: Implement selling items logic
+                        //if (!currentScene.GUIObjects.Attributes.OfType<Hotbar>()
+                        //    .First()
+                        //    .SellItems();
+                        //{
+                        //    return; // no empty slot
+                        //}
+                    }
+
+                    var textAttributesList = currentScene.GUIObjects.Attributes
+                        .OfType<Text>()
+                        .ToList();
+
+                    if (textAttributesList.Count > 0 && _text != null)
+                    {
+                        return;
+                    }
+
+                    playerIsInRange = true;
+                    ChangeGui();
+                }
+                else if (!isStillColliding)
+                {
+                    playerIsInRange = false;
+                    ChangeGui();
+                }
+            }
         }
     }
 }
