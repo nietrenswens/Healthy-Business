@@ -117,7 +117,6 @@ namespace HealthyBusiness.Engine.Levels
 
             List<GameObject> GameObjectsList = new List<GameObject>();
             
-
             if (currentScene != null)
             {
                 GameObjectsList.Add(dam);
