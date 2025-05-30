@@ -1,23 +1,26 @@
-﻿using HealthyBusiness.Animations;
-using HealthyBusiness.Collision;
-using HealthyBusiness.Controllers;
+﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Engine;
-using HealthyBusiness.Objects.Creatures.Player.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.Engine.GUI;
+using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.Items;
+using HealthyBusiness.Scenes;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
 {
-    class Employer : Creature
+    public class Employer : Creature
     {
+        public int Level = 1;
         private string? _textureName;
+        private bool QuotaIsMet = false;
+
+        private RectangleCollider? _collider;
 
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
@@ -31,14 +34,45 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public override void Load(ContentManager content)
         {
             Texture = content.Load<Texture2D>("entities\\theDam\\theDam");
+
             var width = (int)(Texture.Width * LocalScale);
             var height = (int)(Texture.Height * LocalScale);
 
-            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width / 4, height / 4)));
-            collider.LocalPosition = new Vector2((width / 2) - (width / 8), height - height / 4);
+            var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height)));
+            collider.LocalPosition = Vector2.Zero;
+
+            _collider = collider;
+            
             Add(collider);
             base.Load(content);
         }
+
+        public int DetermineQuota()
+        {
+            return 100 + (Level - 1) * 50;                                   
+        }
+
+        public void IncreaseLevel(int? increaseLevelBy = null)
+        {
+            if(increaseLevelBy.HasValue)
+            {
+                Level += increaseLevelBy.Value;
+                DetermineQuota();
+                return;
+            }
+
+            Level++;
+            DetermineQuota();
+        }
+        public void PrintQuotaStatus()
+        {
+            string message = $"Level: {Level}, Quota: {DetermineQuota()}, Quota Met: {QuotaIsMet}";
+
+            Add(
+                new Text("fonts\\pixelated_elegance\\small", message, Color.White, new GUIStyling(verticalFloat: VerticalAlign.Center, horizontalFloat: HorizontalAlign.Left))
+            );
+        }
+
         public void SetFeetPosition(TileLocation location)
         {
             WorldPosition = location.ToVector2() - new Vector2(0, Globals.TILESIZE);
@@ -47,11 +81,60 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            CheckCollision();
         }
 
         public override void OnCollision(GameObject other)
         {
             base.OnCollision(other);
+
+            // check if we can change this to a player type
+            if(other is Creature)
+            {
+               
+            }
+
+            string message = "Press E to interact with The Dam";
+            Add(
+                new Text("fonts\\pixelated_elegance\\title",
+                    message,
+                    Color.White,
+                    new GUIStyling(
+                        verticalFloat: VerticalAlign.Bottom,
+                        horizontalFloat: HorizontalAlign.Center
+                    )
+                )
+            );
+
+        }
+
+        private void CheckCollision()
+        {
+            var items = GameManager.GetGameManager()
+                .CurrentScene.GameObjects
+                .OfType<Item>();
+
+            GameManager gm = GameManager.GetGameManager();
+
+            var center = _collider?.Center ?? Vector2.Zero;
+
+            GameScene scene = (GameScene)GameManager.GetGameManager().CurrentScene;
+
+            // temporary save due to namespace bug? Need to look how we can change the way we get the player
+            Creatures.Player.Player player = scene
+                .GameObjects
+                .OfType<Creatures.Player.Player>()
+                .FirstOrDefault()!;
+
+            Collider? playerCollider = player.GetGameObject<Collider>();
+
+            // check if the employer collides with the player
+            if (!_collider.CheckIntersection(playerCollider) || playerCollider == null)
+            {
+                return;
+            }
+            
+            System.Diagnostics.Debug.WriteLine("test");
         }
     }
 }
