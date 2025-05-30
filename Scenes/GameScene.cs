@@ -53,7 +53,6 @@ namespace HealthyBusiness.Scenes
         public override void Update(GameTime gameTime)
         {
             CheckCollision();
-            base.Update(gameTime);
             GUIObjects.Update(gameTime);
             _pauseMenu.Update(gameTime);
 

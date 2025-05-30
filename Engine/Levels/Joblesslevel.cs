@@ -1,9 +1,7 @@
 ﻿using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
-using HealthyBusiness.Objects.Creatures.Employee;
 using HealthyBusiness.Objects.Doors;
-using HealthyBusiness.Objects.Items;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Content;
 using System;
