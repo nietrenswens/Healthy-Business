@@ -25,7 +25,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
             LocalScale = 4;
-            CollisionGroup = CollisionGroup.Solid;
+            CollisionGroup = CollisionGroup.Player;
         }
 
         public Employer(TileLocation tileLocation) : this(tileLocation.ToVector2())
@@ -81,7 +81,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            CheckCollision();
         }
 
         public override void OnCollision(GameObject other)
@@ -89,52 +88,20 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             base.OnCollision(other);
 
             // check if we can change this to a player type
-            if(other is Creature)
+            if(other is Creatures.Player.Player) // TODO: fix the namespace bug
             {
-               
-            }
-
-            string message = "Press E to interact with The Dam";
-            Add(
-                new Text("fonts\\pixelated_elegance\\title",
-                    message,
-                    Color.White,
-                    new GUIStyling(
-                        verticalFloat: VerticalAlign.Bottom,
-                        horizontalFloat: HorizontalAlign.Center
+                string message = "Press E to interact with The Dam";
+                Add(
+                    new Text("fonts\\pixelated_elegance\\title",
+                        message,
+                        Color.White,
+                        new GUIStyling(
+                            verticalFloat: VerticalAlign.Bottom,
+                            horizontalFloat: HorizontalAlign.Center
+                        )
                     )
-                )
-            );
-
-        }
-
-        private void CheckCollision()
-        {
-            var items = GameManager.GetGameManager()
-                .CurrentScene.GameObjects
-                .OfType<Item>();
-
-            GameManager gm = GameManager.GetGameManager();
-
-            var center = _collider?.Center ?? Vector2.Zero;
-
-            GameScene scene = (GameScene)GameManager.GetGameManager().CurrentScene;
-
-            // temporary save due to namespace bug? Need to look how we can change the way we get the player
-            Creatures.Player.Player player = scene
-                .GameObjects
-                .OfType<Creatures.Player.Player>()
-                .FirstOrDefault()!;
-
-            Collider? playerCollider = player.GetGameObject<Collider>();
-
-            // check if the employer collides with the player
-            if (!_collider.CheckIntersection(playerCollider) || playerCollider == null)
-            {
-                return;
+                );
             }
-            
-            System.Diagnostics.Debug.WriteLine("test");
         }
     }
 }
