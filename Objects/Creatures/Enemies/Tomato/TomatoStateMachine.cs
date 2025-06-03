@@ -1,4 +1,5 @@
 ﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Builders;
 using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Controllers.PathFinding;
@@ -61,6 +62,12 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
                     {
                         player.Health -= TomatoEnemy.damage;
+
+                        var tileLocation = new TileLocation(creature3.WorldPosition);
+
+                        var ketchup = ItemBuilder.CreateKetchup(tileLocation);
+                        GameManager.GetGameManager().CurrentScene.AddGameObject(ketchup);
+
                         GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
                     }
                     break;
