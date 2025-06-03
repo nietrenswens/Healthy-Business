@@ -46,7 +46,8 @@ namespace HealthyBusiness.Builders
                 () => CreateColonelFries(randomTileLocation),
                 () => CreateBurger(randomTileLocation),
                 () => CreateDinoNugget1(randomTileLocation),
-                () => CreateDinoNugget2(randomTileLocation)            };
+                () => CreateDinoNugget2(randomTileLocation)
+            };
 
             int index = GameManager.GetGameManager().RNG.Next(itemCreationMethods.Length);
             return itemCreationMethods[index]();
