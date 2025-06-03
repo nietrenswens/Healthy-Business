@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Controllers.PathFinding;
 using HealthyBusiness.Engine;
@@ -47,12 +48,20 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     }
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
-                        GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
-                        return;
+                        //GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
+                        //return;
+                        SetExploding();
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)
                     {
                         SetIdle();
+                    }
+                    break;
+                case TomatoEnemyState.Exploding:
+                    if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
+                    {
+                        player.Health -= TomatoEnemy.damage;
+                        GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
                     }
                     break;
             }
@@ -82,5 +91,30 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
             Parent.Remove(idleController!);
             Parent.Add(pathFindingController);
         }
+
+        public void SetExploding()
+        {
+            State = TomatoEnemyState.Exploding;
+
+            if (Parent is Creature creature)
+            {
+                creature.Animation = new ExplosionAnimation("entities\\enemies\\tomato\\TomatoBoom");
+                creature.Animation.Resume();
+            }
+
+            var idle = Parent.GetGameObject<IdleMovementController>();
+            if (idle != null)
+            {
+                Parent.Remove(idle);
+            }
+
+            var path = Parent.GetGameObject<PathfindingMovementController>();
+            if (path != null)
+            {
+                Parent.Remove(path);
+            }
+        }
+
+
     }
 }
