@@ -16,12 +16,14 @@ namespace HealthyBusiness.Engine.Managers
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Random RNG { get; private set; } = null!;
         public Scene CurrentScene { get; private set; } = null!;
+        public GameData GameData { get; private set; }
 
         public Scene CurrentlyLoadingScene => _nextScene;
 
         private GameManager()
         {
             RNG = new();
+            GameData = new GameData();
         }
 
         public static GameManager GetGameManager()

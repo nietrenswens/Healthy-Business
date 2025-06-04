@@ -30,6 +30,7 @@ namespace HealthyBusiness.Scenes
             {
                 case GameSceneType.PlayableLevel:
                     LevelManager.AddDefaultLevel();
+                    GameManager.GetGameManager().GameData.ShiftCount += 1;
                     break;
                 case GameSceneType.Apartment:
                     LevelManager.AddApartment();
@@ -45,7 +46,8 @@ namespace HealthyBusiness.Scenes
             player.SetFeetPosition(LevelManager.SpawnLocation);
             SetCamera(new GameObjectCenteredCamera(player, 1f));
             AddGameObject(player);
-            GUIObjects.Add(new Hotbar());
+            var hotbarslots = GameManager.GetGameManager().GameData.HotbarSlots;
+            GUIObjects.Add(new Hotbar(hotbarslots));
             _pauseMenu = new PauseMenu();
             _pauseMenu.Load(content);
         }
@@ -104,6 +106,7 @@ namespace HealthyBusiness.Scenes
         public override void Unload()
         {
             base.Unload();
+            GUIObjects.Unload();
             _collidableGameObjects.Clear();
         }
 
