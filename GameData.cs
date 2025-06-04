@@ -13,12 +13,5 @@ namespace HealthyBusiness
         {
             HotbarSlots = new();
         }
-
-        public void Reset()
-        {
-            ShiftCount = 0;
-            Balance = 0;
-            HotbarSlots.Clear();
-        }
     }
 }
