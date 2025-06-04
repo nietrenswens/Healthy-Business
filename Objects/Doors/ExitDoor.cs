@@ -1,6 +1,8 @@
 ﻿using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Scenes;
 using System;
 
 namespace HealthyBusiness.Objects.Doors
@@ -16,7 +18,7 @@ namespace HealthyBusiness.Objects.Doors
 
         public override void OnCollision(GameObject other)
         {
-            if (other is not Player)
+            if (other is not Player || GameManager.GetGameManager().CurrentScene is not GameScene)
                 return;
             _exitAction.Invoke();
         }

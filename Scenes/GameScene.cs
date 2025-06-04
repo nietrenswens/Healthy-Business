@@ -8,7 +8,6 @@ using HealthyBusiness.Objects.Creatures.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace HealthyBusiness.Scenes
@@ -30,7 +29,6 @@ namespace HealthyBusiness.Scenes
             {
                 case GameSceneType.PlayableLevel:
                     LevelManager.AddDefaultLevel();
-                    GameManager.GetGameManager().GameData.ShiftCount += 1;
                     break;
                 case GameSceneType.Apartment:
                     LevelManager.AddApartment();
@@ -112,6 +110,7 @@ namespace HealthyBusiness.Scenes
 
         private void CheckCollision()
         {
+            HashSet<GameObject> checkedGameObjects = new HashSet<GameObject>();
             foreach (var gameObject in _collidableGameObjects)
             {
                 foreach (var other in _collidableGameObjects)
@@ -119,12 +118,17 @@ namespace HealthyBusiness.Scenes
                     var collider = gameObject.GetGameObject<Collider>();
                     if (gameObject != other && collider != null && other.GetGameObject<Collider>() != null)
                     {
-                        if (collider.CollisionGroup == CollisionGroup.Utility)
-                            Console.WriteLine();
+                        if (checkedGameObjects.Contains(gameObject) || checkedGameObjects.Contains(other))
+                        {
+                            continue; // Skip if already checked
+                        }
                         if (gameObject.GetGameObject<Collider>()!.CheckIntersection(other.GetGameObject<Collider>()!))
                         {
                             gameObject.OnCollision(other);
                             other.OnCollision(gameObject);
+
+                            checkedGameObjects.Add(gameObject);
+                            checkedGameObjects.Add(other);
                         }
                     }
                 }

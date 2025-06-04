@@ -18,7 +18,7 @@ namespace HealthyBusiness.Engine.Managers
         public Scene CurrentScene { get; private set; } = null!;
         public GameData GameData { get; private set; }
 
-        public Scene CurrentlyLoadingScene => _nextScene;
+        public Scene? CurrentlyLoadingScene => _nextScene;
 
         private GameManager()
         {
@@ -79,8 +79,8 @@ namespace HealthyBusiness.Engine.Managers
         {
             _nextScene = newScene;
             CurrentScene.Unload();
-            newScene.Load(ContentManager);
             CurrentScene = newScene;
+            newScene.Load(ContentManager);
         }
     }
 }
