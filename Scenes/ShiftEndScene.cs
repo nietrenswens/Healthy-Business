@@ -46,6 +46,19 @@ namespace HealthyBusiness.Scenes
                 marginTop = 100f
             }));
 
+            int daysUntilDeadline = (gameData.Deadline - gameData.ShiftCount);
+
+            string deadlineText = daysUntilDeadline > 0
+                ? $"Deadline in {daysUntilDeadline} day(s)"
+                : "Deadline today";
+
+            AddGameObject(new Text(LARGE_FONT, deadlineText, Color.White, new()
+            {
+                horizontalFloat = HorizontalAlign.Center,
+                verticalFloat = VerticalAlign.Center,
+                marginTop = 220f
+            }));
+
             AddGameObject(new Text(LARGE_FONT, $"Balance: {gameData.Balance}", Color.White, new()
             {
                 horizontalFloat = HorizontalAlign.Center,
