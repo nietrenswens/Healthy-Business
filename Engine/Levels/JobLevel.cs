@@ -39,6 +39,8 @@ namespace HealthyBusiness.Engine.Levels
 
             var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
             SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
+
+            SpawnEnemies(1);
         }
 
         public override GameObject[] GetTiles(ContentManager contentManager)
@@ -177,5 +179,42 @@ namespace HealthyBusiness.Engine.Levels
                 SavedGameObjects = gameObjects.ToArray();
             }
         }
+
+        private void SpawnEnemies(int number)
+        {
+            List<GameObject> gameObjects = new();
+            var floorTiles = GameObjects.Where(go => go is Floor).ToList();
+            HashSet<TileLocation> usedLocations = new HashSet<TileLocation>();
+
+            if (floorTiles.Count == 0)
+            {
+                return;
+            }
+
+            if (number >= floorTiles.Count / 2)
+                number = floorTiles.Count / 2;
+
+            for (int i = 0; i < number; i++)
+            {
+                int retries = 0;
+                if (retries > 4)
+                    break;
+
+                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                while (usedLocations.Contains(randomTileLocation))
+                {
+                    randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                    randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+                    retries++;
+                }
+
+                var enemy = new TomatoEnemy(randomTileLocation);
+                gameObjects.Add(enemy);
+                SavedGameObjects = gameObjects.ToArray();
+            }
+        }
+
     }
 }

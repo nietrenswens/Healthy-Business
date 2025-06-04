@@ -25,6 +25,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
             Add(collider);
             var stateMachine = new TomatoStateMachine();
             Add(stateMachine);
+            IsPersistent = true;
         }
     }
 }
