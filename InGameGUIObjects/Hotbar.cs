@@ -18,8 +18,8 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public Hotbar()
         {
-            GameScene currentLevel = ((GameScene)GameManager.GetGameManager().CurrentlyLoadingScene);
-            currentLevel.GUIObjects.Add(new CurrentScore());
+            GameScene? currentLevel = ((GameScene?)GameManager.GetGameManager().CurrentlyLoadingScene);
+            currentLevel?.GUIObjects.Add(new CurrentScore());
         }
 
         public Hotbar(List<HotbarSlot> hotbarSlots) : this()
@@ -132,6 +132,11 @@ namespace HealthyBusiness.InGameGUIObjects
         private HotbarSlot GetSelectedSlot()
         {
             return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
+        }
+
+        public void Clear()
+        {
+            HotbarSlots.ForEach(slot => slot.Item = null);
         }
     }
 

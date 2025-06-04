@@ -1,7 +1,7 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
-using HealthyBusiness.Objects.Creatures.Player;
-using HealthyBusiness.Objects.Creatures.Player.Modules;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
+using HealthyBusiness.Objects.Creatures.PlayerCreature.Modules;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

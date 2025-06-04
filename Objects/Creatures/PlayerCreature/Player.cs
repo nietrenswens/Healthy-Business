@@ -1,16 +1,18 @@
-﻿using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Interfaces;
+using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Objects.Creatures.Player.Modules;
+using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Objects.Creatures.PlayerCreature.Modules;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using HealthyBusiness.Animations;
+using System.Linq;
 
-namespace HealthyBusiness.Objects.Creatures.Player
+namespace HealthyBusiness.Objects.Creatures.PlayerCreature
 {
     public class Player : Creature
     {
@@ -54,6 +56,21 @@ namespace HealthyBusiness.Objects.Creatures.Player
         public override void OnCollision(GameObject other)
         {
             base.OnCollision(other);
+        }
+
+        public void SellItems()
+        {
+            var gameManager = GameManager.GetGameManager();
+            var currentScene = gameManager.CurrentScene as GameScene;
+
+            var hotbar = currentScene?.GUIObjects.Attributes.OfType<Hotbar>().First();
+            if (hotbar == null)
+                return;
+
+            var hotbarValue = hotbar.HotbarSlots.Sum(slot => slot.Item?.Price);
+            gameManager.GameData.Balance += hotbarValue ?? 0;
+
+            hotbar.Clear();
         }
     }
 }

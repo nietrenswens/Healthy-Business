@@ -3,6 +3,7 @@ using HealthyBusiness.Controllers;
 using HealthyBusiness.Controllers.PathFinding;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 
         public override void Update(GameTime gameTime)
         {
-            var player = GameManager.GetGameManager().CurrentScene.GameObjects.OfType<Player.Player>().First();
+            var player = GameManager.GetGameManager().CurrentScene.GameObjects.OfType<Player>().First();
             var linecollider = new LinePieceCollider(Parent!.WorldPosition, player.GetGameObject<Collider>()!.Center);
             switch (State)
             {

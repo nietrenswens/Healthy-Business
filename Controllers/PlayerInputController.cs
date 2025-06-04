@@ -2,7 +2,7 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures;
-using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;

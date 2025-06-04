@@ -1,7 +1,7 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using System;
 using System.Linq;

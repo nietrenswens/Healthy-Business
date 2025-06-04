@@ -4,7 +4,7 @@ using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,6 +32,7 @@ namespace HealthyBusiness.Scenes
                     break;
                 case GameSceneType.Apartment:
                     LevelManager.AddApartment();
+                    GUIObjects.Add(new BalanceText());
                     break;
             }
         }

@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.GUI;
+using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
+using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
-using HealthyBusiness.Collision;
-using HealthyBusiness.Engine.GUI;
-using HealthyBusiness.Objects.GUI;
-using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework.Content;
-using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
 {
@@ -17,20 +18,13 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public int Level = 1;
         private string? _textureName;
         private bool QuotaIsMet = false;
-
-        private RectangleCollider? _collider;
-
         private bool playerIsInRange = false;
-
         private Text? _text;
-
-        GameScene currentScene;
 
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
             LocalScale = 4;
             CollisionGroup = CollisionGroup.Player;
-            currentScene = (GameScene)GameManager.GetGameManager().CurrentlyLoadingScene;
         }
 
         public Employer(TileLocation tileLocation) : this(tileLocation.ToVector2())
@@ -46,20 +40,18 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             var collider = new RectangleCollider(new Rectangle(WorldPosition.ToPoint(), new Point(width, height)));
             collider.LocalPosition = Vector2.Zero;
 
-            _collider = collider;
-
             Add(collider);
             base.Load(content);
         }
 
         public int DetermineQuota()
         {
-            return 100 + (Level - 1) * 50;                                   
+            return 100 + (Level - 1) * 50;
         }
 
         public void IncreaseLevel(int? increaseLevelBy = null)
         {
-            if(increaseLevelBy.HasValue)
+            if (increaseLevelBy.HasValue)
             {
                 Level += increaseLevelBy.Value;
                 DetermineQuota();
@@ -89,10 +81,10 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 
             var player = GameManager.GetGameManager()
                 .CurrentScene.GameObjects
-                .OfType<Creatures.Player.Player>()
+                .OfType<Player>()
                 .FirstOrDefault();
 
-            if(player != null)
+            if (player != null)
             {
                 HandlePlayerInteraction(player);
             }
@@ -106,6 +98,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 
         private void ChangeGui()
         {
+            var currentScene = (GameScene)GameManager.GetGameManager().CurrentScene;
             if (playerIsInRange)
             {
                 string message = "Press E to sell items to the Dam";
@@ -119,7 +112,8 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     )
                 );
                 currentScene.GUIObjects.Add(_text);
-            } else
+            }
+            else if (_text != null)
             {
                 currentScene.GUIObjects.Remove(_text);
                 _text = null;
@@ -127,7 +121,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         }
 
         // TODO: make the Creatures.Player.Player -> Player but it is not working rn
-        private void HandlePlayerInteraction(Creatures.Player.Player player)
+        private void HandlePlayerInteraction(Player player)
         {
             if (player != null && GetGameObject<Collider>() is Collider collider &&
                 player.GetGameObject<Collider>() is Collider playerCollider)
@@ -138,16 +132,10 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                 {
                     if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
                     {
-                        // TODO: Implement selling items logic
-                        //if (!currentScene.GUIObjects.Attributes.OfType<Hotbar>()
-                        //    .First()
-                        //    .SellItems();
-                        //{
-                        //    return; // no empty slot
-                        //}
+                        player.SellItems();
                     }
 
-                    var textAttributesList = currentScene.GUIObjects.Attributes
+                    var textAttributesList = ((GameScene)GameManager.GetGameManager().CurrentScene).GUIObjects.Attributes
                         .OfType<Text>()
                         .ToList();
 

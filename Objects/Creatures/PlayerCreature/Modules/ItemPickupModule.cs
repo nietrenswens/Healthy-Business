@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Linq;
 
-namespace HealthyBusiness.Objects.Creatures.Player.Modules
+namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
 {
     public class ItemPickupModule : GameObject
     {
