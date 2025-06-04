@@ -16,7 +16,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
     public class Employer : Creature
     {
         public int Level = 1;
-        private string? _textureName;
         private bool QuotaIsMet = false;
         private bool playerIsInRange = false;
         private Text? _text;
@@ -61,6 +60,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             Level++;
             DetermineQuota();
         }
+
         public void PrintQuotaStatus()
         {
             string message = $"Level: {Level}, Quota: {DetermineQuota()}, Quota Met: {QuotaIsMet}";
@@ -123,31 +123,30 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         // TODO: make the Creatures.Player.Player -> Player but it is not working rn
         private void HandlePlayerInteraction(Player player)
         {
-            if (player != null && GetGameObject<Collider>() is Collider collider &&
-                player.GetGameObject<Collider>() is Collider playerCollider)
+            if (player == null) return;
+
+            var collider = GetGameObject<Collider>() as Collider;
+            var playerCollider = player.GetGameObject<Collider>() as Collider;
+            if (collider == null || playerCollider == null) return;
+
+            bool isColliding = collider.CheckIntersection(playerCollider);
+
+            if (isColliding)
             {
-                bool isStillColliding = collider.CheckIntersection(playerCollider);
-
-                if (isStillColliding)
+                if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
                 {
-                    if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
-                    {
-                        player.SellItems();
-                    }
+                    player.SellItems();
+                }
 
-                    var textAttributesList = ((GameScene)GameManager.GetGameManager().CurrentScene).GUIObjects.Attributes
-                        .OfType<Text>()
-                        .ToList();
-
-                    if (textAttributesList.Count > 0 && _text != null)
-                    {
-                        return;
-                    }
-
+                if (_text == null)
+                {
                     playerIsInRange = true;
                     ChangeGui();
                 }
-                else if (!isStillColliding)
+            }
+            else
+            {
+                if (_text != null)
                 {
                     playerIsInRange = false;
                     ChangeGui();
