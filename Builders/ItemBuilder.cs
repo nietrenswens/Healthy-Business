@@ -35,7 +35,7 @@ namespace HealthyBusiness.Builders
 
         public static Item CreateKetchup(TileLocation location)
         {
-            return new Item(location, "items\\ketchup", "Ketchup");
+            return new ValuedItem(location, "items\\ketchup", "Ketchup", ItemRarity.Low);
         }
 
         public static GameObject CreateRandomItem(TileLocation randomTileLocation)
