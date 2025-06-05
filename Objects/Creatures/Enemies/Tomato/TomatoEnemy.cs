@@ -1,16 +1,14 @@
-﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Interfaces;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
-using HealthyBusiness.Animations;
 
 
 namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 {
     public class TomatoEnemy : Creature
     {
-        public static int damage = 15;
+        public static int Damage = 15;
 
         public static float AggroRange = 10f;
         public static float ExplosionRange = 2f;

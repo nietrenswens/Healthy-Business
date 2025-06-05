@@ -61,7 +61,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                 case TomatoEnemyState.Exploding:
                     if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
                     {
-                        player.Health -= TomatoEnemy.damage;
+                        player.Health -= TomatoEnemy.Damage;
 
                         var tileLocation = new TileLocation(creature3.WorldPosition);
 
