@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework.Graphics;
 

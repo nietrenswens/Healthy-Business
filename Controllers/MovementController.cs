@@ -1,8 +1,7 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
-using Microsoft.Xna.Framework;
-using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Objects.Creatures;
+using Microsoft.Xna.Framework;
 
 namespace HealthyBusiness.Controllers
 {
@@ -11,9 +10,6 @@ namespace HealthyBusiness.Controllers
         public float Speed { get; set; }
 
         protected TileLocation? _targetLocation;
-
-        private Vector2 _lastMoveDirection = Vector2.Zero;
-
 
         private Vector2 _lastMoveDirection = Vector2.Zero;
 

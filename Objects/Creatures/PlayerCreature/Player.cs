@@ -1,5 +1,4 @@
-﻿using HealthyBusiness.Animations;
-using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
@@ -56,6 +55,12 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
         public override void OnCollision(GameObject other)
         {
             base.OnCollision(other);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Animation.Draw(spriteBatch, WorldPosition, LocalScale / 2);
+            base.Draw(spriteBatch);
         }
 
         public void SellItems()
