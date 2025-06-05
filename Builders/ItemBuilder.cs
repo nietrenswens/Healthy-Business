@@ -33,6 +33,11 @@ namespace HealthyBusiness.Builders
             return new ValuedItem(location, "items\\dino2", "Dino nugget", ItemRarity.Medium);
         }
 
+        public static Item CreateKetchup(TileLocation location)
+        {
+            return new ValuedItem(location, "items\\ketchup", "Ketchup", ItemRarity.High);
+        }
+
         public static GameObject CreateRandomItem(TileLocation randomTileLocation)
         {
             Func<Item>[] itemCreationMethods = new[]

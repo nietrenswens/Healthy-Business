@@ -43,7 +43,8 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
                 .OfType<Item>();
 
             var closestItem = items
-                .Where(item => item.GetGameObject<Collider>()!.Intersects((CircleCollider)GetGameObject<Collider>()!))
+                //.Where(item => (bool)(item.GetGameObject<Collider>()?.Intersects((CircleCollider)GetGameObject<Collider>())))
+                .Where(item => item.GetGameObject<Collider>()?.Intersects((CircleCollider)GetGameObject<Collider>()) == true)
                 .Select(item => new { Item = item, Distance = (_center - item.GetGameObject<Collider>()!.Center).Length() })
                 .OrderBy(x => x.Distance)
                 .FirstOrDefault();

@@ -1,5 +1,6 @@
 ﻿using HealthyBusiness.Collision;
 using HealthyBusiness.Engine;
+using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +11,11 @@ namespace HealthyBusiness.Objects.Creatures
     public class Creature : GameObject
     {
         private string? _textureName;
+        private Texture2D _grayPixel = null!;
+        private Texture2D _greenPixel = null!;
+
+        private const int HealthBarHeight = 10;
+        private const int HealthBarWidth = 50;
 
         public Texture2D Texture = null!;
         public Animation? Animation { get; set; }
@@ -30,6 +36,12 @@ namespace HealthyBusiness.Objects.Creatures
         public override void Load(ContentManager content)
         {
             base.Load(content);
+
+            _grayPixel = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+            _grayPixel.SetData(new[] { Color.DarkGray });
+            _greenPixel = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
+            _greenPixel.SetData(new[] { Color.Green });
+
             if (_textureName != null && Animation == null)
             {
                 Texture = content.Load<Texture2D>(_textureName);
@@ -54,6 +66,8 @@ namespace HealthyBusiness.Objects.Creatures
                 var height = (int)(Texture.Height * LocalScale);
                 spriteBatch.Draw(Texture, new Rectangle(WorldPosition.ToPoint(), new Point(width, height)), Color.White);
             }
+
+            DrawHealthBar(spriteBatch);
 
             base.Draw(spriteBatch);
         }
@@ -82,6 +96,18 @@ namespace HealthyBusiness.Objects.Creatures
             {
                 Animation.SetRow(newRow);
             }
+        }
+
+        private void DrawHealthBar(SpriteBatch spriteBatch)
+        {
+            if (Health >= MaxHealth)
+                return;
+            var center = GetGameObject<Collider>()!.Center;
+            var x = (int)(center.X) - (HealthBarWidth / 2);
+            var y = (int)(WorldPosition.Y - 20);
+            spriteBatch.Draw(_grayPixel, new Rectangle(new Point(x, y), new Point(HealthBarWidth, HealthBarHeight)), Color.White);
+            var healthPercentage = (float)Health / MaxHealth;
+            spriteBatch.Draw(_greenPixel, new Rectangle(new Point(x, y), new Point((int)(HealthBarWidth * healthPercentage), HealthBarHeight)), Color.White);
         }
 
     }

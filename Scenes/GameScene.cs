@@ -103,6 +103,12 @@ namespace HealthyBusiness.Scenes
             }
         }
 
+        public void ClearGameObjects()
+        {
+            base.Unload();
+            _collidableGameObjects.Clear();
+        }
+
         public override void Unload()
         {
             base.Unload();

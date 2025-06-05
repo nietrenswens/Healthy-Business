@@ -2,6 +2,7 @@
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Objects.Doors;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -64,7 +65,8 @@ namespace HealthyBusiness.Engine.Managers
 
         private void LoadCurrentLevel()
         {
-            _scene.Unload();
+            GameScene currentScene = (GameScene)_scene;
+            currentScene.ClearGameObjects();
             _scene.AddGameObject(Currentlevel.GameObjects);
             _scene.AddGameObject(Currentlevel.SavedGameObjects);
         }

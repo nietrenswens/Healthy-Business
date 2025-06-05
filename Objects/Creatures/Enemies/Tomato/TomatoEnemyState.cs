@@ -2,6 +2,6 @@
 {
     public enum TomatoEnemyState
     {
-        Idle, Attack
+        Idle, Attack, Exploding
     }
 }

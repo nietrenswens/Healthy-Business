@@ -1,15 +1,15 @@
-﻿using HealthyBusiness.Collision;
-using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Interfaces;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Engine.Utils;
 using Microsoft.Xna.Framework;
-using HealthyBusiness.Animations;
 
 
 namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 {
     public class TomatoEnemy : Creature
     {
+        public static int Damage = 15;
+
         public static float AggroRange = 10f;
         public static float ExplosionRange = 2f;
 
@@ -23,6 +23,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
             Add(collider);
             var stateMachine = new TomatoStateMachine();
             Add(stateMachine);
+            IsPersistent = true;
         }
     }
 }

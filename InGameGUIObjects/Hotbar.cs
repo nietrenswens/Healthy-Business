@@ -20,6 +20,7 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             GameScene? currentLevel = ((GameScene?)GameManager.GetGameManager().CurrentlyLoadingScene);
             currentLevel?.GUIObjects.Add(new CurrentScore());
+            IsPersistent = true;
         }
 
         public Hotbar(List<HotbarSlot> hotbarSlots) : this()

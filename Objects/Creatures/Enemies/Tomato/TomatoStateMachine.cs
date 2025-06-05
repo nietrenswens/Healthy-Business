@@ -1,8 +1,11 @@
-﻿using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Builders;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Controllers.PathFinding;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
+using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -27,7 +30,12 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
         public override void Update(GameTime gameTime)
         {
             var player = GameManager.GetGameManager().CurrentScene.GameObjects.OfType<Player>().First();
-            var linecollider = new LinePieceCollider(Parent!.WorldPosition, player.GetGameObject<Collider>()!.Center);
+            var playerCollider = player.GetGameObject<Collider>();
+            if (playerCollider == null)
+            {
+                return; // Player collider not found, exit early
+            }
+            var linecollider = new LinePieceCollider(Parent!.WorldPosition, playerCollider.Center);
             switch (State)
             {
                 case TomatoEnemyState.Idle:
@@ -47,12 +55,26 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     }
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
-                        GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
-                        return;
+                        //GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
+                        //return;
+                        SetExploding();
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)
                     {
                         SetIdle();
+                    }
+                    break;
+                case TomatoEnemyState.Exploding:
+                    if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
+                    {
+                        player.Health -= TomatoEnemy.Damage;
+
+                        var tileLocation = new TileLocation(creature3.WorldPosition);
+
+                        var ketchup = ItemBuilder.CreateKetchup(tileLocation);
+                        GameManager.GetGameManager().CurrentScene.AddGameObject(ketchup);
+
+                        GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
                     }
                     break;
             }
@@ -82,5 +104,30 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
             Parent.Remove(idleController!);
             Parent.Add(pathFindingController);
         }
+
+        public void SetExploding()
+        {
+            State = TomatoEnemyState.Exploding;
+
+            if (Parent is Creature creature)
+            {
+                creature.Animation = new ExplosionAnimation("entities\\enemies\\tomato\\TomatoBoom");
+                creature.Animation.Resume();
+            }
+
+            var idle = Parent.GetGameObject<IdleMovementController>();
+            if (idle != null)
+            {
+                Parent.Remove(idle);
+            }
+
+            var path = Parent.GetGameObject<PathfindingMovementController>();
+            if (path != null)
+            {
+                Parent.Remove(path);
+            }
+        }
+
+
     }
 }
