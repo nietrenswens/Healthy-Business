@@ -183,7 +183,7 @@ namespace HealthyBusiness.Engine.Levels
 
         private void SpawnEnemies(int number)
         {
-            List<GameObject> gameObjects = new();
+            List<GameObject> gameObjects = SavedGameObjects.ToList();
             var floorTiles = GameObjects.Where(go => go is Floor).ToList();
             HashSet<TileLocation> usedLocations = new HashSet<TileLocation>();
 
