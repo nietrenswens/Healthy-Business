@@ -1,4 +1,5 @@
 ﻿using HealthyBusiness.Collision;
+using HealthyBusiness.Data;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
@@ -9,7 +10,6 @@ using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
@@ -51,38 +51,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             base.Load(content);
         }
 
-        public int DetermineQuota()
-        {
-            GameData gameData = GameManager.GetGameManager().GameData;
-
-            if (gameData.ShiftCount < 1 || gameData.EmployerLevel < 0)
-            {
-                throw new System.Exception("Invalid game data: Shift count or employer level is not set correctly.");
-            }
-
-            int deadline = (int)Math.Ceiling(gameData.ShiftCount / 4.0);
-
-            int baseQuota = 100;
-            int scalingFactor = GameManager.GetGameManager().RNG.Next(50, 80);
-            double exponent = 1.5;
-            int levelMultiplier = 25;
-
-            double quota = baseQuota + scalingFactor * Math.Pow(deadline, exponent) + levelMultiplier * gameData.EmployerLevel;
-
-            return (int)Math.Round(quota);
-        }
-
-        public void IncreaseLevel()
-        {
-            if (QuotaIsMet)
-            {
-                Level++;
-                gameData.EmployerLevel = Level;
-                gameData.Quota = DetermineQuota();
-                PrintQuotaStatus();
-            }
-        }
-
         public void PrintQuotaStatus()
         {
             string message = $"Level: {Level}, Quota: {gameData.Quota}, Quota Met: {QuotaIsMet}";
@@ -116,7 +84,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         {
             base.OnCollision(other);
         }
-
 
         private void ChangeGui()
         {

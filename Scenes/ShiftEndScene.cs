@@ -36,7 +36,6 @@ namespace HealthyBusiness.Scenes
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
-                marginBottom = 100f
             }));
 
             AddGameObject(new Text(LARGE_FONT, $"Shift day: {gameData.ShiftCount}", Color.White, new()
