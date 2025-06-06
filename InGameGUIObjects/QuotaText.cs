@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Data;
+using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Objects.GUI;
@@ -23,11 +24,11 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             base.Update(gameTime);
 
-            var quota = GameManager.GetGameManager().GameData.Quota;
+            Quota quota = GameManager.GetGameManager().GameData.Quota;
 
-            if (quota != lastQuota)
+            if (quota.amount != lastQuota)
             {
-                lastQuota = quota;
+                lastQuota = quota.amount;
                 AddText();
             }
         }
@@ -37,7 +38,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var textObj = GetGameObject<Text>();
             if (textObj == null)
             {
-                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota}", Color.White, new()
+                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.amount}", Color.White, new()
                 {
                     verticalFloat = VerticalAlign.Top,
                     horizontalFloat = HorizontalAlign.Left,

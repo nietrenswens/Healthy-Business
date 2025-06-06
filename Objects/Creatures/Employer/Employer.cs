@@ -16,7 +16,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 {
     public class Employer : Creature
     {
-        public int Level = GameManager.GetGameManager().GameData.EmployerLevel;
+        public int Level = GameManager.GetGameManager().GameData.Quota.EmployerLevel;
         private bool QuotaIsMet = false;
         private bool playerIsInRange = false;
         private Text? _text;
@@ -28,9 +28,9 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             CollisionGroup = CollisionGroup.Player;
 
             // the employer has not been spawed it yet if the quota is 0
-            if (GameManager.GetGameManager().GameData.Quota == 0)
+            if (GameManager.GetGameManager().GameData.Quota.amount == 0)
             {
-                gameData.Quota = DetermineQuota();
+                gameData.Quota.amount = GameManager.GetGameManager().GameData.Quota.DetermineQuota();
             }
         }
 
@@ -51,14 +51,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             base.Load(content);
         }
 
-        public void PrintQuotaStatus()
-        {
-            string message = $"Level: {Level}, Quota: {gameData.Quota}, Quota Met: {QuotaIsMet}";
-
-            Add(
-                new Text("fonts\\pixelated_elegance\\small", message, Color.Green, new GUIStyling(verticalFloat: VerticalAlign.Center, horizontalFloat: HorizontalAlign.Center))
-            );
-        }
+        
 
         public void SetFeetPosition(TileLocation location)
         {
@@ -128,19 +121,19 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     GameData gameData = GameManager.GetGameManager().GameData;
 
                     // check if the quota is met (balance and current quota)
-                    QuotaIsMet = gameData.Balance >= GameManager.GetGameManager().GameData.Quota;
+                    QuotaIsMet = gameData.Balance >= GameManager.GetGameManager().GameData.Quota.amount;
 
                     // if the quota is met, increase the level
-                    if (QuotaIsMet) IncreaseLevel();
+                    if (QuotaIsMet) GameManager.GetGameManager().GameData.Quota.IncreaseLevel();
 
                     // if the quota is not met but the deadline is the same day as the current shift day -> game over
-                    if (!QuotaIsMet && gameData.ShiftCount == GameManager.GetGameManager().GameData.Deadline)
+                    if (!QuotaIsMet && gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
                     {
                         // TODO: show game over screen
                         GameManager.GetGameManager().Exit();
                     }
                     // if the quota is not met but the deadline is not the same day as the current shift day
-                    else if (!QuotaIsMet && gameData.ShiftCount < GameManager.GetGameManager().GameData.Deadline)
+                    else if (!QuotaIsMet && gameData.ShiftCount < GameManager.GetGameManager().GameData.Quota.Deadline)
                     {
                         return;
                     }
@@ -164,7 +157,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 
         private void SyncLevelWithGameData()
         {
-            Level = GameManager.GetGameManager().GameData.EmployerLevel;
+            Level = GameManager.GetGameManager().GameData.Quota.EmployerLevel;
         }
     }
 }

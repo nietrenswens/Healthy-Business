@@ -13,7 +13,7 @@ namespace HealthyBusiness.Data
         public GameData()
         {
             HotbarSlots = new();
-            Quota = new Quota();
+            Quota = new Quota(1, this);
         }
     }
 }

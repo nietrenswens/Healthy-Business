@@ -45,7 +45,7 @@ namespace HealthyBusiness.Scenes
                 marginTop = 100f
             }));
 
-            int daysUntilDeadline = (gameData.Deadline - gameData.ShiftCount);
+            int daysUntilDeadline = (gameData.Quota.Deadline - gameData.ShiftCount);
 
             string deadlineText = daysUntilDeadline > 0
                 ? $"Deadline in {daysUntilDeadline} day(s)"
