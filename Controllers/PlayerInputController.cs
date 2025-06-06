@@ -67,12 +67,6 @@ namespace HealthyBusiness.Controllers
 
             if (direction != Vector2.Zero)
             {
-                direction.Normalize();
-                _movement?.Move(direction);
-            }
-            ;
-            if (direction != Vector2.Zero)
-            {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
             }
 
