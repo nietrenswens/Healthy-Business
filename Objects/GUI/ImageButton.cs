@@ -9,10 +9,6 @@ namespace HealthyBusiness.Objects.GUI
 {
     public class ImageButton : Button
     {
-        private SpriteFont _font = null!;
-
-        public string ?Text { get; private set; }
-
         public ImageButton(GUIStyling? guiStyling = null) : base("gui\\manual", guiStyling)
         {
 
@@ -21,7 +17,6 @@ namespace HealthyBusiness.Objects.GUI
         public override void Load(ContentManager content)
         {
             base.Load(content);
-            _font = content.Load<SpriteFont>("fonts\\pixelated_elegance\\large");
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -65,12 +65,6 @@ namespace HealthyBusiness.Controllers
                 if (hotbar != null) hotbar.SelectNextSlot(ScrollDirection.Down);
             }
 
-            //if (direction != Vector2.Zero)
-            //{
-            //    direction.Normalize();
-            //    _movement?.Move(direction);
-            //}
-            //;
             if (direction != Vector2.Zero)
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);

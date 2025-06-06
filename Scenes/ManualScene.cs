@@ -22,7 +22,6 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             SetCamera(new DefaultCamera());
-            //AddGameObject(new ImageBackground("backgrounds\\manualscreen"));
             AddGameObject(new ColoredBackground(new Color(40, 54, 78)));
 
             manualTitle = new Text("fonts\\pixelated_elegance\\title", "Manual", Color.MediumTurquoise,
@@ -59,6 +58,7 @@ namespace HealthyBusiness.Scenes
             backButton.Clicked += BackButtonClicked;
             AddGameObject(backButton);
         }
+
         private void BackButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().ChangeScene(new MainMenu());
