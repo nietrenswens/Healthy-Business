@@ -43,7 +43,6 @@ namespace HealthyBusiness.Data
             int deadline = (int)Math.Ceiling(gameData.ShiftCount / 4.0);
 
             int baseQuota = 100;
-            //int scalingFactor = GameManager.GetGameManager().RNG.Next(50, 80);
             int scalingFactor = 50;
             double exponent = 1.5;
             int levelMultiplier = 25;
@@ -53,14 +52,23 @@ namespace HealthyBusiness.Data
             return (int)Math.Round(quota);
         }
 
-        public void IncreaseLevel()
+        public void SetLevel(bool IsQuotaMet)
         {
-            if (QuotaIsMet)
+            System.Diagnostics.Debug.WriteLine($"Setting level: {EmployerLevel}, Quota Met: {IsQuotaMet}");
+            if (IsQuotaMet)
             {
                 EmployerLevel++;
+                gameData.Balance = gameData.Balance - gameData.Quota.amount; // give the player the remaining balance after meeting the quota so he can get further in the levels
                 amount = DetermineQuota();
                 PrintQuotaStatus();
+
+                gameData.Quota.Deadline = gameData.ShiftCount + 3; // reset the deadline for the next quota
+
+                return;
             }
+
+            EmployerLevel = 1;
+            amount = DetermineQuota();
         }
 
         private void PrintQuotaStatus()

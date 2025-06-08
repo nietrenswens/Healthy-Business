@@ -32,7 +32,6 @@ namespace HealthyBusiness.Scenes
                     break;
                 case GameSceneType.Apartment:
                     LevelManager.AddApartment();
-                    GUIObjects.Add(new BalanceText());
                     GUIObjects.Add(new QuotaText());
                     break;
             }

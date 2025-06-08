@@ -40,15 +40,15 @@ namespace HealthyBusiness.InGameGUIObjects
             {
                 textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.amount}", Color.White, new()
                 {
-                    verticalFloat = VerticalAlign.Top,
-                    horizontalFloat = HorizontalAlign.Left,
-                    marginLeft = 50f,
+                    verticalFloat = VerticalAlign.Bottom,
+                    horizontalFloat = HorizontalAlign.Right,
+                    marginRight = 50f,
                 });
                 Add(textObj);
             }
             else
             {
-                textObj.TextString = $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota}";
+                textObj.TextString = $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.amount}";
             }
         }
     }

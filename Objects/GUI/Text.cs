@@ -16,6 +16,8 @@ namespace HealthyBusiness.Objects.GUI
         private Color _textColor;
         private GUIStyling _guiStyling;
 
+        public Color TextColor { get; set; }
+
         public Text(string fontPath, string text, Color? color, GUIStyling? guiStyling = null)
         {
             FontName = fontPath;
@@ -24,6 +26,8 @@ namespace HealthyBusiness.Objects.GUI
             _guiStyling = guiStyling ?? new GUIStyling();
 
             _textColor = color ?? Color.White;
+
+            TextColor = _textColor;
         }
 
         public override void Load(ContentManager content)

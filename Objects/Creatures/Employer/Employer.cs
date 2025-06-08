@@ -124,7 +124,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     QuotaIsMet = gameData.Balance >= GameManager.GetGameManager().GameData.Quota.amount;
 
                     // if the quota is met, increase the level
-                    if (QuotaIsMet) GameManager.GetGameManager().GameData.Quota.IncreaseLevel();
+                    if (QuotaIsMet) GameManager.GetGameManager().GameData.Quota.SetLevel(QuotaIsMet);
 
                     // if the quota is not met but the deadline is the same day as the current shift day -> game over
                     if (!QuotaIsMet && gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
