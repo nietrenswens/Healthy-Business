@@ -1,30 +1,32 @@
-﻿using HealthyBusiness.Builders;
+﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Cameras;
-using HealthyBusiness.Collision;
-using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using Microsoft.Xna.Framework;
+using HealthyBusiness.Builders;
+using HealthyBusiness.Collision;
+using System.Collections.Generic;
+using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 
 namespace HealthyBusiness.Scenes
 {
     public class GameScene : Scene
     {
+        private GameSceneType _gameSceneType;
         private List<GameObject> _collidableGameObjects { get; set; }
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
 
         public LevelManager LevelManager { get; private set; } = null!;
-
+       
         public GameScene(GameSceneType gameSceneType)
         {
             _collidableGameObjects = new List<GameObject>();
             GUIObjects = new();
             LevelManager = new(this);
+            _gameSceneType = gameSceneType;
             switch (gameSceneType)
             {
                 case GameSceneType.PlayableLevel:
