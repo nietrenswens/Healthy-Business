@@ -77,7 +77,7 @@ namespace HealthyBusiness.Engine.Levels
                             if (gid >= 4 && gid <= 7)
                             {
                                 var direction = (DoorDirection)(gid - 4);
-                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new GameScene(GameSceneType.PlayableLevel)));
+                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new LoadingScene()));
                                 gameObjects.Add(door);
                                 Doors.Add(door);
                             }
