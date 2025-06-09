@@ -29,8 +29,8 @@ namespace HealthyBusiness.InGameGUIObjects
             if (quota.amount != lastQuota)
             {
                 lastQuota = quota.amount;
-                AddText();
             }
+            AddText();
         }
 
         private void AddText()
