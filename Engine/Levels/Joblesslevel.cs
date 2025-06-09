@@ -89,8 +89,8 @@ namespace HealthyBusiness.Engine.Levels
                                 var direction = (DoorDirection)(gid - 4);
 
                                 var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(
-                                        (gameOver) ? new LoadingScene() : new GameScene(GameSceneType.PlayableLevel)
-                                    ));
+                                    (gameOver) ? new GameOverScene() : new LoadingScene()
+                                ));
 
                                 gameObjects.Add(door);
                                 Doors.Add(door);
