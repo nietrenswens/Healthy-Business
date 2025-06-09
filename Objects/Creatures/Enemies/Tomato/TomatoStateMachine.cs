@@ -7,6 +7,7 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
@@ -65,7 +66,9 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                 case TomatoEnemyState.Exploding:
                     if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
                     {
-                        player.Health -= TomatoEnemy.Damage;
+                        player.TakeDamage(TomatoEnemy.Damage);
+
+                        player.CheckHealth();
 
                         var tileLocation = new TileLocation(creature3.WorldPosition);
 

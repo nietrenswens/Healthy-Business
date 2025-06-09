@@ -78,5 +78,19 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
 
             hotbar.Clear();
         }
+
+        public void CheckHealth()
+        {
+            if (Health <= 0)
+            {
+                GameManager.GetGameManager().ChangeScene(new GameOverScene());
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            CheckHealth();
+        }
     }
 }

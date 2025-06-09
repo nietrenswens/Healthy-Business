@@ -28,7 +28,7 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             SetCamera(new DefaultCamera());
-            AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
+            AddGameObject(new ImageBackground("backgrounds\\gameover"));
 
             var gameData = GameManager.GetGameManager().GameData;
 

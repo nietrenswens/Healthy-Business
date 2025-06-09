@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Engine.Managers;
+﻿using HealthyBusiness.Data;
+using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
 using HealthyBusiness.Objects.Creatures.Employee;
@@ -76,6 +77,14 @@ namespace HealthyBusiness.Engine.Levels
 
                             if (gid >= 4 && gid <= 7)
                             {
+                                GameData gameData = GameManager.GetGameManager().GameData;
+                                bool gameOver = false;
+
+                                if(gameData.ShiftCount >= gameData.Quota.Deadline && gameData.Balance < gameData.Quota.amount)
+                                {
+                                    gameOver = true;
+                                }
+
                                 var direction = (DoorDirection)(gid - 4);
 
                                 var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(
