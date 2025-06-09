@@ -8,6 +8,7 @@ using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace HealthyBusiness.Scenes
@@ -53,16 +54,26 @@ namespace HealthyBusiness.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            CheckCollision();
-            GUIObjects.Update(gameTime);
-            _pauseMenu.Update(gameTime);
+            var inputManager = InputManager.GetInputManager();
+
+            if (inputManager.IsKeyPressed(Keys.Escape))
+            {
+                _pauseMenu.Toggle();
+            }
 
             if (!_pauseMenu.IsPaused)
             {
+                CheckCollision();
                 base.Update(gameTime);
+                LevelManager.Update(gameTime);
             }
 
-            LevelManager.Update(gameTime);
+            GUIObjects.Update(gameTime);
+
+            if (_pauseMenu.IsPaused)
+            {
+                _pauseMenu.Update(gameTime);
+            }
 
         }
 
