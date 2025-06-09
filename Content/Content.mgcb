@@ -49,18 +49,6 @@
 /processorParam:TextureFormat=Color
 /build:entities/enemies/tomato/tomato.png
 
-#begin entities/enemies/tomato/tomato.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:entities/enemies/tomato/tomato.png
-
 #begin entities/enemies/tomato/tomato2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,18 +60,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:entities/enemies/tomato/tomato2.png
-
-#begin entities/enemies/tomato/tomato3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:entities/enemies/tomato/tomato3.png
 
 #begin entities/enemies/tomato/tomato3.png
 /importer:TextureImporter

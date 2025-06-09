@@ -1,4 +1,5 @@
 ﻿using HealthyBusiness.Cameras;
+using HealthyBusiness.Data;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
@@ -18,13 +19,18 @@ namespace HealthyBusiness.Scenes
     {
         private TextedButton? playAgainButton;
         private TextedButton? quitButton;
+
         private const string TITLE_FONT = "fonts\\pixelated_elegance\\title";
+        private const string LARGE_FONT = "fonts\\pixelated_elegance\\large";
+
 
         public override void Load(ContentManager content)
         {
             base.Load(content);
             SetCamera(new DefaultCamera());
-            AddGameObject(new ColoredBackground(Color.Black));
+            AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
+
+            var gameData = GameManager.GetGameManager().GameData;
 
             AddGameObject(new Text(TITLE_FONT, "Stats", Color.White, new()
             {
@@ -32,9 +38,16 @@ namespace HealthyBusiness.Scenes
                 verticalFloat = VerticalAlign.Top,
             }));
 
-            playAgainButton = new TextedButton("Play Again", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
+            AddGameObject(new Text(LARGE_FONT, $"You survived the disaster for {gameData.ShiftCount} days!", Color.White, new()
+            {
+                horizontalFloat = HorizontalAlign.Center,
+                verticalFloat = VerticalAlign.Top,
+                marginTop = 200f
+            }));
+
+            playAgainButton = new TextedButton("Play Again", new GUIStyling(marginTop: 500, horizontalFloat: HorizontalAlign.Center));
             playAgainButton.Clicked += PlayAgainButtonClicked;
-            quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));
+            quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 600, horizontalFloat: HorizontalAlign.Center));
             quitButton.Clicked += QuitButtonClicked;
 
             AddGameObject(playAgainButton);
