@@ -30,7 +30,6 @@ namespace HealthyBusiness.InGameGUIObjects
             {
                 lastQuota = quota.amount;
             }
-
             AddText();
         }
 
