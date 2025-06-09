@@ -54,7 +54,6 @@ namespace HealthyBusiness.Data
 
         public void SetLevel(bool IsQuotaMet)
         {
-            System.Diagnostics.Debug.WriteLine($"Setting level: {EmployerLevel}, Quota Met: {IsQuotaMet}");
             if (IsQuotaMet)
             {
                 EmployerLevel++;

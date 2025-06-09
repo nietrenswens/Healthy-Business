@@ -93,13 +93,25 @@ namespace HealthyBusiness.Scenes
         private string GetShiftName()
         {
             var shiftCount = GameManager.GetGameManager().GameData.ShiftCount;
+            return $"{shiftCount}{GetOrdinalSuffix(shiftCount)}";
+        }
 
-            if (shiftCount == 1)
-                return "1st";
-            if (shiftCount == 2)
-                return "2nd";
+        private string GetOrdinalSuffix(int number)
+        {
+            if (number <= 0) return "th"; 
 
-            return $"{shiftCount}th";
+            int lastTwoDigits = number % 100;
+
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 13)
+                return "th";
+
+            switch (number % 10)
+            {
+                case 1: return "st";
+                case 2: return "nd";
+                case 3: return "rd";
+                default: return "th";
+            }
         }
     }
 }

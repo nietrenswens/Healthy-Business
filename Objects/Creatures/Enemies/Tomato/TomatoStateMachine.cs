@@ -55,8 +55,6 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     }
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
-                        //GameManager.GetGameManager().CurrentScene.RemoveGameObject(Parent!);
-                        //return;
                         SetExploding();
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)
