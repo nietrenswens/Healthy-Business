@@ -118,6 +118,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                 if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
                 {
                     player.SellItems();
+
                     GameData gameData = GameManager.GetGameManager().GameData;
 
                     // check if the quota is met (balance and current quota)
@@ -130,7 +131,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     if (!QuotaIsMet && gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
                     {
                         // TODO: show game over screen
-                        GameManager.GetGameManager().Exit();
+                        GameManager.GetGameManager().ChangeScene(new GameOverScene());
                     }
                     // if the quota is not met but the deadline is not the same day as the current shift day
                     else if (!QuotaIsMet && gameData.ShiftCount < GameManager.GetGameManager().GameData.Quota.Deadline)

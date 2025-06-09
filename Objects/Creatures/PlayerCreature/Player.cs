@@ -1,4 +1,5 @@
-﻿using HealthyBusiness.Collision;
+﻿using HealthyBusiness.Animations;
+using HealthyBusiness.Collision;
 using HealthyBusiness.Controllers;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;

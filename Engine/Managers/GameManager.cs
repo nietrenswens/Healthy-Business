@@ -76,6 +76,12 @@ namespace HealthyBusiness.Engine.Managers
             _game.Exit();
         }
 
+        public void RestartGame()
+        {
+            GameData = new GameData();
+            _nextScene = new MainMenu();
+        }
+
         private void DoSceneTransition(Scene newScene)
         {
             _nextScene = newScene;
@@ -83,5 +89,6 @@ namespace HealthyBusiness.Engine.Managers
             CurrentScene = newScene;
             newScene.Load(ContentManager);
         }
+
     }
 }
