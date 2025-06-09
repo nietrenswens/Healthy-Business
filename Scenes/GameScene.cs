@@ -5,6 +5,7 @@ using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,6 +16,7 @@ namespace HealthyBusiness.Scenes
 {
     public class GameScene : Scene
     {
+        private GameSceneType _gameSceneType;
         private List<GameObject> _collidableGameObjects { get; set; }
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
@@ -26,6 +28,7 @@ namespace HealthyBusiness.Scenes
             _collidableGameObjects = new List<GameObject>();
             GUIObjects = new();
             LevelManager = new(this);
+            _gameSceneType = gameSceneType;
             switch (gameSceneType)
             {
                 case GameSceneType.PlayableLevel:
