@@ -14,23 +14,23 @@ namespace HealthyBusiness.InGameGUIObjects
 {
     public class QuotaText : GameObject
     {
-        public int lastQuota = 0;
-
-        public QuotaText()
-        {
-        }
+        public int lastQuota = -1;
+        public int lastBalance = -1;
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            Quota quota = GameManager.GetGameManager().GameData.Quota;
+            var gameData = GameManager.GetGameManager().GameData;
+            var quotaAmount = gameData.Quota.Amount;
+            var balance = gameData.Balance;
 
-            if (quota.amount != lastQuota)
+            if (quotaAmount != lastQuota || balance != lastBalance)
             {
-                lastQuota = quota.amount;
+                lastQuota = quotaAmount;
+                lastBalance = balance;
+                AddText();
             }
-            AddText();
         }
 
         private void AddText()
@@ -38,7 +38,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var textObj = GetGameObject<Text>();
             if (textObj == null)
             {
-                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.amount}", Color.White, new()
+                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.Amount}", Color.White, new()
                 {
                     verticalFloat = VerticalAlign.Bottom,
                     horizontalFloat = HorizontalAlign.Right,
@@ -48,7 +48,7 @@ namespace HealthyBusiness.InGameGUIObjects
             }
             else
             {
-                textObj.TextString = $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.amount}";
+                textObj.TextString = $"{lastBalance}/{lastQuota}";
             }
         }
     }

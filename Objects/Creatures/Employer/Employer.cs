@@ -16,11 +16,12 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 {
     public class Employer : Creature
     {
-        public int Level = GameManager.GetGameManager().GameData.Quota.EmployerLevel;
-        private bool QuotaIsMet = false;
-        private bool playerIsInRange = false;
+        private bool _quotaIsMet = false;
+        private bool _playerIsInRange = false;
         private Text? _text;
-        private GameData gameData = GameManager.GetGameManager().GameData;
+        private GameData _gameData = GameManager.GetGameManager().GameData;
+
+        public int Level = GameManager.GetGameManager().GameData.Quota.EmployerLevel;
 
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
@@ -28,9 +29,9 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             CollisionGroup = CollisionGroup.Player;
 
             // the employer has not been spawed it yet if the quota is 0
-            if (GameManager.GetGameManager().GameData.Quota.amount == 0)
+            if (GameManager.GetGameManager().GameData.Quota.Amount == 0)
             {
-                gameData.Quota.amount = GameManager.GetGameManager().GameData.Quota.DetermineQuota();
+                _gameData.Quota.Amount = GameManager.GetGameManager().GameData.Quota.DetermineQuota();
             }
         }
 
@@ -50,8 +51,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             Add(collider);
             base.Load(content);
         }
-
-        
 
         public void SetFeetPosition(TileLocation location)
         {
@@ -73,7 +72,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             }
         }
 
-        public override void OnCollision(GameObject other)
+        public void OnCollision(GameObject other)
         {
             base.OnCollision(other);
         }
@@ -81,7 +80,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         private void ChangeGui()
         {
             var currentScene = (GameScene)GameManager.GetGameManager().CurrentScene;
-            if (playerIsInRange)
+            if (_playerIsInRange)
             {
                 string message = "Press E to sell items to the Dam";
                 _text = new Text(
@@ -102,7 +101,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             }
         }
 
-        // TODO: make the Creatures.Player.Player -> Player but it is not working rn
         private void HandlePlayerInteraction(Player player)
         {
             if (player == null) return;
@@ -122,19 +120,19 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                     GameData gameData = GameManager.GetGameManager().GameData;
 
                     // check if the quota is met (balance and current quota)
-                    QuotaIsMet = gameData.Balance >= GameManager.GetGameManager().GameData.Quota.amount;
+                    _quotaIsMet = gameData.Balance >= GameManager.GetGameManager().GameData.Quota.Amount;
 
                     // if the quota is met, increase the level
-                    if (QuotaIsMet) GameManager.GetGameManager().GameData.Quota.SetLevel(QuotaIsMet);
+                    if (_quotaIsMet) GameManager.GetGameManager().GameData.Quota.IncreaseEmployerLevel();
 
                     // if the quota is not met but the deadline is the same day as the current shift day -> game over
-                    if (!QuotaIsMet && gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
+                    else if (gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
                     {
-                        // TODO: show game over screen
                         GameManager.GetGameManager().ChangeScene(new GameOverScene());
+                        // Employer level reset ???
                     }
                     // if the quota is not met but the deadline is not the same day as the current shift day
-                    else if (!QuotaIsMet && gameData.ShiftCount < GameManager.GetGameManager().GameData.Quota.Deadline)
+                    else if (gameData.ShiftCount < GameManager.GetGameManager().GameData.Quota.Deadline)
                     {
                         return;
                     }
@@ -142,7 +140,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
 
                 if (_text == null)
                 {
-                    playerIsInRange = true;
+                    _playerIsInRange = true;
                     ChangeGui();
                 }
             }
@@ -150,15 +148,10 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             {
                 if (_text != null)
                 {
-                    playerIsInRange = false;
+                    _playerIsInRange = false;
                     ChangeGui();
                 }
             }
-        }
-
-        private void SyncLevelWithGameData()
-        {
-            Level = GameManager.GetGameManager().GameData.Quota.EmployerLevel;
         }
     }
 }

@@ -80,7 +80,7 @@ namespace HealthyBusiness.Engine.Levels
                                 GameData gameData = GameManager.GetGameManager().GameData;
                                 bool gameOver = false;
 
-                                if(gameData.ShiftCount >= gameData.Quota.Deadline && gameData.Balance < gameData.Quota.amount)
+                                if(gameData.ShiftCount >= gameData.Quota.Deadline && gameData.Balance < gameData.Quota.Amount)
                                 {
                                     gameOver = true;
                                 }

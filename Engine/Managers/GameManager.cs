@@ -68,7 +68,6 @@ namespace HealthyBusiness.Engine.Managers
         public void ChangeScene(Scene newScene)
         {
             _nextScene = newScene;
-
         }
 
         public void Exit()

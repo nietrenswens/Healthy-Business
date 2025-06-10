@@ -11,36 +11,44 @@ namespace HealthyBusiness.Data
 {
     public class Quota : GameObject
     {
-        public int EmployerLevel { get; set; } = 1;
-        public int Deadline { get; set; } = 0;
-        public int MinimalBalance { get; set; } = 0;
+        private bool _quotaIsMet = false;
 
-        public int amount = 0;
+        private GameData _gameData;
 
-        private bool QuotaIsMet = false;
+        public int EmployerLevel { get; set; }
+        public int Deadline { get; set; }
+        public int MinimalBalance { get; set; }
 
-        private GameData gameData;
+        public int Amount { get; set; }
+
+        
 
         public Quota(int employerLevel, GameData gameData)
         {
-            this.gameData = gameData;
+            _gameData = gameData;
             EmployerLevel = employerLevel;
             Deadline = gameData.ShiftCount + 3;
+            MinimalBalance = 0;
+            Amount = 0;
 
-            if (amount == 0)
+            if (Amount == 0)
             {
-                amount = DetermineQuota();
+                Amount = DetermineQuota();
             }
         }
 
         public int DetermineQuota()
         {
-            if (EmployerLevel < 1 || gameData.ShiftCount < 0)
+            if (EmployerLevel < 1)
             {
-                throw new System.Exception("Invalid game data: Shift count or employer level is not set correctly.");
+                throw new Exception("Invalid game data: Employer level is not set correctly.");
+            }
+            if (_gameData.ShiftCount < 0)
+            {
+                throw new Exception("Invalid game data: Shift count is not set correctly.");
             }
 
-            int deadline = (int)Math.Ceiling(gameData.ShiftCount / 4.0);
+            int deadline = (int)Math.Ceiling(_gameData.ShiftCount / 4.0);
 
             int baseQuota = 100;
             int scalingFactor = 50;
@@ -52,27 +60,19 @@ namespace HealthyBusiness.Data
             return (int)Math.Round(quota);
         }
 
-        public void SetLevel(bool IsQuotaMet)
+        public void IncreaseEmployerLevel()
         {
-            if (IsQuotaMet)
-            {
-                EmployerLevel++;
-                gameData.Balance = gameData.Balance - gameData.Quota.amount; // give the player the remaining balance after meeting the quota so he can get further in the levels
-                amount = DetermineQuota();
-                PrintQuotaStatus();
+            EmployerLevel++;
+            _gameData.Balance = _gameData.Balance - _gameData.Quota.Amount; // give the player the remaining balance after meeting the quota so he can get further in the levels
+            Amount = DetermineQuota();
+            PrintQuotaStatus();
 
-                gameData.Quota.Deadline = gameData.ShiftCount + 3; // reset the deadline for the next quota
-
-                return;
-            }
-
-            EmployerLevel = 1;
-            amount = DetermineQuota();
+            _gameData.Quota.Deadline = _gameData.ShiftCount + 3; // reset the deadline for the next quota
         }
 
         private void PrintQuotaStatus()
         {
-            string message = $"Level: {EmployerLevel}, Quota: {amount}, Quota Met: {QuotaIsMet}";
+            string message = $"Level: {EmployerLevel}, Quota: {Amount}, Quota Met: {_quotaIsMet}";
 
             Add(
                 new Text("fonts\\pixelated_elegance\\small", message, Color.Green, new GUIStyling(verticalFloat: VerticalAlign.Center, horizontalFloat: HorizontalAlign.Center))

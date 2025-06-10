@@ -18,9 +18,9 @@ namespace HealthyBusiness.Scenes
     {
         private GameSceneType _gameSceneType;
         private List<GameObject> _collidableGameObjects { get; set; }
-        public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         private PauseMenu _pauseMenu = null!;
 
+        public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         public LevelManager LevelManager { get; private set; } = null!;
 
         public GameScene(GameSceneType gameSceneType)

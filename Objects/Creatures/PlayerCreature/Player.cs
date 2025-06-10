@@ -51,6 +51,7 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
         {
             base.Update(gameTime);
             Animation.Update(gameTime);
+            CheckHealth();
         }
 
         public override void OnCollision(GameObject other)

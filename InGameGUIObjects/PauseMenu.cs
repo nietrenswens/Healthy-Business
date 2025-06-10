@@ -50,7 +50,7 @@ namespace HealthyBusiness.InGameGUIObjects
             GameManager.GetGameManager().ChangeScene(new MainMenu());
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             base.Update(gameTime);
         }

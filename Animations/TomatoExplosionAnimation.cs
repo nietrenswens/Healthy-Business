@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HealthyBusiness.Animations
 {
-    public class ExplosionAnimation : Animation
+    public class TomatoExplosionAnimation : Animation
     {
-        public ExplosionAnimation(string spriteSheetName)
+        public TomatoExplosionAnimation()
             : base(128, 128, 100, 0, 1, false)
         {
-            _texture = GameManager.GetGameManager().ContentManager.Load<Texture2D>(spriteSheetName);
+            _texture = GameManager.GetGameManager().ContentManager.Load<Texture2D>("entities\\enemies\\tomato\\TomatoBoom");
         }
     }
 }

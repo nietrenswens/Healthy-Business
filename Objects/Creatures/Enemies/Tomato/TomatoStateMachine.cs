@@ -68,8 +68,6 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     {
                         player.TakeDamage(TomatoEnemy.Damage);
 
-                        player.CheckHealth();
-
                         var tileLocation = new TileLocation(creature3.WorldPosition);
 
                         var ketchup = ItemBuilder.CreateKetchup(tileLocation);
@@ -112,7 +110,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 
             if (Parent is Creature creature)
             {
-                creature.Animation = new ExplosionAnimation("entities\\enemies\\tomato\\TomatoBoom");
+                creature.Animation = new TomatoExplosionAnimation();
                 creature.Animation.Resume();
             }
 

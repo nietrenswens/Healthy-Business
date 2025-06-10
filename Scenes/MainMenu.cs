@@ -12,10 +12,9 @@ namespace HealthyBusiness.Scenes
 {
     public class MainMenu : Scene
     {
-        private Text? titleText;
-        private TextedButton? playButton;
-        private TextedButton? quitButton;
-
+        private Text? _titleText;
+        private TextedButton? _playButton;
+        private TextedButton? _quitButton;
 
         public override void Load(ContentManager content)
         {
@@ -23,18 +22,18 @@ namespace HealthyBusiness.Scenes
             SetCamera(new DefaultCamera());
 
             AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
-            titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
-            AddGameObject(titleText);
+            _titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
+            AddGameObject(_titleText);
 
-            playButton = new TextedButton("Play", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
-            playButton.Clicked += PlayButtonClicked;
-            quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));
-            quitButton.Clicked += QuitButtonClicked;
+            _playButton = new TextedButton("Play", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
+            _playButton.Clicked += PlayButtonClicked;
+            _quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));
+            _quitButton.Clicked += QuitButtonClicked;
             var manualButton = new ImageButton(new GUIStyling(marginLeft: -10, marginTop: -10, horizontalFloat: HorizontalAlign.Right, verticalFloat: VerticalAlign.Bottom));
             manualButton.Clicked += ManualButtonClicked;
 
-            AddGameObject(playButton);
-            AddGameObject(quitButton);
+            AddGameObject(_playButton);
+            AddGameObject(_quitButton);
             AddGameObject(manualButton);
         }
 
@@ -46,7 +45,6 @@ namespace HealthyBusiness.Scenes
         private void QuitButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().Exit();
-
         }
 
         private void ManualButtonClicked(object? sender, EventArgs e)

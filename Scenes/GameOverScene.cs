@@ -17,12 +17,11 @@ namespace HealthyBusiness.Scenes
 {
     class GameOverScene : Scene
     {
-        private TextedButton? playAgainButton;
-        private TextedButton? quitButton;
+        private TextedButton? _playAgainButton;
+        private TextedButton? _quitButton;
 
         private const string TITLE_FONT = "fonts\\pixelated_elegance\\title";
         private const string LARGE_FONT = "fonts\\pixelated_elegance\\large";
-
 
         public override void Load(ContentManager content)
         {
@@ -45,13 +44,13 @@ namespace HealthyBusiness.Scenes
                 marginTop = 200f
             }));
 
-            playAgainButton = new TextedButton("Play Again", new GUIStyling(marginTop: 500, horizontalFloat: HorizontalAlign.Center));
-            playAgainButton.Clicked += PlayAgainButtonClicked;
-            quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 600, horizontalFloat: HorizontalAlign.Center));
-            quitButton.Clicked += QuitButtonClicked;
+            _playAgainButton = new TextedButton("Play Again", new GUIStyling(marginTop: 500, horizontalFloat: HorizontalAlign.Center));
+            _playAgainButton.Clicked += PlayAgainButtonClicked;
+            _quitButton = new TextedButton("Quit", new GUIStyling(marginTop: 600, horizontalFloat: HorizontalAlign.Center));
+            _quitButton.Clicked += QuitButtonClicked;
 
-            AddGameObject(playAgainButton);
-            AddGameObject(quitButton);
+            AddGameObject(_playAgainButton);
+            AddGameObject(_quitButton);
         }
 
         private void PlayAgainButtonClicked(object? sender, EventArgs e)
