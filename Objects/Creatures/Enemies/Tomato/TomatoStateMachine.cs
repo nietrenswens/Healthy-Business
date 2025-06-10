@@ -56,6 +56,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     }
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
+                        player.TakeDamage(TomatoEnemy.Damage);
                         SetExploding();
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)
@@ -66,8 +67,6 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                 case TomatoEnemyState.Exploding:
                     if (Parent is Creature creature3 && creature3.Animation?.IsFinished == true)
                     {
-                        player.TakeDamage(TomatoEnemy.Damage);
-
                         var tileLocation = new TileLocation(creature3.WorldPosition);
 
                         var ketchup = ItemBuilder.CreateKetchup(tileLocation);

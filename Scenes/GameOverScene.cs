@@ -31,11 +31,7 @@ namespace HealthyBusiness.Scenes
 
             var gameData = GameManager.GetGameManager().GameData;
 
-            AddGameObject(new Text(TITLE_FONT, "Stats", Color.White, new()
-            {
-                horizontalFloat = HorizontalAlign.Center,
-                verticalFloat = VerticalAlign.Top,
-            }));
+            AddGameObject(new Text(TITLE_FONT, "Game Over", Color.Firebrick, new GUIStyling(marginTop: 100, horizontalFloat: HorizontalAlign.Center)));
 
             AddGameObject(new Text(LARGE_FONT, $"You survived the disaster for {gameData.ShiftCount} days!", Color.White, new()
             {
