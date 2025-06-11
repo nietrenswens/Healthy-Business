@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin audio/footstep.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/footstep.wav
+
+#begin audio/pickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/pickup.wav
+
 #begin backgrounds/gameover.png
 /importer:TextureImporter
 /processor:TextureProcessor

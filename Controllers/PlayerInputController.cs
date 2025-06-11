@@ -13,6 +13,8 @@ namespace HealthyBusiness.Controllers
 {
     public class PlayerInputController : GameObject
     {
+        private double _footstepTimer = 0;
+        private double _footstepInterval = 220;
         private InputManager _inputManager => InputManager.GetInputManager();
         private MovementController? _movement;
 
@@ -67,6 +69,16 @@ namespace HealthyBusiness.Controllers
             if (direction != Vector2.Zero)
             {
                 player.GetGameObject<CollidableMovementController>()!.Move(direction, gameTime);
+                _footstepTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (_footstepTimer >= _footstepInterval)
+                {
+                    player.PlayFootstepSound();
+                    _footstepTimer = 0;
+                }
+            }
+            else
+            {
+                _footstepTimer = _footstepInterval;
             }
 
             (Parent as Creature)?.OnDirectionChanged(direction);
