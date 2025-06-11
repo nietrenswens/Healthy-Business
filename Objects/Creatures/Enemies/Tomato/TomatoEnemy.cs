@@ -9,8 +9,8 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
     public class TomatoEnemy : Creature
     {
         public static int Damage = 15;
-        public static float AggroRange = 10f;
-        public static float ExplosionRange = 2f;
+        public static float AggroRange = 8f;
+        public static float ExplosionRange = 1.5f;
 
         public const float SPEED = 2f;
 

@@ -18,7 +18,6 @@ namespace HealthyBusiness.Engine.Managers
         public Random RNG { get; private set; } = null!;
         public Scene CurrentScene { get; private set; } = null!;
         public GameData GameData { get; private set; }
-
         public Scene? CurrentlyLoadingScene => _nextScene;
 
         private GameManager()

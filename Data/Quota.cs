@@ -1,27 +1,23 @@
 ﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
-using HealthyBusiness.Engine.Levels;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Objects.GUI;
+using HealthyBusiness.InGameGUIObjects;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace HealthyBusiness.Data
 {
-    public class Quota : GameObject
+    public class Quota
     {
         private bool _quotaIsMet = false;
-
         private GameData _gameData;
 
         public int EmployerLevel { get; set; }
         public int Deadline { get; set; }
         public int MinimalBalance { get; set; }
-
         public int Amount { get; set; }
-
-        
 
         public Quota(int employerLevel, GameData gameData)
         {
@@ -72,10 +68,16 @@ namespace HealthyBusiness.Data
 
         private void PrintQuotaStatus()
         {
-            string message = $"Level: {EmployerLevel}, Quota: {Amount}, Quota Met: {_quotaIsMet}";
+            string message = $"You have reached a new quota!\nYour new quota: {Amount}";
+            Scene scene = GameManager.GetGameManager().CurrentScene;
 
-            Add(
-                new Text("fonts\\pixelated_elegance\\small", message, Color.Green, new GUIStyling(verticalFloat: VerticalAlign.Center, horizontalFloat: HorizontalAlign.Center))
+            if (scene is not GameScene gameScene)
+            {
+                return;
+            }
+
+            gameScene.GUIObjects.Add(
+                new TimedText("fonts\\pixelated_elegance\\small", message, Color.White, 4000, backgroundColor: Color.DarkSlateGray, guiStyling: new GUIStyling(verticalFloat: VerticalAlign.Center, horizontalFloat: HorizontalAlign.Center))
             );
         }
 

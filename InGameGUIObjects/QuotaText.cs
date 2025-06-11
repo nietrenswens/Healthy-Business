@@ -1,14 +1,8 @@
-﻿using HealthyBusiness.Data;
-using HealthyBusiness.Engine;
+﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthyBusiness.InGameGUIObjects
 {
@@ -38,7 +32,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var textObj = GetGameObject<Text>();
             if (textObj == null)
             {
-                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.Amount}", Color.White, new()
+                textObj = new Text("fonts\\pixelated_elegance\\large", $"{GameManager.GetGameManager().GameData.Balance}/{GameManager.GetGameManager().GameData.Quota.Amount}", Color.White, guiStyling: new()
                 {
                     verticalFloat = VerticalAlign.Bottom,
                     horizontalFloat = HorizontalAlign.Right,

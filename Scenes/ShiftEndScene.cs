@@ -25,20 +25,20 @@ namespace HealthyBusiness.Scenes
             var gameData = GameManager.GetGameManager().GameData;
 
             AddGameObject(new ColoredBackground(new Color(40, 54, 78)));
-            AddGameObject(new Text(TITLE_FONT, "You have finished your " + GetShiftName() + " shift", Color.White, new()
+            AddGameObject(new Text(TITLE_FONT, "You have finished your " + GetShiftName() + " shift", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
                 marginBottom = 200f
             }));
 
-            AddGameObject(new Text(TITLE_FONT, "Stats", Color.White, new()
+            AddGameObject(new Text(TITLE_FONT, "Stats", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
             }));
 
-            AddGameObject(new Text(LARGE_FONT, $"Shift day: {gameData.ShiftCount}", Color.White, new()
+            AddGameObject(new Text(LARGE_FONT, $"Shift day: {gameData.ShiftCount}", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
@@ -51,14 +51,14 @@ namespace HealthyBusiness.Scenes
                 ? $"Deadline in {daysUntilDeadline} day(s)"
                 : "Deadline today";
 
-            AddGameObject(new Text(LARGE_FONT, deadlineText, Color.White, new()
+            AddGameObject(new Text(LARGE_FONT, deadlineText, Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
                 marginTop = 220f
             }));
 
-            AddGameObject(new Text(LARGE_FONT, $"Balance: {gameData.Balance}", Color.White, new()
+            AddGameObject(new Text(LARGE_FONT, $"Balance: {gameData.Balance}", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
@@ -66,7 +66,7 @@ namespace HealthyBusiness.Scenes
             }));
 
             var hotbarValue = gameData.HotbarSlots.Sum(slot => slot.Item?.Price);
-            AddGameObject(new Text(LARGE_FONT, $"Hotbar value: {hotbarValue}", Color.White, new()
+            AddGameObject(new Text(LARGE_FONT, $"Hotbar value: {hotbarValue}", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Center,
@@ -98,7 +98,7 @@ namespace HealthyBusiness.Scenes
 
         private string GetOrdinalSuffix(int number)
         {
-            if (number <= 0) return "th"; 
+            if (number <= 0) return "th";
 
             int lastTwoDigits = number % 100;
 

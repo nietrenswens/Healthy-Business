@@ -22,7 +22,7 @@ namespace HealthyBusiness.Scenes
             SetCamera(new DefaultCamera());
 
             AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
-            _titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
+            _titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, guiStyling: new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
             AddGameObject(_titleText);
 
             _playButton = new TextedButton("Play", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));

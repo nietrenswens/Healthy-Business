@@ -22,12 +22,12 @@ namespace HealthyBusiness.Objects.GUI
                 "fonts\\pixelated_elegance\\medium",
                 $"{Item.Name} (${Item.Price})",
                 Color.White,
-                new()
-                {
-                    horizontalFloat = HorizontalAlign.Center,
-                    verticalFloat = VerticalAlign.Bottom,
-                    marginBottom = Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN + 20f,
-                }));
+               guiStyling: new()
+               {
+                   horizontalFloat = HorizontalAlign.Center,
+                   verticalFloat = VerticalAlign.Bottom,
+                   marginBottom = Globals.HOTBAR_SLOT_SIZE + Globals.HOTBAR_SLOT_MARGIN + 20f,
+               }));
         }
 
     }

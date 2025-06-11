@@ -32,7 +32,7 @@ namespace HealthyBusiness.InGameGUIObjects
             var textObj = GetGameObject<Text>();
             if (textObj == null)
             {
-                textObj = new Text("fonts\\pixelated_elegance\\large", $"Balance: {balance}", Color.White, new()
+                textObj = new Text("fonts\\pixelated_elegance\\large", $"Balance: {balance}", Color.White, guiStyling: new()
                 {
                     verticalFloat = VerticalAlign.Bottom,
                     horizontalFloat = HorizontalAlign.Right,

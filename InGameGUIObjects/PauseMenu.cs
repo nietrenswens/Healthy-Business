@@ -23,7 +23,7 @@ namespace HealthyBusiness.InGameGUIObjects
         public override void Load(ContentManager content)
         {
             Add(new ColoredBackground(Color.Black * 0.5f));
-            Add(new Text("fonts\\pixelated_elegance\\title", "Paused", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
+            Add(new Text("fonts\\pixelated_elegance\\title", "Paused", Color.White, guiStyling: new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
 
             var resumeButton = new TextedButton("Resume", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
             resumeButton.Clicked += ResumeButtonClicked;
@@ -48,11 +48,6 @@ namespace HealthyBusiness.InGameGUIObjects
         private void QuitButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().ChangeScene(new MainMenu());
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

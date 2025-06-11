@@ -1,5 +1,4 @@
 ﻿using HealthyBusiness.Cameras;
-using HealthyBusiness.Data;
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
@@ -8,10 +7,6 @@ using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthyBusiness.Scenes
 {
@@ -31,9 +26,9 @@ namespace HealthyBusiness.Scenes
 
             var gameData = GameManager.GetGameManager().GameData;
 
-            AddGameObject(new Text(TITLE_FONT, "Game Over", Color.Firebrick, new GUIStyling(marginTop: 100, horizontalFloat: HorizontalAlign.Center)));
+            AddGameObject(new Text(TITLE_FONT, "Game Over", Color.Firebrick, guiStyling: new GUIStyling(marginTop: 100, horizontalFloat: HorizontalAlign.Center)));
 
-            AddGameObject(new Text(LARGE_FONT, $"You survived the disaster for {gameData.ShiftCount} days!", Color.White, new()
+            AddGameObject(new Text(LARGE_FONT, $"You survived the disaster for {gameData.ShiftCount} days!", Color.White, guiStyling: new()
             {
                 horizontalFloat = HorizontalAlign.Center,
                 verticalFloat = VerticalAlign.Top,
