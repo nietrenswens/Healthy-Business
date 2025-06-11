@@ -47,7 +47,7 @@ namespace HealthyBusiness.Engine.Levels
                 _ => 7,
             };
 
-            SpawnRandomItems(rng.Next(0, maxItemCount));
+            SpawnRandomItems(rng.Next(1, maxItemCount + 1));
 
             int maxEnemyCount = floorTilesCount switch
             {
