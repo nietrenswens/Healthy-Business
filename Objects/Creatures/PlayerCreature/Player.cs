@@ -11,11 +11,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace HealthyBusiness.Objects.Creatures.PlayerCreature
 {
     public class Player : Creature
     {
+        private SoundEffect _footstep;
+        private float _footstepVolume = 0.25f;
 
         public Player(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
@@ -41,6 +45,7 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
             base.Load(content);
 
             Animation = new PlayerAnimation("entities\\daniel");
+            _footstep = content.Load<SoundEffect>("audio\\footstep");
         }
         public void SetFeetPosition(TileLocation location)
         {
@@ -92,6 +97,11 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
         {
             Health -= damage;
             CheckHealth();
+        }
+
+        public void PlayFootstepSound()
+        {
+            _footstep?.Play(_footstepVolume, 0f, 0f);
         }
     }
 }
