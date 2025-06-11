@@ -3,6 +3,7 @@ using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Objects.Items;
 using HealthyBusiness.Scenes;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,33 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public Hotbar()
         {
-            InitializeHotbarSlots();
-            GameScene currentLevel = ((GameScene)GameManager.GetGameManager().CurrentScene);
-            currentLevel.GUIObjects.Add(new CurrentScore());
+            GameScene? currentLevel = ((GameScene?)GameManager.GetGameManager().CurrentlyLoadingScene);
+            currentLevel?.GUIObjects.Add(new CurrentScore());
+            IsPersistent = true;
         }
 
-        public void InitializeHotbarSlots()
+        public Hotbar(List<HotbarSlot> hotbarSlots) : this()
+        {
+            HotbarSlots = hotbarSlots;
+        }
+
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+            if (HotbarSlots.Count > 0)
+            {
+                // If the hotbar is already loaded, we don't need to initialize it again.
+                return;
+            }
+            InitializeHotbarSlots(content);
+        }
+
+        public void InitializeHotbarSlots(ContentManager content)
         {
             for (int i = 0; i < AMOUNT_OF_SLOTS; i++)
             {
                 HotbarSlot hotbarSlot = new HotbarSlot();
-                hotbarSlot.Load(GameManager.GetGameManager().ContentManager);
+                hotbarSlot.Load(content);
                 HotbarSlots.Add(hotbarSlot);
             }
         }
@@ -90,6 +107,7 @@ namespace HealthyBusiness.InGameGUIObjects
 
         public override void Unload()
         {
+            GameManager.GetGameManager().GameData.HotbarSlots = [.. HotbarSlots];
             base.Unload();
             HotbarSlots.Clear();
         }
@@ -115,6 +133,11 @@ namespace HealthyBusiness.InGameGUIObjects
         private HotbarSlot GetSelectedSlot()
         {
             return HotbarSlots.Where(slot => slot.isSelected).FirstOrDefault() ?? HotbarSlots[0];
+        }
+
+        public void Clear()
+        {
+            HotbarSlots.ForEach(slot => slot.Item = null);
         }
     }
 

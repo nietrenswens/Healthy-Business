@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin backgrounds/gameover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:backgrounds/gameover.png
+
 #begin backgrounds/titlescreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -49,6 +61,18 @@
 /processorParam:TextureFormat=Color
 /build:entities/enemies/tomato/tomato.png
 
+#begin entities/enemies/tomato/tomato2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:entities/enemies/tomato/tomato2.png
+
 #begin entities/enemies/tomato/tomato3.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -61,6 +85,18 @@
 /processorParam:TextureFormat=Color
 /build:entities/enemies/tomato/tomato3.png
 
+#begin entities/enemies/tomato/TomatoBoom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:entities/enemies/tomato/TomatoBoom.png
+
 #begin entities/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,6 +108,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:entities/player.png
+
+#begin entities/theDam/theDam32.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:entities/theDam/theDam32.png;entities/theDam/theDam.png
 
 #begin fonts/pixelated_elegance/large.spritefont
 /importer:FontDescriptionImporter
@@ -185,6 +233,18 @@
 /processorParam:TextureFormat=Color
 /build:items/fries.png
 
+#begin items/Ketchup.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:items/Ketchup.png;items/ketchup.png
+
 #begin objects/floor.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -208,18 +268,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:objects/wall.png
-
-#begin tilemaps/Doors.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:tilemaps/Doors.png
 
 #begin tileMaps/Doors.png
 /importer:TextureImporter

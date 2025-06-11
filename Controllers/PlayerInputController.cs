@@ -1,9 +1,8 @@
 using HealthyBusiness.Engine;
-using HealthyBusiness.Engine.Interfaces;
 using HealthyBusiness.Engine.Managers;
-using HealthyBusiness.Objects.Creatures;
 using HealthyBusiness.InGameGUIObjects;
-using HealthyBusiness.Objects.Creatures.Player;
+using HealthyBusiness.Objects.Creatures;
+using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -15,7 +14,7 @@ namespace HealthyBusiness.Controllers
     public class PlayerInputController : GameObject
     {
         private InputManager _inputManager => InputManager.GetInputManager();
-        private MovementController _movement;
+        private MovementController? _movement;
 
         public override void Load(ContentManager content)
         {

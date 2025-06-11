@@ -1,3 +1,4 @@
+using HealthyBusiness.Data;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,13 +17,14 @@ namespace HealthyBusiness.Engine.Managers
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
         public Random RNG { get; private set; } = null!;
         public Scene CurrentScene { get; private set; } = null!;
+        public GameData GameData { get; private set; }
+        public Scene? CurrentlyLoadingScene => _nextScene;
 
         private GameManager()
         {
             RNG = new();
+            GameData = new GameData();
         }
-
-
 
         public static GameManager GetGameManager()
         {
@@ -51,10 +53,8 @@ namespace HealthyBusiness.Engine.Managers
             InputManager.GetInputManager().Update();
             if (_nextScene != null)
             {
-                CurrentScene.Unload();
-                CurrentScene = _nextScene;
+                DoSceneTransition(_nextScene);
                 _nextScene = null;
-                CurrentScene.Load(ContentManager);
             }
             CurrentScene.Update(gameTime);
         }
@@ -73,5 +73,20 @@ namespace HealthyBusiness.Engine.Managers
         {
             _game.Exit();
         }
+
+        public void RestartGame()
+        {
+            GameData = new GameData();
+            _nextScene = new MainMenu();
+        }
+
+        private void DoSceneTransition(Scene newScene)
+        {
+            _nextScene = newScene;
+            CurrentScene.Unload();
+            CurrentScene = newScene;
+            newScene.Load(ContentManager);
+        }
+
     }
 }

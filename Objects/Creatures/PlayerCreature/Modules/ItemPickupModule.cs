@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Linq;
 
-namespace HealthyBusiness.Objects.Creatures.Player.Modules
+namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
 {
     public class ItemPickupModule : GameObject
     {
@@ -43,7 +43,7 @@ namespace HealthyBusiness.Objects.Creatures.Player.Modules
                 .OfType<Item>();
 
             var closestItem = items
-                .Where(item => item.GetGameObject<Collider>()!.Intersects((CircleCollider)GetGameObject<Collider>()!))
+                .Where(item => item.GetGameObject<Collider>()?.Intersects((CircleCollider)GetGameObject<Collider>()) == true)
                 .Select(item => new { Item = item, Distance = (_center - item.GetGameObject<Collider>()!.Center).Length() })
                 .OrderBy(x => x.Distance)
                 .FirstOrDefault();

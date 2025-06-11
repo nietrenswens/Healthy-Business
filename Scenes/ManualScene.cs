@@ -25,8 +25,8 @@ namespace HealthyBusiness.Scenes
             AddGameObject(new ColoredBackground(new Color(40, 54, 78)));
 
             manualTitle = new Text("fonts\\pixelated_elegance\\title", "Manual", Color.MediumTurquoise,
-                new GUIStyling(marginTop: 100, horizontalFloat: HorizontalAlign.Center));
-            manualText = new Text("fonts\\pixelated_elegance\\small", 
+                guiStyling: new GUIStyling(marginTop: 100, horizontalFloat: HorizontalAlign.Center));
+            manualText = new Text("fonts\\pixelated_elegance\\small",
                 "Well well well. So you're lucky enough to have survived this nuclear disaster together with me!\n" +
                 "I would call this fate, to be the last one surviving together with my lifelong rival... #EnemiesToLovers\n" +
                 "You see, this now post-apocalyptic country has been ravaged by this nuclear disaster.\n" +
@@ -44,11 +44,11 @@ namespace HealthyBusiness.Scenes
                 "S - Walk Down\n" +
                 "D - Walk Right\n" +
                 "E - Pick Up/Sell Items", Color.LightYellow,
-                new GUIStyling(marginTop: 180, horizontalFloat: HorizontalAlign.Center));
+                guiStyling: new GUIStyling(marginTop: 180, horizontalFloat: HorizontalAlign.Center));
             manualGoal = new Text("fonts\\pixelated_elegance\\large", "Goal:", Color.MediumTurquoise,
-                new GUIStyling(marginTop: 390, horizontalFloat: HorizontalAlign.Left));
+                guiStyling: new GUIStyling(marginTop: 390, horizontalFloat: HorizontalAlign.Left));
             manualControls = new Text("fonts\\pixelated_elegance\\large", "Controls:", Color.MediumTurquoise,
-                new GUIStyling(marginTop: 550, horizontalFloat: HorizontalAlign.Left));
+                guiStyling: new GUIStyling(marginTop: 550, horizontalFloat: HorizontalAlign.Left));
             AddGameObject(manualTitle);
             AddGameObject(manualText);
             AddGameObject(manualGoal);

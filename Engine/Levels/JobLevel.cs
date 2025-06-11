@@ -2,68 +2,49 @@
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
+using HealthyBusiness.Objects.Doors;
+using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TiledSharp;
 
-namespace HealthyBusiness.Engine
+namespace HealthyBusiness.Engine.Levels
 {
-    public class Level
+    public class JobLevel : Level
     {
-        private TileMapsManager _tileMapsManager;
-        public string PathToMap { get; private set; }
-        public List<Door> Doors { get; private set; }
-        public string Id { get; private set; }
         public string? TopLevelId { get; private set; }
         public string? BottomlevelId { get; private set; }
         public string? LeftLevelId { get; private set; }
         public string? RightLevelId { get; private set; }
 
-        public GameObject[] GameObjects { get; private set; }
-        public GameObject[] SavedGameObjects { get; private set; }
-
-        public Level(string pathToMap, string id, string? topLevelId = null, string? bottomLevelId = null, string? leftlevelId = null, string? rightLevelId = null)
+        public JobLevel(string pathToMap, string id, string? topLevelId = null, string? bottomLevelId = null, string? leftlevelId = null, string? rightLevelId = null) : base(pathToMap, id)
         {
-            _tileMapsManager = new TileMapsManager();
-            PathToMap = pathToMap;
-            Doors = new List<Door>();
-            Id = id;
             TopLevelId = topLevelId;
             BottomlevelId = bottomLevelId;
             LeftLevelId = leftlevelId;
             RightLevelId = rightLevelId;
-
-            GameObjects = [];
-            SavedGameObjects = [];
         }
 
-        public void Load(ContentManager contentManager)
+        public override void Load(ContentManager contentManager)
         {
+            base.Load(contentManager);
             GenerateGameObjects(contentManager);
-        }
-
-        public void SaveGameObjects(GameObject[] gameObjects)
-        {
-            SavedGameObjects = gameObjects;
         }
 
         public void GenerateGameObjects(ContentManager contentManager)
         {
-            GameObjects = GetTiles(contentManager);
             var rng = GameManager.GetGameManager().RNG;
 
             var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
             SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
+
+            SpawnEnemies(1);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pathToMap">TMX file containing map info</param>
-        /// <returns></returns>
-        public GameObject[] GetTiles(ContentManager contentManager)
+        public override GameObject[] GetTiles(ContentManager contentManager)
         {
             List<GameObject> gameObjects = new List<GameObject>();
             GameManager gm = GameManager.GetGameManager();
@@ -113,29 +94,34 @@ namespace HealthyBusiness.Engine
                             gid = gid - ts.FirstGid + 1;
 
                             // For utilities, there is more advanced logic as these wont be displayed but will be used for game objects.
-                            if (gid >= 0 && gid <= 4)
+                            if (gid >= 0 && gid <= 3)
                             {
-                                var doorType = (DoorType)gid;
+                                var doorType = (DoorDirection)gid;
                                 string destinationLevelId = "";
                                 switch (doorType)
                                 {
-                                    case DoorType.Left:
+                                    case DoorDirection.Left:
                                         destinationLevelId = LeftLevelId ?? throw new Exception("Left level ID is not set.");
                                         break;
-                                    case DoorType.Right:
+                                    case DoorDirection.Right:
                                         destinationLevelId = RightLevelId ?? throw new Exception("Right level ID is not set.");
                                         break;
-                                    case DoorType.Top:
+                                    case DoorDirection.Top:
                                         destinationLevelId = TopLevelId ?? throw new Exception("Top level ID is not set.");
                                         break;
-                                    case DoorType.Bottom:
+                                    case DoorDirection.Bottom:
                                         destinationLevelId = BottomlevelId ?? throw new Exception("Bottom level ID is not set.");
                                         break;
-                                    case DoorType.Exit:
-                                        destinationLevelId = "exit";
-                                        break;
                                 }
-                                var door = new Door(new TileLocation(tile.X, tile.Y), (DoorType)gid, destinationLevelId);
+                                var door = new NavigationalDoor(new TileLocation(tile.X, tile.Y), (DoorDirection)gid, destinationLevelId);
+                                gameObjects.Add(door);
+                                Doors.Add(door);
+                            }
+
+                            if (gid >= 4 && gid <= 7)
+                            {
+                                var direction = (DoorDirection)(gid - 4);
+                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(new ShiftEndScene()));
                                 gameObjects.Add(door);
                                 Doors.Add(door);
                             }
@@ -191,6 +177,42 @@ namespace HealthyBusiness.Engine
 
                 var item = ItemBuilder.CreateRandomItem(randomTileLocation);
                 gameObjects.Add(item);
+                SavedGameObjects = gameObjects.ToArray();
+            }
+        }
+
+        private void SpawnEnemies(int number)
+        {
+            List<GameObject> gameObjects = SavedGameObjects.ToList();
+            var floorTiles = GameObjects.Where(go => go is Floor).ToList();
+            HashSet<TileLocation> usedLocations = new HashSet<TileLocation>();
+
+            if (floorTiles.Count == 0)
+            {
+                return;
+            }
+
+            if (number >= floorTiles.Count / 2)
+                number = floorTiles.Count / 2;
+
+            for (int i = 0; i < number; i++)
+            {
+                int retries = 0;
+                if (retries > 4)
+                    break;
+
+                var randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                var randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+
+                while (usedLocations.Contains(randomTileLocation))
+                {
+                    randomTileIndex = GameManager.GetGameManager().RNG.Next(0, floorTiles.Count);
+                    randomTileLocation = floorTiles[randomTileIndex].TileLocation;
+                    retries++;
+                }
+
+                var enemy = new TomatoEnemy(randomTileLocation);
+                gameObjects.Add(enemy);
                 SavedGameObjects = gameObjects.ToArray();
             }
         }

@@ -43,7 +43,6 @@ namespace HealthyBusiness.Objects.GUI
             // update the total score of the class
             Score = totalScore;
 
-            System.Diagnostics.Debug.WriteLine(Score);
             AddText();
         }
 
@@ -72,7 +71,7 @@ namespace HealthyBusiness.Objects.GUI
             }
 
             Add(
-                new Text("fonts\\pixelated_elegance\\title", Score.ToString(), Color.White, new GUIStyling(marginTop: 0, horizontalFloat: HorizontalAlign.Right))
+                new Text("fonts\\pixelated_elegance\\title", Score.ToString(), Color.White, guiStyling: new GUIStyling(marginTop: 0, horizontalFloat: HorizontalAlign.Right))
             );
         }
     }

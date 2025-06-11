@@ -7,9 +7,7 @@ using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-
 
 namespace HealthyBusiness.InGameGUIObjects
 {
@@ -25,10 +23,11 @@ namespace HealthyBusiness.InGameGUIObjects
         public override void Load(ContentManager content)
         {
             Add(new ColoredBackground(Color.Black * 0.5f));
-            Add(new Text("fonts\\pixelated_elegance\\title", "Paused", Color.White, new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
+            Add(new Text("fonts\\pixelated_elegance\\title", "Paused", Color.White, guiStyling: new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center)));
 
             var resumeButton = new TextedButton("Resume", new GUIStyling(marginTop: 300, horizontalFloat: HorizontalAlign.Center));
             resumeButton.Clicked += ResumeButtonClicked;
+
             var mainMenuButton = new TextedButton("Main Menu", new GUIStyling(marginTop: 400, horizontalFloat: HorizontalAlign.Center));
             mainMenuButton.Clicked += QuitButtonClicked;
 
@@ -36,14 +35,9 @@ namespace HealthyBusiness.InGameGUIObjects
             Add(mainMenuButton);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Toggle()
         {
-            base.Update(gameTime);
-            var inputManager = InputManager.GetInputManager();
-            if (inputManager.IsKeyPressed(Keys.Escape))
-            {
-                IsPaused = !IsPaused;
-            }
+            IsPaused = !IsPaused;
         }
 
         private void ResumeButtonClicked(object? sender, EventArgs e)
@@ -60,6 +54,7 @@ namespace HealthyBusiness.InGameGUIObjects
         {
             if (!IsPaused)
                 return;
+
             spriteBatch.Begin();
             base.Draw(spriteBatch);
             spriteBatch.End();
