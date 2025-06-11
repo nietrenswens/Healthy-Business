@@ -49,11 +49,15 @@ namespace HealthyBusiness.Engine.Levels
 
             SpawnRandomItems(rng.Next(1, maxItemCount + 1));
 
+            const int ENEMY_SPAWN_THRESHOLD_LOW = 30;
+            const int ENEMY_SPAWN_THRESHOLD_MEDIUM = 60;
+            const int ENEMY_SPAWN_THRESHOLD_HIGH = 100;
+
             int maxEnemyCount = floorTilesCount switch
             {
-                < 30 => 0,
-                < 60 => 1,
-                < 100 => 2,
+                < ENEMY_SPAWN_THRESHOLD_LOW => 0,
+                < ENEMY_SPAWN_THRESHOLD_MEDIUM => 1,
+                < ENEMY_SPAWN_THRESHOLD_HIGH => 2,
                 _ => 3,
             };
             int enemyCount = rng.Next(0, maxEnemyCount + 1);
