@@ -33,16 +33,15 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.2.1105" />
     <PackageReference Include="TiledSharp" Version="1.0.1" />
   </ItemGroup>
-	<ItemGroup>
-		<Content Include="Maps\**">
-			<CopyToOutputDirectory>PerserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Update="Maps\Test\apartment.tmx">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
+  <ItemGroup>
+    <MapsFiles Include="Maps\**\*" />
+  </ItemGroup>
+  <Target Name="CopyMapsFolder" AfterTargets="Build">
+    <Copy
+      SourceFiles="@(MapsFiles)"
+      DestinationFiles="@(MapsFiles->'$(OutDir)Maps\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+  </Target>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
