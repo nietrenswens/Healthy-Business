@@ -7,11 +7,13 @@ using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HealthyBusiness.Scenes
 {
     public class MainMenu : Scene
     {
+        private SoundEffectInstance? _menuMusic;
         private Text? _titleText;
         private TextedButton? _playButton;
         private TextedButton? _quitButton;
@@ -20,6 +22,13 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             SetCamera(new DefaultCamera());
+
+            var menuMusic = content.Load<SoundEffect>("audio\\mainMenu");
+            _menuMusic = menuMusic.CreateInstance();
+            _menuMusic.IsLooped = true;
+            _menuMusic.Volume = 0.5f;
+            _menuMusic.Play();
+
 
             AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
             _titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, guiStyling: new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
@@ -50,6 +59,13 @@ namespace HealthyBusiness.Scenes
         private void ManualButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().ChangeScene(new ManualScene());
+        }
+
+        public override void Unload()
+        {
+            _menuMusic?.Stop();
+            _menuMusic?.Dispose();
+            base.Unload();
         }
     }
 }
