@@ -11,8 +11,19 @@ namespace HealthyBusiness.Engine.Managers
         private List<T> _attributes = new List<T>();
         private List<T> _attributesToBeAdded = new List<T>();
         private List<T> _attributesToBeRemoved = new List<T>();
+        private object _lock = new object();
 
-        public IReadOnlyList<T> Attributes => _attributes.AsReadOnly();
+        public IReadOnlyList<T> Attributes
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    return _attributes.AsReadOnly();
+                }
+            }
+        }
+
         public IReadOnlyList<T> AttributesToBeAdded => _attributesToBeAdded.AsReadOnly();
         public IReadOnlyList<T> AttributesToBeRemoved => _attributesToBeRemoved.AsReadOnly();
 
@@ -21,7 +32,10 @@ namespace HealthyBusiness.Engine.Managers
             foreach (var attribute in _attributesToBeAdded)
             {
                 attribute.Load(GameManager.GetGameManager().ContentManager);
-                _attributes.Add(attribute);
+                lock (_lock)
+                {
+                    _attributes.Add(attribute);
+                }
             }
             _attributesToBeAdded.Clear();
             foreach (var attribute in _attributes)
@@ -30,7 +44,11 @@ namespace HealthyBusiness.Engine.Managers
             }
             foreach (var attribute in _attributesToBeRemoved)
             {
-                _attributes.Remove(attribute);
+                lock (_lock)
+                {
+                    _attributes.Remove(attribute);
+                    attribute.Unload();
+                }
             }
             _attributesToBeRemoved.Clear();
         }
@@ -74,8 +92,5 @@ namespace HealthyBusiness.Engine.Managers
         {
             _attributesToBeRemoved.Add(attribute);
         }
-
-
-
     }
 }

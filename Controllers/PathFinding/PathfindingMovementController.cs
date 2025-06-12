@@ -17,8 +17,6 @@ namespace HealthyBusiness.Controllers.PathFinding
         private TileLocation? _lastTargetTileLocation;
         private Task _pathFindingDiscoveryTask;
         private CancellationTokenSource _cancellationTokenSource;
-        private GameObject[] _walkableGameObjects;
-        private Mutex _gameObjectsMutex;
 
         public Stack<TileLocation> CurrentPath { get; private set; }
         public GameObject? Target { get; set; }
@@ -27,8 +25,6 @@ namespace HealthyBusiness.Controllers.PathFinding
         public PathfindingMovementController(float speed) : base(speed)
         {
             CurrentPath = new Stack<TileLocation>();
-            _gameObjectsMutex = new Mutex(false);
-            _walkableGameObjects = Array.Empty<GameObject>();
             _cancellationTokenSource = new CancellationTokenSource();
             _pathFindingDiscoveryTask = Task.Run(async () => await PathFindingDiscovery(_cancellationTokenSource.Token));
         }
@@ -95,31 +91,14 @@ namespace HealthyBusiness.Controllers.PathFinding
             {
                 _lastTargetTileLocation = Target.TileLocation;
                 var targetTileLocation = new TileLocation(Target.GetGameObject<Collider>()!.Center);
-                var gameObjects = GetFloorTiles();
+                var gameObjects = GameManager.GetGameManager().CurrentScene.GameObjects
+                        .Where(go => go is Floor).ToArray();
 
                 var path = Pathfinding.PathFinding(Parent!.TileLocation, targetTileLocation, gameObjects).Skip(1).ToList();
                 path.Reverse();
                 CurrentPath = new(path);
             }
         }
-
-        private GameObject[] GetFloorTiles()
-        {
-            _gameObjectsMutex.WaitOne();
-            try
-            {
-                if (_walkableGameObjects == null || !_walkableGameObjects.Any())
-                    _walkableGameObjects = GameManager.GetGameManager().CurrentScene.GameObjects
-                        .Where(go => go is Floor).ToArray();
-
-                return _walkableGameObjects.ToArray();
-            }
-            finally
-            {
-                _gameObjectsMutex.ReleaseMutex();
-            }
-        }
-
 
         public override void Update(GameTime gameTime)
         {
