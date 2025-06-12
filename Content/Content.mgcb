@@ -55,11 +55,11 @@
 /processorParam:Quality=Best
 /build:audio/pickup.wav
 
-#begin audio/potatogasp.wav
+#begin audio/potatoGasp.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:audio/potatogasp.wav
+/build:audio/potatoGasp.wav
 
 #begin audio/startLevel.wav
 /importer:WavImporter

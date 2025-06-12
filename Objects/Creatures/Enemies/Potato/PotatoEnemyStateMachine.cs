@@ -6,12 +6,16 @@ using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
 {
     public class PotatoEnemyStateMachine : GameObject
     {
+        private SoundEffect _potatoGasp;
+        private float _potatoVolume = 0.5f;
         private float _damageTimer = 0f;
         private const float DAMAGE_COOLDOWN = 1000f; // Cooldown time in miliseconds
         public PotatoEnemyState State { get; private set; }
@@ -19,6 +23,12 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
         public PotatoEnemyStateMachine()
         {
             State = PotatoEnemyState.Idle;
+        }
+        public override void Load(ContentManager content)
+        {
+            base.Load(content);
+            SetIdle();
+            _potatoGasp = content.Load<SoundEffect>("audio\\potatoGasp");
         }
 
         public override void Update(GameTime gameTime)
@@ -47,6 +57,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
 
                     if (isPlayerInRange && playerHasFries)
                     {
+                        _potatoGasp.Play(_potatoVolume, 0f, 0f);
                         SetAttack(player);
                     }
                     break;
