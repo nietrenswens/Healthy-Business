@@ -9,6 +9,7 @@ using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
@@ -18,6 +19,8 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         private bool _quotaIsMet = false;
         private bool _playerIsInRange = false;
         private Text? _text;
+        private SoundEffect _sell;
+        private float _sellVolume = 0.25f;
 
         public Employer(Vector2 spawnPosition) : base(spawnPosition, 100, 100)
         {
@@ -38,6 +41,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
         public override void Load(ContentManager content)
         {
             Texture = content.Load<Texture2D>("entities\\theDam\\theDam");
+            _sell = content.Load<SoundEffect>("audio\\sell");
 
             var width = (int)(Texture.Width * LocalScale);
             var height = (int)(Texture.Height * LocalScale);
@@ -101,6 +105,7 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             {
                 if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
                 {
+                    //_sell.Play(_sellVolume, 0, 0);
                     SellItems(player);
                 }
 
@@ -134,6 +139,9 @@ namespace HealthyBusiness.Objects.Creatures.Employee
                 GameManager.GetGameManager().GameData.Quota.IncreaseEmployerLevel();
                 return;
             }
+
+            _sell.Play(_sellVolume, 0, 0);
+
             // if the quota is not met but the deadline is the same day as the current shift day -> game over
             if (gameData.ShiftCount == GameManager.GetGameManager().GameData.Quota.Deadline)
             {

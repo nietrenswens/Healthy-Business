@@ -61,6 +61,18 @@
 /processorParam:Quality=Best
 /build:audio/potatoGasp.wav
 
+#begin audio/quota.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/quota.wav;audio/quota.wav
+
+#begin audio/sell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/sell.wav
+
 #begin audio/startLevel.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

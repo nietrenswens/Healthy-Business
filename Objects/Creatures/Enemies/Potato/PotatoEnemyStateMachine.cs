@@ -15,9 +15,10 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
     public class PotatoEnemyStateMachine : GameObject
     {
         private SoundEffect _potatoGasp;
-        private float _potatoVolume = 0.5f;
+        private float _potatoVolume = 0.25f;
         private float _damageTimer = 0f;
         private const float DAMAGE_COOLDOWN = 1000f; // Cooldown time in miliseconds
+        private bool _hasPlayedGasp = false;
         public PotatoEnemyState State { get; private set; }
 
         public PotatoEnemyStateMachine()
@@ -55,7 +56,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
                         .OfType<Hotbar>().FirstOrDefault();
                     bool playerHasFries = hotbar != null && hotbar.HotbarSlots.Any(slot => slot.Item?.Name.ToLower().Contains("fries") ?? false);
 
-                    if (isPlayerInRange && playerHasFries)
+                    if (isPlayerInRange && playerHasFries && State != PotatoEnemyState.Attack && !_hasPlayedGasp)
                     {
                         _potatoGasp.Play(_potatoVolume, 0f, 0f);
                         SetAttack(player);
@@ -86,6 +87,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Potato
         {
             ((Creature)Parent).SetTexture(PotatoEnemy.POTATO_NORMAL_TEXTURE_PATH);
             State = PotatoEnemyState.Idle;
+            _hasPlayedGasp = false;
             var pathFindingController = Parent!.GetGameObject<PathfindingMovementController>();
             if (pathFindingController != null)
             {

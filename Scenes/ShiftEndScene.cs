@@ -85,7 +85,7 @@ namespace HealthyBusiness.Scenes
             var damSound = content.Load<SoundEffect>("audio\\itsTheDam");
             _damSound = damSound.CreateInstance();
             _damSound.IsLooped = false;
-            _damSound.Volume = 0.5f;
+            _damSound.Volume = 0.25f;
         }
 
         public override void Update(GameTime gameTime)
