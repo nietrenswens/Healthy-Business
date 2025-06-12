@@ -51,13 +51,6 @@ namespace HealthyBusiness.Scenes
             var backgroundSound = content.Load<SoundEffect>("audio\\whiteNoise");
             GameManager.GetGameManager().PlayLoopingMusic(backgroundSound, 0.03f);
 
-
-            //if (_gameSceneType == GameSceneType.PlayableLevel || _gameSceneType == GameSceneType.Apartment)
-            //{
-            //    var backgroundSound = content.Load<SoundEffect>("audio\\whiteNoise");
-            //    GameManager.GetGameManager().PlayBackgroundLoop(backgroundSound);
-            //}
-
             var player = new Player(LevelManager.SpawnLocation);
             player.SetFeetPosition(LevelManager.SpawnLocation);
             SetCamera(new GameObjectCenteredCamera(player, 1f));
