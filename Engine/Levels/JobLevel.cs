@@ -2,6 +2,8 @@
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects;
+using HealthyBusiness.Objects.Creatures;
+using HealthyBusiness.Objects.Creatures.Enemies.Potato;
 using HealthyBusiness.Objects.Creatures.Enemies.Tomato;
 using HealthyBusiness.Objects.Doors;
 using HealthyBusiness.Scenes;
@@ -227,7 +229,20 @@ namespace HealthyBusiness.Engine.Levels
                     retries++;
                 }
 
-                var enemy = new TomatoEnemy(randomTileLocation);
+                int random = GameManager.GetGameManager().RNG.Next(0, 101);
+                Creature enemy;
+
+                switch (random)
+                {
+                    case < 50:
+                        enemy = new TomatoEnemy(randomTileLocation);
+                        break;
+                    default:
+                        enemy = new PotatoEnemy(randomTileLocation);
+                        break;
+                }
+
+
                 gameObjects.Add(enemy);
                 SavedGameObjects = gameObjects.ToArray();
             }
