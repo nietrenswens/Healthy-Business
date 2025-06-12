@@ -1,6 +1,5 @@
-﻿using HealthyBusiness.Engine.Managers;
+﻿using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Utils;
-using HealthyBusiness.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,11 @@ namespace HealthyBusiness.Controllers.PathFinding
 {
     public static class Pathfinding
     {
-        public static Stack<TileLocation> PathFinding(TileLocation originLocation, TileLocation targetLocation)
+        public static Stack<TileLocation> PathFinding(TileLocation originLocation, TileLocation targetLocation, GameObject[] walkableGameObjects)
         {
             PriorityQueue<Step, float> prioritizedSteps = new();
             HashSet<TileLocation> visitedLocations = new();
-            var gameObjects = GameManager.GetGameManager().CurrentScene.GameObjects.Where(go => go is Floor).ToList();
+            var gameObjects = walkableGameObjects;
 
             prioritizedSteps.Enqueue(new Step(0, originLocation), 0);
 
