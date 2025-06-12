@@ -49,6 +49,30 @@
 /processorParam:TextureFormat=Color
 /build:entities/daniel.png
 
+#begin entities/enemies/potato/potato-normal-state.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:entities/enemies/potato/potato-normal-state.png;entities/enemies/potato/potato_normal.png
+
+#begin entities/enemies/potato/potato-shocked.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:entities/enemies/potato/potato-shocked.png;entities/enemies/potato/potato_shocked.png
+
 #begin entities/enemies/tomato/tomato.png
 /importer:TextureImporter
 /processor:TextureProcessor

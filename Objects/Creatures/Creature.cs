@@ -48,6 +48,12 @@ namespace HealthyBusiness.Objects.Creatures
             }
         }
 
+        public void SetTexture(string textureName)
+        {
+            var content = GameManager.GetGameManager().ContentManager;
+            Texture = content.Load<Texture2D>(textureName);
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -74,6 +80,9 @@ namespace HealthyBusiness.Objects.Creatures
 
         public virtual void OnDirectionChanged(Vector2 direction)
         {
+            if (Animation == null)
+                return;
+
             if (direction == Vector2.Zero)
             {
                 Animation.Pause();
