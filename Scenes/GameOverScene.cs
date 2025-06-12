@@ -5,6 +5,7 @@ using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Engine.Utils;
 using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
 
@@ -12,6 +13,7 @@ namespace HealthyBusiness.Scenes
 {
     class GameOverScene : Scene
     {
+        private SoundEffectInstance? _gameOverMusic;
         private TextedButton? _playAgainButton;
         private TextedButton? _quitButton;
 
@@ -23,6 +25,12 @@ namespace HealthyBusiness.Scenes
             base.Load(content);
             SetCamera(new DefaultCamera());
             AddGameObject(new ImageBackground("backgrounds\\gameover"));
+
+            var gameOverMusic = content.Load<SoundEffect>("audio\\gameOver");
+            _gameOverMusic = gameOverMusic.CreateInstance();
+            _gameOverMusic.IsLooped = true;
+            _gameOverMusic.Volume = 0.5f;
+            _gameOverMusic.Play();
 
             var gameData = GameManager.GetGameManager().GameData;
 
@@ -52,6 +60,13 @@ namespace HealthyBusiness.Scenes
         private void QuitButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().Exit();
+        }
+
+        public override void Unload()
+        {
+            _gameOverMusic?.Stop();
+            _gameOverMusic?.Dispose();
+            base.Unload();
         }
     }
 }

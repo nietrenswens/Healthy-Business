@@ -25,6 +25,12 @@
 /processorParam:Quality=Best
 /build:audio/footstep.wav
 
+#begin audio/gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/gameOver.wav
+
 #begin audio/mainMenu.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
