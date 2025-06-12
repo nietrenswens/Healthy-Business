@@ -4,7 +4,9 @@ using HealthyBusiness.Engine.GUI;
 using HealthyBusiness.Engine.Managers;
 using HealthyBusiness.Objects.GUI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using System;
 using System.Linq;
 
 namespace HealthyBusiness.Scenes
@@ -13,6 +15,8 @@ namespace HealthyBusiness.Scenes
     {
         private float _timeCounter = 0f; // ms
         private float _timeToWait = 4000f; // ms
+        private static readonly Random _random = new Random();
+        private SoundEffectInstance? _damSound;
 
         private const string TITLE_FONT = "fonts\\pixelated_elegance\\title";
         private const string LARGE_FONT = "fonts\\pixelated_elegance\\large";
@@ -78,6 +82,10 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             GameManager.GetGameManager().StopLoopingMusic();
+            var damSound = content.Load<SoundEffect>("audio\\itsTheDam");
+            _damSound = damSound.CreateInstance();
+            _damSound.IsLooped = false;
+            _damSound.Volume = 0.5f;
         }
 
         public override void Update(GameTime gameTime)
@@ -88,6 +96,10 @@ namespace HealthyBusiness.Scenes
             {
                 _timeCounter = 0f;
                 GameManager.GetGameManager().ChangeScene(new GameScene(GameSceneType.Apartment));
+                if (_random.Next(5) == 0)
+                {
+                    _damSound?.Play();
+                }
             }
         }
 

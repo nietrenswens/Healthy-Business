@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:audio/gameOver.wav
 
+#begin audio/itsTheDam.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/itsTheDam.wav
+
 #begin audio/mainMenu.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
