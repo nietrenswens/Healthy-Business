@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin audio/boom.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/boom.wav
+
 #begin audio/door.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
