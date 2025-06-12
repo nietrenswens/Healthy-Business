@@ -14,6 +14,7 @@ namespace HealthyBusiness.Scenes
     public class MainMenu : Scene
     {
         private SoundEffectInstance? _menuMusic;
+        private SoundEffectInstance? _startSound;
         private Text? _titleText;
         private TextedButton? _playButton;
         private TextedButton? _quitButton;
@@ -28,6 +29,13 @@ namespace HealthyBusiness.Scenes
             _menuMusic.IsLooped = true;
             _menuMusic.Volume = 0.5f;
             _menuMusic.Play();
+
+            var startSound = content.Load<SoundEffect>("audio\\startLevel");
+            _startSound = startSound.CreateInstance();
+            _startSound.IsLooped = false;
+            _startSound.Volume = 0.5f;
+            _startSound.Pitch = -0.5f; // Slightly lower pitch for a more dramatic effect
+            
 
 
             AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
@@ -49,6 +57,7 @@ namespace HealthyBusiness.Scenes
         private void PlayButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().ChangeScene(new LoadingScene());
+            _startSound?.Play();
         }
 
         private void QuitButtonClicked(object? sender, EventArgs e)
