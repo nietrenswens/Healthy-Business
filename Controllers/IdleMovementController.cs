@@ -33,8 +33,8 @@ namespace HealthyBusiness.Controllers
             TileLocation? target = null;
             while (target == null)
             {
-                var randomX = GameManager.GetGameManager().RNG.Next(-2, 3);
-                var randomY = GameManager.GetGameManager().RNG.Next(-2, 3);
+                var randomX = GameManager.GetGameManager().RNG.Next(-1, 2);
+                var randomY = GameManager.GetGameManager().RNG.Next(-1, 2);
                 var newLocation = new TileLocation(currentLocation.X + randomX, currentLocation.Y + randomY);
                 if (TileLocation.IsTileWalkable(newLocation))
                 {
