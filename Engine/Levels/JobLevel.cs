@@ -39,9 +39,25 @@ namespace HealthyBusiness.Engine.Levels
             var rng = GameManager.GetGameManager().RNG;
 
             var floorTilesCount = GameObjects.Where(go => go is Floor).Count();
-            SpawnRandomItems(rng.Next(floorTilesCount / 16, floorTilesCount / 8));
+            int maxItemCount = floorTilesCount switch
+            {
+                < 20 => 1,
+                < 40 => 4,
+                < 100 => 5,
+                _ => 7,
+            };
 
-            SpawnEnemies(1);
+            SpawnRandomItems(rng.Next(1, maxItemCount + 1));
+
+            int maxEnemyCount = floorTilesCount switch
+            {
+                < Globals.ENEMY_SPAWN_THRESHOLD_LOW => 0,
+                < Globals.ENEMY_SPAWN_THRESHOLD_MEDIUM => 1,
+                < Globals.ENEMY_SPAWN_THRESHOLD_HIGH => 2,
+                _ => 3,
+            };
+            int enemyCount = rng.Next(0, maxEnemyCount + 1);
+            SpawnEnemies(enemyCount);
         }
 
         public override GameObject[] GetTiles(ContentManager contentManager)

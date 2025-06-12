@@ -24,7 +24,13 @@
         public const int HOTBAR_SLOT_MARGIN = 10;
         #endregion
 
-        #region
+        #region Enemy globals
+        public const int ENEMY_SPAWN_THRESHOLD_LOW = 30;
+        public const int ENEMY_SPAWN_THRESHOLD_MEDIUM = 60;
+        public const int ENEMY_SPAWN_THRESHOLD_HIGH = 100;
+        #endregion
+
+        #region Path finding
         public const int MAX_PATHFINDING_COST = 200;
         #endregion
     }
