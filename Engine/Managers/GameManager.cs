@@ -1,8 +1,10 @@
 using HealthyBusiness.Data;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace HealthyBusiness.Engine.Managers
@@ -12,6 +14,8 @@ namespace HealthyBusiness.Engine.Managers
         private static GameManager _gameManager = null!;
         private Scene? _nextScene;
         private Game _game = null!;
+        private SoundEffectInstance? _backgroundLoop;
+        private string? _currentlyPlayingMusicKey;
 
         public ContentManager ContentManager { get; private set; } = null!;
         public GraphicsDevice GraphicsDevice { get; private set; } = null!;
@@ -88,5 +92,28 @@ namespace HealthyBusiness.Engine.Managers
             newScene.Load(ContentManager);
         }
 
+        public void PlayLoopingMusic(SoundEffect music, float volume, string? currentMusic = null)
+        {
+            if (_backgroundLoop != null && _backgroundLoop.State == SoundState.Playing && _currentlyPlayingMusicKey == currentMusic)
+                return;
+
+            StopLoopingMusic();
+            _backgroundLoop = music.CreateInstance();
+            _backgroundLoop.IsLooped = true;
+            _backgroundLoop.Volume = volume;
+            _backgroundLoop.Play();
+
+            _currentlyPlayingMusicKey = currentMusic;
+        }
+
+        public void StopLoopingMusic()
+        {
+            if (_backgroundLoop != null)
+            {
+                _backgroundLoop.Stop();
+                _backgroundLoop.Dispose();
+                _backgroundLoop = null;
+            }
+        }
     }
 }

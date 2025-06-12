@@ -25,6 +25,7 @@ namespace HealthyBusiness.Scenes
             base.Load(content);
             SetCamera(new DefaultCamera());
             AddGameObject(new ImageBackground("backgrounds\\gameover"));
+            GameManager.GetGameManager().StopLoopingMusic();
 
             var gameOverMusic = content.Load<SoundEffect>("audio\\gameOver");
             _gameOverMusic = gameOverMusic.CreateInstance();
