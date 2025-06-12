@@ -27,16 +27,13 @@ namespace HealthyBusiness.Scenes
             var menuMusic = content.Load<SoundEffect>("audio\\mainMenu");
             _menuMusic = menuMusic.CreateInstance();
             _menuMusic.IsLooped = true;
-            _menuMusic.Volume = 0.5f;
-            _menuMusic.Play();
+            GameManager.GetGameManager().PlayLoopingMusic(menuMusic, 0.5f, "main_menu_music");
 
             var startSound = content.Load<SoundEffect>("audio\\startLevel");
             _startSound = startSound.CreateInstance();
             _startSound.IsLooped = false;
             _startSound.Volume = 0.5f;
-            _startSound.Pitch = -0.5f; // Slightly lower pitch for a more dramatic effect
-            
-
+            _startSound.Pitch = -0.5f;
 
             AddGameObject(new ImageBackground("backgrounds\\titlescreen"));
             _titleText = new Text("fonts\\pixelated_elegance\\title", "Healthy Business", Color.White, guiStyling: new GUIStyling(marginTop: 200, horizontalFloat: HorizontalAlign.Center));
@@ -68,13 +65,6 @@ namespace HealthyBusiness.Scenes
         private void ManualButtonClicked(object? sender, EventArgs e)
         {
             GameManager.GetGameManager().ChangeScene(new ManualScene());
-        }
-
-        public override void Unload()
-        {
-            _menuMusic?.Stop();
-            _menuMusic?.Dispose();
-            base.Unload();
         }
     }
 }

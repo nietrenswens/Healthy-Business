@@ -77,6 +77,7 @@ namespace HealthyBusiness.Scenes
         public override void Load(ContentManager content)
         {
             base.Load(content);
+            GameManager.GetGameManager().StopLoopingMusic();
         }
 
         public override void Update(GameTime gameTime)
@@ -95,7 +96,6 @@ namespace HealthyBusiness.Scenes
             var shiftCount = GameManager.GetGameManager().GameData.ShiftCount;
             return $"{shiftCount}{GetOrdinalSuffix(shiftCount)}";
         }
-
         private string GetOrdinalSuffix(int number)
         {
             if (number <= 0) return "th";

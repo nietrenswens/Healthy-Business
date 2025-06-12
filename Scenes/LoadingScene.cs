@@ -11,8 +11,8 @@ namespace HealthyBusiness.Scenes
 {
     public class LoadingScene : Scene
     {
-        private float _timeCounter = 0f; // ms
-        private float _timeToWait = 4000f; // ms
+        private float _timeCounter = 0f;
+        private float _timeToWait = 4000f;
 
         private const string TITLE_FONT = "fonts\\pixelated_elegance\\title";
         private const string LARGE_FONT = "fonts\\pixelated_elegance\\large";
@@ -77,6 +77,7 @@ namespace HealthyBusiness.Scenes
         public override void Load(ContentManager content)
         {
             base.Load(content);
+            GameManager.GetGameManager().StopLoopingMusic();
         }
 
         public override void Update(GameTime gameTime)
