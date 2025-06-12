@@ -43,6 +43,18 @@
 /processorParam:Quality=Best
 /build:audio/pickup.wav
 
+#begin audio/startLevel.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/startLevel.wav
+
+#begin audio/whiteNoise.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/whiteNoise.wav
+
 #begin backgrounds/gameover.png
 /importer:TextureImporter
 /processor:TextureProcessor
