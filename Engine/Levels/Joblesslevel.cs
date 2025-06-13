@@ -78,18 +78,21 @@ namespace HealthyBusiness.Engine.Levels
                             if (gid >= 4 && gid <= 7)
                             {
                                 GameData gameData = GameManager.GetGameManager().GameData;
-                                bool gameOver = false;
-
-                                if(gameData.ShiftCount >= gameData.Quota.Deadline && gameData.Balance < gameData.Quota.Amount)
-                                {
-                                    gameOver = true;
-                                }
 
                                 var direction = (DoorDirection)(gid - 4);
 
-                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () => GameManager.GetGameManager().ChangeScene(
-                                    (gameOver) ? new GameOverScene() : new LoadingScene()
-                                ));
+                                var door = new ExitDoor(new TileLocation(tile.X, tile.Y), direction, () =>
+                                {
+                                    // Check if game over
+                                    bool gameOver = gameData.Balance < gameData.Quota.Amount &&
+                                        gameData.ShiftCount >= gameData.Quota.Deadline &&
+                                        gameData.Quota.LastAchievedQuotaDeadline < gameData.ShiftCount;
+
+                                    if (gameOver)
+                                        gm.ChangeScene(new GameOverScene());
+                                    else
+                                        gm.ChangeScene(new LoadingScene());
+                                });
 
                                 gameObjects.Add(door);
                                 Doors.Add(door);
@@ -129,7 +132,7 @@ namespace HealthyBusiness.Engine.Levels
             GameScene currentScene = gm.CurrentScene as GameScene;
 
             List<GameObject> GameObjectsList = new List<GameObject>();
-            
+
             if (currentScene != null)
             {
                 GameObjectsList.Add(dam);
