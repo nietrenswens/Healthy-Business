@@ -7,9 +7,9 @@ using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Objects.GUI;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Employee
@@ -105,7 +105,6 @@ namespace HealthyBusiness.Objects.Creatures.Employee
             {
                 if (InputManager.GetInputManager().IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.E))
                 {
-                    //_sell.Play(_sellVolume, 0, 0);
                     SellItems(player);
                 }
 
