@@ -10,12 +10,15 @@ using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using System.Linq;
 
 namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
 {
     public class TomatoStateMachine : GameObject
     {
+        private SoundEffect _explosionSound;
+        private float _explosionSoundVolume = 0.5f;
         public TomatoEnemyState State { get; private set; }
 
         public TomatoStateMachine()
@@ -26,6 +29,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
         {
             base.Load(content);
             SetIdle();
+            _explosionSound = content.Load<SoundEffect>("audio\\boom");
         }
 
         public override void Update(GameTime gameTime)
@@ -57,6 +61,7 @@ namespace HealthyBusiness.Objects.Creatures.Enemies.Tomato
                     if (linecollider.Length <= TomatoEnemy.ExplosionRange * Globals.TILESIZE)
                     {
                         player.TakeDamage(TomatoEnemy.Damage);
+                        _explosionSound.Play(_explosionSoundVolume, 0f, 0f);
                         SetExploding();
                     }
                     if (linecollider.Length > TomatoEnemy.AggroRange * Globals.TILESIZE)

@@ -20,6 +20,8 @@ namespace HealthyBusiness.Objects.Doors
         {
             if (other is not Player || GameManager.GetGameManager().CurrentScene is not GameScene)
                 return;
+            PlayDoorSound();
+
             _exitAction.Invoke();
         }
     }

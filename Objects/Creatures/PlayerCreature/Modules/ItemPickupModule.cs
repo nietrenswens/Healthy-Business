@@ -5,6 +5,7 @@ using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Items;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
 {
     public class ItemPickupModule : GameObject
     {
-        public Item? SelectedItem { get; private set; }
-
+        private SoundEffect? _pickupSound;
+        private float _pickupVolume = 1f;
         private Vector2 _center => ((CircleCollider)GetGameObject<Collider>()!).Center;
+
+        public Item? SelectedItem { get; private set; }
 
         public override void Load(ContentManager content)
         {
@@ -25,6 +28,8 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
 
             if (GetGameObject<CircleCollider>() == null)
                 Add(new CircleCollider(new(0, 0), Globals.ITEMPICKUPRANGE));
+
+            _pickupSound = content.Load<SoundEffect>("audio\\pickup");
         }
 
         public override void Update(GameTime gameTime)
@@ -73,11 +78,13 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature.Modules
                     return; // no empty slot
                 }
 
+                _pickupSound?.Play(_pickupVolume, 0f, 0f);
+
                 GameManager.GetGameManager().CurrentScene.RemoveGameObject(SelectedItem);
                 SelectedItem = null;
+
             }
         }
-
         private void ChangeGUI()
         {
             if (SelectedItem == null)

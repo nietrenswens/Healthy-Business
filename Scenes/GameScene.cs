@@ -7,6 +7,7 @@ using HealthyBusiness.InGameGUIObjects;
 using HealthyBusiness.Objects.Creatures.PlayerCreature;
 using HealthyBusiness.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,7 @@ namespace HealthyBusiness.Scenes
         private GameSceneType _gameSceneType;
         private List<GameObject> _collidableGameObjects { get; set; }
         private PauseMenu _pauseMenu = null!;
+        private SoundEffectInstance? _backgroundSound;
 
         public AttributeManager<GameObject> GUIObjects { get; private set; } = null!;
         public LevelManager LevelManager { get; private set; } = null!;
@@ -45,6 +47,10 @@ namespace HealthyBusiness.Scenes
         {
             base.Load(content);
             LevelManager.Load(content);
+
+            var backgroundSound = content.Load<SoundEffect>("audio\\whiteNoise");
+            GameManager.GetGameManager().PlayLoopingMusic(backgroundSound, 0.03f);
+
             var player = new Player(LevelManager.SpawnLocation);
             player.SetFeetPosition(LevelManager.SpawnLocation);
             SetCamera(new GameObjectCenteredCamera(player, 1f));
