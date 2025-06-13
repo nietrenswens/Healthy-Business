@@ -12,22 +12,21 @@ namespace HealthyBusiness.Data
 {
     public class Quota
     {
-        private bool _quotaIsMet = false;
         private GameData _gameData;
         private SoundEffect _quota;
         private float _quotaVolume = 0.5f;
 
         public int EmployerLevel { get; set; }
         public int Deadline { get; set; }
-        public int MinimalBalance { get; set; }
         public int Amount { get; set; }
+        public int LastAchievedQuotaDeadline { get; set; }
 
         public Quota(int employerLevel, GameData gameData)
         {
             _gameData = gameData;
             EmployerLevel = employerLevel;
             Deadline = gameData.ShiftCount + 3;
-            MinimalBalance = 0;
+            LastAchievedQuotaDeadline = Deadline;
             Amount = 0;
 
             if (Amount == 0)
@@ -61,14 +60,15 @@ namespace HealthyBusiness.Data
 
         public void IncreaseEmployerLevel()
         {
+            LastAchievedQuotaDeadline = Deadline;
             EmployerLevel++;
-            _gameData.Balance = _gameData.Balance - _gameData.Quota.Amount; // give the player the remaining balance after meeting the quota so he can get further in the levels
+            _gameData.Balance = _gameData.Balance - _gameData.Quota.Amount;
             Amount = DetermineQuota();
             _quota = GameManager.GetGameManager().ContentManager.Load<SoundEffect>("audio\\quota");
             _quota.Play(_quotaVolume, 0f, 0f);
             PrintQuotaStatus();
 
-            _gameData.Quota.Deadline = _gameData.ShiftCount + 3; // reset the deadline for the next quota
+            _gameData.Quota.Deadline = _gameData.ShiftCount + 3;
         }
 
         private void PrintQuotaStatus()
