@@ -57,13 +57,13 @@ namespace HealthyBusiness.Data
 
         public void IncreaseEmployerLevel()
         {
-            LastAchievedQuotaDeadline = Deadline; // save the last achieved quota deadline before increasing the level
+            LastAchievedQuotaDeadline = Deadline;
             EmployerLevel++;
-            _gameData.Balance = _gameData.Balance - _gameData.Quota.Amount; // give the player the remaining balance after meeting the quota so he can get further in the levels
+            _gameData.Balance = _gameData.Balance - _gameData.Quota.Amount;
             Amount = DetermineQuota();
             PrintQuotaStatus();
 
-            _gameData.Quota.Deadline = _gameData.ShiftCount + 3; // reset the deadline for the next quota
+            _gameData.Quota.Deadline = _gameData.ShiftCount + 3;
         }
 
         private void PrintQuotaStatus()
