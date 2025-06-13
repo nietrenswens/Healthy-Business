@@ -2,6 +2,7 @@
 using HealthyBusiness.Engine;
 using HealthyBusiness.Engine.Managers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,6 +14,8 @@ namespace HealthyBusiness.Objects.Creatures
         private string? _textureName;
         private Texture2D _grayPixel = null!;
         private Texture2D _greenPixel = null!;
+        protected SoundEffect _sell;
+        protected float _sellVolume = 0.25f;
 
         private const int HealthBarHeight = 10;
         private const int HealthBarWidth = 50;
@@ -37,6 +40,7 @@ namespace HealthyBusiness.Objects.Creatures
         {
             base.Load(content);
 
+            _sell = content.Load<SoundEffect>("audio\\sell");
             _grayPixel = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);
             _grayPixel.SetData(new[] { Color.DarkGray });
             _greenPixel = new Texture2D(GameManager.GetGameManager().GraphicsDevice, 1, 1);

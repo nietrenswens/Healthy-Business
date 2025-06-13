@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Microsoft.Xna.Framework.Audio;
+using HealthyBusiness.Objects.GUI;
 
 
 namespace HealthyBusiness.Objects.Creatures.PlayerCreature
@@ -78,6 +79,12 @@ namespace HealthyBusiness.Objects.Creatures.PlayerCreature
             var hotbar = currentScene?.GUIObjects.Attributes.OfType<Hotbar>().First();
             if (hotbar == null)
                 return;
+
+            bool hasItems = hotbar.HotbarSlots.Any(slot => slot.Item != null);
+            if (hasItems)
+            {
+                _sell.Play(_sellVolume, 0, 0);
+            }
 
             var hotbarValue = hotbar.HotbarSlots.Sum(slot => slot.Item?.Price);
             gameManager.GameData.Balance += hotbarValue ?? 0;
